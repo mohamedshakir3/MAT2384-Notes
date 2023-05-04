@@ -1,0 +1,282 @@
+\documentclass[openany]{report}
+\usepackage[utf8]{inputenc}
+
+\usepackage{stylesheets}
+\usepackage{lecture_notes_styles}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\powerset}[0]{\mathcal{P}}
+
+\title{MAT 2384: Ordinary Differentials Lecture Notes}
+\author{Last Updated:}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\setcounter{chapter}{-1}
+\chapter{Introduction and Basic Terminology}
+\begin{definition}[Differential Equations]
+    A differential equation is an equation involving an unknown function $y$ (of one or many variables), derivatives of $y$, and other known functions of indepedent variables.
+\end{definition}
+\begin{definition}[Order of Differential Equations]
+    The \emph{order} of a differential equation is the highest order of a derivative appearing in the equation.
+\end{definition}
+If the unknown function $y$ is a function of only one variable, $y = f(x)$, we saw that the differential equation is \emph{ordinary}. If $y$ is a function of two or more variables, we say the differential equation is a \emph{partial} differential equation. \\[2ex]
+\textbf{Example:}
+\[x^3y'' - 3e^x \sin x y' + 3y = \tan x\]
+This is an ODE of order 2. \\[2ex]
+\textbf{Example:}
+\[x_1x_2 \frac{\partial^2y}{\partial x_1\partial x_2} - 3e^{x_1} \frac{\partial y}{\partial x_1} = 0\]
+This is a PDE of order 2. \\[2ex]
+\begin{center}
+    \textbf{Note:} In this course, we will only consider ODEs.
+\end{center}
+\begin{definition}
+    We say that the function $y$ is a \emph{solution} to a differential equation on an interval $I$ if $y$ is well-defined on $I$ and $y$ satisfies the differential equation.
+\end{definition}
+\textbf{Example:} Consider the differential equation 
+\[y'' - 5y' + 4y = 0\]
+Show that the function 
+\[y = Ae^x + Be^{4x}\]
+is a solution for the differential equation on $\real$ for any constants $A$ and $B$. \\[2ex]
+\textbf{Solution:} We have $y = Ae^x + Be^{4x}$ is well defined on $\real$. 
+\[y' = Ae^x - 4Be^{4x}\]
+\[y'' = Ae^x + 16Be^{4x}\]
+So, 
+    \[y'' - 5y' + 4y = Ae^x + 16Be^{4x} - 5Ae^x - 20Be^{4x} + 4Ae^x + 4Be^{4x} = 0\]
+Therefore, $y = Ae^x + Be^{4x}$ is a solution to the differential equation for any $A,B \in \real$. This is called the \emph{general solution} to the differential equation. \\[2ex]
+\textbf{Remark:} The above example shows that a differential equation has infinitely many solutions.
+\begin{definition}[Initial Value Problem]
+    An \emph{intial value problem} (IVP) of order n consists of an ordinary differential equation of order $n$, and $n$ initial coniditions of the form 
+    \[y(x_0) = y_0, \ \ y'(x_0) = y_1 \ldots\]
+    \[y^{(n-1)}(x_0) = y_{n-1}\]
+\end{definition}
+\begin{center}
+    \textbf{Note:} $y^{(i)}$ denotes the $i$th derivative of $y$.
+\end{center}
+\textbf{Example:} Consider the IVP of order 3 
+\[y''' - 3e^xy'' + 6xy' + 2y = x^2\]
+\[y(0) = -1 \ \ y'(0) = 2 \ \ y''(0) = 1\]
+\textbf{Example:} Solve the following IVP
+\[y'' - 5y + 4y = 0\]
+\[y(0) = 1 \ \ y'(0) = 2\]
+\textbf{Solution:} We saw in the previous example that the general solution to this differential equation is 
+\[y = Ae^x + Be^{4x}\]
+We can use the initial conditions to find the constants $A$ and $B$.
+\[y(0) = 1 \implies 1 = Ae^0 + Be^0 = A + B\]
+\[y'(0) = 2 \implies 2 = Ae^0 - 4Be^0 = A + 4B\]
+\[A + 4B - A - B = 2 - 1 \implies 3B = 1 \implies B = \frac{1}{3} \ \ A = \frac{2}{3}\]
+\begin{theorem}[Existence and Uniqueness Theorem for the First Order ODEs]
+    Consider the IVP: 
+    \[y' = F(x,y), \ \ y(x_0) = y_0\]
+    \begin{itemize}
+        \item \textbf{Existence:} If $F(x,y)$ is continuous in an open rectangular region 
+        \[R = \left\{(x,y) \in \real^2: a < x < b, c < y < d\right\}\]
+        of the $xy$-plane that contains the initial point $(x_0, y_0)$, then there exists a solution $y(x)$ to the intial value problem that is defined in some open interval $I = (\alpha, \beta)$ containg $x_0$.
+        \item \textbf{Uniqueness:} If the partial derivative $\frac{\partial F}{\partial y}$ of the function $F(x,y)$ is continuous in the recnagular region $R$, then the solution $y(x)$ is unique.
+    \end{itemize}
+\end{theorem}
+\begin{center}
+    \textbf{Note:} We will always suppose this condition is satisfied in this course.
+\end{center}
+
+\chapter{Ordinary Differential Equations of First Order}
+The goal of this chapter is to solve ODE's of order 1. 
+\begin{definition}
+    The \emph{standard form} of an ODE of order 1 is an expression of the form 
+    \[y' = f(x,y)\]
+    We can rewrite $y'$ as $\frac{dy}{dx}$ and we have the \emph{differential form} 
+    \[M(x,y)dx + N(x,y)dy = 0\]
+\end{definition}
+\noindent
+\textbf{Example:} Consider the differential equation 
+\[2xy' + 3y = 2y' + \sin x\]
+The standard form is
+\[2xy ' - 2y' = \sin x - 3y \implies y' = \frac{\sin x - 3y}{2x-2}\]
+The differential form is 
+\begin{align*}
+    &2x\frac{dy}{dx} + 3y = 2\frac{dy}{dx} + \sin x   \\
+    \implies&2xdy + 3ydx = 2dy + \sin x dx\\
+    \implies& (3y - \sin x)dx (2x-2)dy = 0
+\end{align*}
+\section{Seperable First Order Ordinary Differential Equations}
+
+\begin{definition}
+    A first order ODE is called \emph{seperable} if it can be written in the form
+    \[F(x)dx = G(y)dy\]
+\end{definition}
+\subsection{Solving Seperable ODE's} 
+To solve a seperable ODE,
+\begin{enumerate}
+    \item Write $y' = \frac{dy}{dx}$
+    \item Seperate the ODE to write it in the form 
+    \[F(x)dx = G(y)dy\]
+    \item Take integrals of both sides
+    \item If an itial condition is given, solve for the constant of integration $C$. 
+\end{enumerate}
+\textbf{Example:} Solve the IVP 
+\[(y^2 + 1)y' = \frac{x}{y} \ \ y(1) = 1\]
+\textbf{Solution:} We can write $y' = \frac{dy}{dx}$ and we get 
+    \[(y^2 + 1)\frac{dy}{dx} = \frac{x}{y} \implies (y^2 + 1)ydy = xdx\]
+    Taking integrals on both sides, we have 
+    \[\int y^3 + ydy = \int xdx \implies \frac{y^4}{4} + \frac{y^2}{2} = \frac{x^2}{2} + C\]
+    Using our initial condition, we have $y = 1$ when $x =1$, then 
+    \[\frac{1}{4} + \frac{1}{2} = \frac{1}{2} + C\]
+    Therefore $C = \frac{1}{2}$ and the solution to the IVP is
+    \[\frac{y^4}{4} + \frac{y^2}{2} = \frac{x}{2} + \frac{1}{4}\]
+    This is called the \emph{implicit solution} since we could not explcitly solve for $y$ in terms of $x$. \\[2ex]
+
+\textbf{Example:} Solve the IVP
+\[e^xy' = (x+1)y^2 \ \ y(0) = -\frac{1}{2}\]
+\textbf{Solution:} 
+\begin{align*}
+    &e^x\frac{dy}{dx} = (x+1)y^2 \\
+    \implies& \frac{1}{y^2}dy = \frac{x+1}{e^x}dx \\
+    \implies& \int \frac{1}{y^2}dy = \int (x+1)e^{-x}dx \\
+\end{align*}
+We can use integration by parts to solve the right hand side integral. Let $u = x+1$ and $dv = e^{-x}dx$, $u' = 1$, and $v = -e^{-x}$. Then 
+\begin{align*}
+    \int (x+1)e^{-x}dx &= uv - \int u'vdx\\
+    &= -(x+1)e^{-x} - \int -e^{-x}dx\\
+    &= -(x+1)e^{-x} - e^{-x} + C\\
+\end{align*}
+Therefore we have 
+\begin{align*}
+    \frac{y^{-2 +1}}{-2 + 1} &= -(x+1)e^{-x} - e^{-x} + C\\
+    -\frac{1}{y} &= -(x+1)e^{-x} - e^{-x} + C\\
+\end{align*}
+Setting $y = -\frac{1}{2}$ and $x = 0$, we have 
+\[2 = -2 + C \implies C = 4\]
+Therefore the implicit solution is 
+\[-\frac{1}{y} = -(x+1)e^{-x} - e^{-x} - 4\]
+We can rewrite this as an explicit solution as 
+\[y = \frac{1}{(x+2)e^{-x}-4}\]
+\section{First Order ODE's With Homogeneous Coefficients}
+\begin{definition}
+    A function $F(x,y)$ of two variables is called \emph{homogeneous} of degree $k$ if 
+    \[F(\lambda x, \lambda y) = \lambda^k \cdot F(x,y)\]
+\end{definition}
+This type of ODEs can be made seperable after a suitable change of variables of the unknown function.\\[2ex]
+\noindent
+\textbf{Example:}
+\[F(x,y) = 3x^2y - 2xy^2 + y^3\]
+We can check if its homogeneous by the definition, 
+\begin{align*}
+    F(\lambda x, \lambda y) &= 3(\lambda x)^2 (\lambda y) - 2(\lambda x) (\lambda y)^2 + (\lambda y^3)\\
+    &= 3\lambda^3x^2y - 2\lambda^3xy^2 + \lambda^3y^3\\
+    &= \lambda^3(3x^2y - 2xy^2 + y^3)\\
+    &= \lambda^3F(x,y)
+\end{align*}
+Therefore, $F(x,y)$ is homogeneous of degree 3. We can tell quickly if a polynomial is homogeneous is by looking at the exponents of each term. If the sum of the exponents of each term is the same, then the polynomial is homogeneous, with order being the sum of the exponents in each term (i.e $x^2y$ has exponents 2,1, $xy^2$ has exponents 1,2, and $y^3$ has exponents 3, each sum to 3).\\[2ex]
+\begin{definition}
+    A first order ODE given in differential form
+    \[M(x,y)dx + N(x,y)dy = 0\]
+    is called of \emph{homogeneous coefficients} if both $M(x,y)$ and $N(x,y)$ are homogeneous of the same degree.
+\end{definition}
+\noindent
+\textbf{Example:}
+\[(3x^2+2y^2+2xy)dx - 4xydy = 0\]
+Both terms are homogeneous of degree 2, therefore this is a differential equation of homogeneous coefficients. 
+\begin{theorem}
+    A first order ODE of homogeneous coefficients can be made seperable by changing the function using one of the following substitutions:
+    \begin{itemize}
+        \item Set $u \coloneqq \frac{y}{x}$ or
+        \item $u \coloneqq \frac{x}{y}$
+    \end{itemize}
+\end{theorem}
+\noindent
+\textbf{Example:} Solve the following IVP 
+\[(x^2-y^2)dx + 2xydy = 0 \ \ y(1) = 2\]
+\textbf{Solution:} This is a first order ODE with homogeneous coefficients. Let 
+\[u \coloneqq \frac{y}{x} \implies y = xu\]
+\[\frac{dy}{dx} = 1 \cdot u + x \cdot \frac{du}{dx} \implies dy = udx + xdu\]
+So, we have 
+\[(x^2-y^2)dx + 2xydy = 0 \implies (x^2 - x^2u^2)dx + 2x(xu)(udx + xdu) = 0\]
+Simplyfing, we get 
+\begin{align*}
+    x^2dx - x^2u^2dx + 2x^2u^2dx + 2x^3udu &= 0\\
+    dx - u^2dx + 2u^2dx + 2xudu &= 0\\
+    (1 + u^2)dx + 2xudu &= 0\\
+    (1+u^2)dx &= -2xudu\\
+    -\frac{1}{x}dx &= \frac{2u}{1+u^2}du
+\end{align*}
+Now that it's seperable, we can integrate both sides,
+\begin{align*}
+    -\int \frac{1}{x}dx &= \int \frac{2u}{1+u^2}du\\
+    -\ln(x) &= \ln(1+u^2) + C\\
+\end{align*}
+Now using our initial condition, we have $y(1) = 2$. But, our differential equation is a function of $u$ not $y$, so we must calculate $u$ using our initial condition. So, $u(1) = \frac{y(1)}{1} = 2$. So, 
+\[-\ln 1 = \ln 5 + C \implies C = -\ln 5\]
+Therefore, our solution is
+\begin{align*}
+    \ln x &= \ln(1 + u^2) - \ln 5\\
+    \ln\left(\frac{5}{x}\right) &= \ln(1 + u^2)\\
+    \frac{5}{x} &= 1 + u^2\\
+    u^2 &= \frac{5}{x} - 1\\
+    \frac{y^2}{x^2} &= \frac{5}{x} - 1\\
+    y &= \sqrt{5x - x^2}
+\end{align*}
+We take the positive square root since if we took the negative square root, then $y(1) = -2$ which is not our initial condition.\\[2ex]
+\textbf{Example:} Solve the IVP 
+\[(2x + y)dx - xdy = 0 \ \ y(1) = -2 \ \ x > 0\]
+\textbf{Solution:} This is a first order ODE with homogeneous coefficients. Let
+\[u = \frac{y}{x} \implies y = xu\]
+\[dy = udx + xdu\]
+Substituting into our differential equation, we get
+\begin{align*}
+    (2x + xu)dx - x(udx + xdu) &= 0\\
+    (2+u)dx - (udx + xdu) &= 0\\  
+    2dx + udx - udx - xdu &= 0\\
+    2dx &= xdu \implies \frac{2}{x}dx = du
+\end{align*}
+This differential equation in $u$ is sperable, so we can integrate 
+\begin{align*}
+    \int \frac{2}{x}dx &= \int du\\
+    2\ln x &= u + C\\
+\end{align*}
+Using your initial condition, $y(1) = -2$. so $u(1) = \frac{y(1)}{1} = -2$. Therefore,
+\[2\ln 1 = -2 + c \implies C = 2\]
+Now solving for $y$, 
+\begin{align*}
+    u &= 2\ln x - 2\\
+    \frac{y}{x} &= 2\ln x - 2\\
+    y &= x(2\ln x - 2)
+\end{align*}
+This is our explicit solution to the initial value problem. 
+\section{Exact First Order ODEs}
+\begin{definition}
+    Given a function $F(x,y)$ of two variables, the differential of $F(x,y)$ denoted by $dF$ is defined by 
+    \[dF = \frac{\partial F}{\partial x} dx + \frac{\partial F}{\partial y}dy\]
+\end{definition}
+\noindent
+\textbf{Example:} Let 
+\[F(x,y) = 2x^2y^3 + \sin(x+2y)\]
+Then 
+\[dF = (4xy^3 + \cos(x+2y))dx + (6x^2y^2 + 2\cos(x+2y))dy\]
+\textbf{Remark:}
+\[dF = 0 \iff \frac{\partial F}{\partial x} dx + \frac{\partial F}{\partial y} dy = 0 \iff \frac{\partial F}{\partial x} = 0 \text{ and } \frac{\partial F}{\partial y} = 0 \]
+So, $F(x,y) = C$ is a constant function. Therefore, 
+\[dF = 0 \iff F(x,y) = C\]
+\begin{definition}
+    A first order ODE 
+    \[M(x,y)dx + N(x,y)dy = 0\]
+    is called \emph{exact} if there exists a continuous function $F(x,y)$ such that 
+    \[\frac{\partial F}{\partial x} = M(x,y) \text{ and } \frac{\partial F}{\partial x} = N(x,y)\]
+    So if $M(x,y)dx + N(x,y)dy = 0$ is exact, then 
+    \[dF = 0 \implies F(x,y) = C\]
+\end{definition}
+In summary, if $M(x,y)dx + N(x,y)dy = 0$ is exact, then find $F(x,y)$ such that
+\[\frac{\partial F}{\partial x} = M(x,y) \text{ and } \frac{\partial F}{\partial x} = N(x,y)\]
+Then, the (implicit) solution to the ODE is $F(x,y) = C$. Furthermore, since $M(x,y) = \frac{\partial F}{\partial x}$ and $N(x,y) = \frac{\partial F}{\partial y}$, then 
+\[\frac{\partial M}{\partial y} = \frac{\partial}{\partial y} \left(\frac{\partial F}{\partial x}\right) = \frac{\partial^2F}{\partial x \partial y}\]
+\[\frac{\partial N}{\partial x} = \frac{\partial}{\partial x} \left(\frac{\partial F}{\partial y}\right) = \frac{\partial^2F}{\partial y \partial x}\]
+So by the Clairaut-Schwarz Theorem, the ODE is exact if and only if
+\[\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\]
+\begin{theorem}[Condition for Exactness]
+    The first order ODE $M(x,y)dx + N(x,y)dy = 0$ (with $M,N$ continuous) is exact if and only if
+    \[\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\]
+\end{theorem}
+\end{document}
