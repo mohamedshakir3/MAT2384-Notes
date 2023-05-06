@@ -1,0 +1,223 @@
+
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{environ}
+\makeatletter
+
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+\title{CSI 2132 Midterm Cheat Sheet}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip2pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+
+
+\definecolor{blue}{HTML}{A7BED3}
+\definecolor{brown}{HTML}{DAB894}
+\definecolor{pink}{HTML}{FFCAAF}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{fact}{Fact}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+
+
+
+
+\tikzset{header/.style={path picture={
+\fill[green, even odd rule, rounded corners]
+(path picture bounding box.south west) rectangle (path picture bounding box.north east) 
+([shift={( 2pt, 4pt)}] path picture bounding box.south west) -- 
+([shift={( 2pt,-2pt)}] path picture bounding box.north west) -- 
+([shift={(-2pt,-4pt)}] path picture bounding box.north east) -- 
+([shift={(-6pt, 6pt)}] path picture bounding box.south east) -- cycle;
+},
+label={[anchor=west, fill=green]north west:\textbf{#1:}},
+}} 
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, rounded corners, font=\bfseries]
+
+
+\tikzstyle{bluebox} = [draw=blue, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{bluetitle} =[fill=blue, inner sep=4pt, text=white, font=\small]
+
+
+\tikzstyle{brownbox} = [draw=brown, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{browntitle} =[fill=brown, inner sep=4pt, text=white, font=\small]
+
+\tikzstyle{pinkbox} = [draw=pink, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{pinktitle} =[fill=pink, inner sep=4pt, text=white, font=\small]
+
+\tikzstyle{redbox} = [draw=red!35, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{redtitle} =[fill=red!35, inner sep=4pt, text=white, font=\small]
+
+
+\NewEnviron{brownbox}[1]{
+    \begin{tikzpicture}
+    \node[brownbox](box){%
+    \begin{minipage}{0.9\textwidth}
+    \BODY
+    \end{minipage}};
+    \node[browntitle, right=10pt] at (box.north west) {#1};
+    \end{tikzpicture}
+}
+
+ \NewEnviron{redbox}[1]{
+    \begin{tikzpicture}
+    \node[redbox](box){%
+    \begin{minipage}{0.9\textwidth}
+    \BODY
+    \end{minipage}};
+    \node[redtitle, right=10pt] at (box.north west) {#1};
+    \end{tikzpicture}
+}
+   
+    
+
+\NewEnviron{bluebox}[1]{%
+\begin{tikzpicture}
+    \node[bluebox](box){%
+        \begin{minipage}{0.9\textwidth}
+            \BODY
+        \end{minipage}
+    };
+    
+\node[bluetitle, right=10pt] at (box.north west) {#1};
+\end{tikzpicture}
+}
+
+\NewEnviron{pinkbox}[1]{%
+\begin{tikzpicture}
+    \node[pinkbox](box){%
+        \begin{minipage}{0.9\textwidth}
+            \BODY
+        \end{minipage}
+    };
+    
+\node[pinktitle, right=10pt] at (box.north west) {#1};
+\end{tikzpicture}
+}
+
+
+
+\NewEnviron{blackbox}[1]{%
+\begin{tikzpicture}
+    \node[mybox](box){%
+        \begin{minipage}{0.3\textwidth}
+        \raggedright
+        \small{
+            \BODY
+        }
+        \end{minipage}
+    };
+    
+\node[fancytitle, right=10pt] at (box.north west) {#1};
+\end{tikzpicture}
+}
+
+
+\begin{document}
+
+\begin{center}{\large{\textbf{MAT 2384 Summary Sheet}}}\\
+\end{center}
+
+
+
+
+\begin{multicols*}{3}
+\begin{blackbox}{Order 1 ODE's}
+    \textbf{Standard Form:} $y' = f(x,y)$
+
+    \textbf{Differential Form:} $M(x,y)dx + N(x,y)dy = 0$
+    \begin{bluebox}{Seperable First Order ODE's}
+        \textbf{Definition.} A first order ODE is called seperable if it can be written in the form \\[-2ex]
+        \[F(x)dx = G(y)dy\]
+        \begin{redbox}{Steps to Solving Seperable ODE's}
+            \begin{enumerate}
+                \item Write $y' = \frac{dy}{dx}$
+                \item Seperate the ODE to write it in the form $F(x)dx = G(y)dy$
+                \item Integrate both sides
+                \item If an initial condition is given, solve for the integration constant C. 
+            \end{enumerate}
+        \end{redbox}
+    \end{bluebox}
+    \begin{brownbox}{First Order ODE's with Homogeneous Coefficients}
+        \textbf{Definition.} A function $F(x,y)$ is called homogeneous of degree $k$ if \\[-2ex]
+        \[F(\lambda x, \lambda y) = \lambda^k \cdot F(x,y)\]
+        \textbf{Definition.} A first order ODE given in differential form is called homogeneous if both $M(x,y)$ and $N(x,y)$ are homogeneous of the same degree.\\[1ex]
+        \textbf{Theorem.} A first order ODE of homogeneous coefficients can be made seperable by changing the function by substituting $u = \frac{y}{x} \implies y = xu$ or $u \frac{x}{y} \implies y = \frac{x}{u}$. 
+    \end{brownbox}
+    \begin{bluebox}{Exact First Order ODEs}
+        \textbf{Definition.} Given a function $F(x,y)$, the differential of $F$ denoted by $dF$ is defined by
+        \[dF = \frac{\partial F}{\partial x} dx + \frac{\partial F}{\partial y}dy\]
+        \textbf{Remark.} $dF = 0 \iff F(x,y) = C$.\\[1ex]
+        \textbf{Definition.} A first order ODE is called exact if there exists $F(x,y)$ such that 
+        \[\frac{\partial F}{\partial x} = M(x,y) \text{ and } \frac{\partial F}{\partial x} = N(x,y)\]
+        \textbf{Theorem.} A first order ODE is exact if and only if
+        \[\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\]
+    \end{bluebox}\\[-2ex]
+\end{blackbox}
+\begin{blackbox}{Iterative Methods to Solving $f(x) = 0$}
+    \textbf{Theorem.} (Intermediate Value Theorem). Let $f: [a,b] \rightarrow \mathbb{R}$ be a continuous function. Let $y \in \mathbb{R}$ between $f(a)$ and $f(b)$. Then there exists $z \in [a,b]$ such that $f(z) = y$.
+    \begin{bluebox}{Fixed Point Iteration}
+        \textbf{Definition.} The value $x = r$ is a fixed point for $g(x)$ if $g(r) = r$.\\[1ex]
+        \textbf{Definition.} The iteration sequence is given as 
+        \[x_{n+1} = g(x_n)\]
+        with $x_0$ being given. \\[1ex]
+        \textbf{Theorem.} Assume that the function $g(x)$ has a fixed-point $s$ on an interal $I$, if 
+        \begin{itemize}
+            \item $g(x)$ is continuous on $I$,
+            \item $g'(x)$ is continuous on $I$, and
+            \item $|g'(x)| < 1$ for all $x \in I$.
+        \end{itemize}
+        Then then the iteration sequence converges.
+        \begin{redbox}{Steps to Solve Using Fixed-Point Iteration}
+           
+            Then the steps for solving are as follows,
+            \begin{enumerate}
+                \item Start with $f(x) = 0$
+                \item Rewrite $f(x) = 0$ under the form $x = g(x)$
+                \item Verify the iteration sequence $x_0, x_1 = g(x_0), \ldots, x_n = g(x_{n-1})$ converges using the above theorem 
+                \item Compute the terms of the sequence and stop when the required accuracy is reached (i.e when 2 consecutive terms have the same $k$ decimal places where $k$ is the desired accuracy).
+            \end{enumerate}
+        \end{redbox}
+    \end{bluebox} 
+\end{blackbox}
+
+
+\end{multicols*}
+\end{document}
