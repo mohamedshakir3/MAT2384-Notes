@@ -40,7 +40,7 @@ Bolzano's Theorem is a special case of the Intermediate Value Theorem, which sta
     \end{itemize}
 \end{proof}
 \noindent
-\textbf{Example:} Prove that the equation 
+\textbf{Example.} Prove that the equation 
 \[2x^3 + 2x - 4 = 0\]
 has a unique root in $[0,1]$.
 \begin{proof}
@@ -51,11 +51,11 @@ has a unique root in $[0,1]$.
     We say that the value $x = r$ is a \emph{fixed point} for a function $g(x)$ if $g(r) = r$.
 \end{definition}
 \noindent
-\textbf{Example:} $g(x) = \frac{5-x^2}{4}$. $r = 1$ is a fixed-point for $g$ since $g(1) = 1$.\\[2ex]
+\textbf{Example.} $g(x) = \frac{5-x^2}{4}$. $r = 1$ is a fixed-point for $g$ since $g(1) = 1$.\\[2ex]
 Graphically, fixed-point of $g(x)$ correspond to the intersection of the graph of $g(x)$ and the line $y = x$. Given an equation $f(x) = 0$, we can write it under the form 
 \[g(x) = x\]
 by isolating one $x$ in the equation.\\[2ex]
-\textbf{Example:} $3x^3 + 2x - 5 = 0$. We can write this as 
+\textbf{Example.} $3x^3 + 2x - 5 = 0$. We can write this as 
 \[x = \frac{5-3x^3}{2}\]
 Set $g(x) \coloneqq \frac{5-3x^3}{2}$. Then $g(x) = x$. Finding a root for $f(x) = 0$ is equivalent to finding a fixed-point for $g(x)$.\\[2ex]
 \subsection{Steps to Solving Using Fixed-Point Iteration}
@@ -79,7 +79,7 @@ The steps for solving are as follows
     \item Verify that the sequence $x_0, x_1 = g(x_0), x_2 = g(x_1), \dots, x_n = g(x_{n-1})$ converges using the above theorem (or otherwise)
     \item Compute terms of the above sequence and stop when you reach the required accuracy
 \end{enumerate}
-\textbf{Example:} Consider the equation 
+\textbf{Example.} Consider the equation 
 \[x^3 + 12x - 3 = 0\]
 \begin{enumerate}
     \item Prove that the equation has a unique root in $[-1.9, 1.9]$
@@ -104,5 +104,24 @@ The steps for solving are as follows
     \end{align*}
     We stop when 2 consecutive terms agree on the first 6 decimal points. So the root is $0.248718$ correct to 6 decimal points.
 \end{enumerate}
+\section{Newton's Method}
+Newton's method is a technique for solving equations of the form $f(x) = 0$ by successive approximation. The idea is to pick an initial guess $x_0$ such that $f(x_0)$ is reasonably close to 0. We then find the equation of the line tangent to $y = f(x)$ at $x = x_0$, and determine where this tangent line intersects the $x$ axis at the new point $x_1$. So, 
+\[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}\]
+We then find the equation of the line tangent to $y = f(x)$ at $x = x_1$, and repeat this process, so we have 
+\[x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}\]
+\textbf{Example.} Using Newton's method, estimate the value of the root of the equation 
+\[x^3 + 12x - 3 = 0\]
+on $[0,2]$. Start by showing that the equation has a unique root on $[0,2]$, then approximate (to 6 decimal places) with the starting point $x_0 = 1.8$.\\[2ex]
+\textbf{Solution.} We have $f(x) = x^3 + 12x - 3$, and 
+\[f(0) = -3 \text{ and } f(2) = 29\]
+Therefore by the intermediate value theorem, there exists $c \in [0,2]$ such that $f(c) = 0$. $f(x)$ is injective since $f'(x) = 2x^2 + 12$ is striclty increasing on $[0,2]$, so $c$ is unique. Now using Newton's method, 
+\[x_0 = 1.8\]
+\[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 0.675138\]
+\[x_2 = x_1 - \frac{f(x_1)}{f'(x_1)} = 0.270469\]
+\[x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 0.248748\]
+\[x_4 = x_3 - \frac{f(x_3)}{f'(x_3)} = 0.248718\]
+\[x_5 = x_4 - \frac{f(x_4)}{f'(x_4)} = 0.248718\]
+Therefore, the our root is $0.248718$ correct to 6 decimal places.
+
 
 \end{document}
