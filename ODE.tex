@@ -389,6 +389,167 @@ Using the initial condition, $y(0) = 1$, we get
 \[(0)(1) + \frac{(0)^2(1)^{-2}}{2} + 2e^{1} = C \implies C = 2e\]
 Therefore, the (implicit) solution to the IVP is
 \[xy+ \frac{x^2y^{-2}}{2} + 2e^y = 2e\]
+\textbf{Example.} Solve the following IVP
+\[(x^2+4xy + 3y^2)dx + (x^2 + 2xy)dy = 0, \ \ y(1) = 1, \ x > 0\]
+\textbf{Solution.} We can see that this function is of homogeneous coefficients, but we will solve it using the integrating factor. First we calculate the partial derivatives,
+\[\frac{\partial M}{\partial y} = 4x + 6y\]
+\[\frac{\partial N}{\partial x} = 2x + 2y\]
+we see that these are not equal so this ODE is not exact, then we calculate the difference,
+\[\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x} = 2x + 4y\]
+Then to obtain a function of only $x$, we divide by $N$, 
+\[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{N} = \frac{2x + 4y}{x^2 + 2xy} = \frac{2(x+2y)}{x(x + 2y)} = \frac{2}{x} = f(x)\]
+An integrating factor exists and is given by
+\[\mu(x) = \exp\left(\int(f(x)dx)\right) = \exp\left(2\ln x\right) = x^2\]
+Now we can multiply the original ODE by $\mu(x) = x^2$,
+\[(x^2 + 4x^3y + 3x^2y^2)dx + (x^4 + 2x^3y)dy = 0\]
+Now we can check the exactness of this ODE, we'll denote the new ODE by $M^*$ and $N^*$,
+\[\frac{\partial M^*}{\partial y} = 4x^3 + 6x^2y\]
+\[\frac{\partial N^*}{\partial x} = 4x^3 + 6x^2y\]
+Therefore, this ODE is exact, so we look for $F(x,y)$ such that
+\[\frac{\partial F}{\partial x} = M^* \text{ and } \frac{\partial F}{\partial y} = N^*\]
+The second equation is simpler so we'll start with this one, 
+\[F(x,y) = \int x^4 + 2x^3ydy = x^4y + x^3y^2 + h(x)\]
+Now we derive with respect to $x$ and use the first equation,
+\[\frac{\partial F}{\partial x} = 4x^3 + 3x^2y^2 + h'(x)\]
+Then, $M^* = x^4 + 4x^3y + 3x^2y^2$, which gives us $h'(x) = x^4$. Now 
+\[h(x) = \int x^4dx = \frac{x^5}{5} + k\]
+So we get the function
+\[F(x,y) = x^4y + x^3y^2 + \frac{x^5}{5} + k\]
+The general solution is given by setting $F(x,y)$ equal to a constant,
+\[x^4y + x^3y^2 + \frac{x^5}{5} = C\]
+Then using our initial value $y(1) = 1$,
+\[1 + 1  + \frac{1}{5} = \frac{11}{5}\]
+Thus, the solution to the IVP is 
+\[x^4y + x^3y^2 + \frac{x^5}{5} = \frac{11}{5}\]
+\textbf{Example.} Solve the following IVP with initial condition $y(0) = 1$,
+\[(3xy - 2y^2\sin x + 4y)dx + (3x^2 + 8x + 6y \cos x)dy = 0\]
+\textbf{Solution.} With $\sin$ and $\cos$ in our function, its certainly not of homogeneous coefficients, we check for exactness, 
+\[\frac{\partial M}{\partial y} = 3x - 4y \sin x + 4\]
+\[\frac{\partial N}{\partial x} = 6x + 8 - 6y \sin x\]
+We see that these are not equal so this ODE is not exact, then we calculate the difference of the partial derivatives 
+\[\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x} = 3x + 2y\sin x x  -4\]
+Then divide by $M$ to find a function of $y$, 
+\[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = \frac{-3x + 2y\sin x - 4}{3xy - 2y^2\sin x + 4y} = \frac{-3x + 2y\sin x-4}{-y(-3x+2y\sin x - 4) = -\frac{1}{y}}\]
+An integrating factor exists and is given by
+\[\mu(y) = \exp\left(-\int -\frac{1}{y}\right) = e^{\ln y} = y\]
+Multiplying the original ODE by $\mu(y) = y$,
+\[(3xy^2 - 2y^3\sin x + 4y^2)dx + (3x^2y + 8xy + 6y^2\cos x)dy = 0 \]
+Now checking exactness of our new ODE, 
+\[\frac{\partial M^*}{\partial y} = 6xy - 6y^2 \sin x + 8y\]
+\[\frac{\partial N^*}{\partial y} = 6xy - 6y^2 \sin x + 8y\]
+This ODE is exact and we can now solve for $F(x,y)$ such that
+\[\frac{\partial F}{\partial x} = M^* \text{ and } \frac{\partial F}{\partial y} = N^*\]
+Both of the equations are similar in complexity so we'll start with the first one,
+\[F(x,y) = \int 3xy^2 - 2y^3 \sin x + 4y dx = \frac{3x^2y^2}{2} = 2y^2\cos x + 4xy^2 + h(y)\]
+Then using the second equation to solve for $y$, 
+\[\frac{\partial F}{\partial y} = 3x^2y + 6y^2\cos x + 8xy + h'(y)\]
+Then, $N^* = 3x^2y + 8xy + 6y^2\cos x$, which gives us $h'(y) = 0$. So we get $h(x) = k$, and the function
+\[F(x,y) = \frac{3x^2y^2}{2} + 2y^3 \cos x + 4xy^2 + k\]
+The general solution is 
+\[\frac{3x^2y^2}{2} + 2y^3 \cos x + 4xy^2 = C\]
+Using our inital condition $y(0) = 1$, we get
+\[0 + 2 + 0 = C\]
+The solution to the IVP is 
+\[\frac{3x^2y^2}{2} + 2y^3 \cos x + 4xy^2 = 2\]
+\textbf{Example.} Find the general solution of the following ODE,
+\[(e^{x+y} ye^y)dx + (xe^y - 1)dy = 0\]
+\textbf{Solution.} We have exponential functions so it is certainly not of homogeneous coefficients, we first check for exactness,
+\[\frac{\partial M}{\partial y} = e^{x+y} + e^y + ye^y\]
+\[\frac{\partial N}{\partial x} = e^y\]
+We see that these are not equal so this ODE is not exact, then we calculate the difference of the partial derivatives
+\[\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x} = e^{x+y} + ye^y\]
+This function is exactly $M$, so we will divide by $M$ to find a function of $y$,
+\[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = 1 = g(y)\]
+An integrating factor exists and is given by
+\[\mu(y) = \exp\left(-\int g(y)dy\right) = \exp\left(-\int 1 dy\right) = e^{-y}\]
+Multiplying the original ODE by $\mu(y) = e^{-y}$,
+\[(e^x + y)dx + (x - e^{-y})dy = 0\]
+Now checking exactness of our new ODE,
+\[\frac{\partial M^*}{\partial y} = 1\]
+\[\frac{\partial N^*}{\partial y} = 1\]
+This ODE is exact and we can now solve for $F(x,y)$ such that
+\[\frac{\partial F}{\partial x} = M^* \text{ and } \frac{\partial F}{\partial y} = N^*\]
+Both of the equations are similar in complexity so we'll start with the first one,
+\[F(x,y) = \int e^x + y dx = xe^x + yx + h(y)\]
+Then using the second equation to solve for $h(y)$,
+\[\frac{\partial F}{\partial y} = x + h'(x)\]
+Then, $N^* = x - e^{-y}$, which gives us $h'(y) = -e^{-y}$. So we get
+\[h(y) = \int h'(y)dy = -\int e^{-y} = e^y + k\]
+Then the general solution is 
+\[e^x + xy + e^{-y} = C\]
+\section{Linear First-Order ODEs}
+\begin{definition}
+    A first order ODE that can be written under the form 
+    \[y' + f(x)y = r(x)\]
+    is called \textbf{linear}.
+\end{definition}
+\noindent
+\textbf{Example.} 
+\[xy' + e^xy = \frac{\sin x}{1 + x^2}\]
+We can divide by $x$ to get
+\[y' + \frac{e^x}{x}y = \frac{\sin x}{x(1+x^2)}\]
+This is linear with $f(x) = \frac{e^x}{x}$ and $r(x) = \frac{\sin x}{x(1+x^2)}$
+\subsection{Steps to Finding (Explicit) Solutions}
+Given a linear first-order ODE in the formm $y' + f(x)y = r(x)$, we can find the solution by following these steps. Start by writing the ODE in differential form by replacing $y'$ with $\frac{dy}{dx}$,
+    \begin{align*}
+        &\frac{dy}{dx} + f(x)y = r(x)\\
+        &\implies dy + f(x)ydx = r(x)dy\\
+        &\implies (f(x)y - r(x))dx + 1dy = 0  
+    \end{align*}
+    This ODE is not exact since 
+    \[\frac{\partial M}{\partial y} = f(x)\]
+    \[\frac{\partial N}{\partial x} = 1\]
+    So we find the integrating factor,
+    \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{N} = f(x)\]
+    and we get our integrating factor, 
+    \[\mu(x) = \exp\left(\int f(x)dx\right)\]
+    Note that 
+    \[\mu'(x) = \exp\left(f(x)dx\right)\cdot \left(\int f(x)dx\right)' = \mu(x) f(x)\]
+    Now we can multply the ODE by $\mu(x)$,
+    \[(\mu(x)f(x)y - r(x)\mu(x))dx + \mu(x)dy = 0\]
+    Now we can check for exactness, of our new ODE, 
+    \[\frac{\partial M^*}{\partial y} =\mu(x)f(x)\]
+    \[\frac{\partial n^*}{\partial x} =\mu(x)f(x)\]
+    Then we look for our function $F(x,y)$ such that
+    \[\frac{\partial F}{\partial x} = M^* \text{ and } \frac{\partial F}{\partial y} = N^*\]
+    \[F(x,y) = \int \mu(x) dy = \mu(x)y + h(x)\]
+    Then we use the second equation to solve for $h(x)$,
+    \[\frac{\partial F}{\partial y} = \mu'(x)y + h'(x) = \mu(x)f(x) + h'(x)\]
+    Then, $M^* = \mu(x)f(x)y - \mu(x)r(x)$, which gives us that $h'(x) = - \mu(x)r(x)$. So we get
+    \[h(x) = \int \mu(x)r(x)dx  + k \]
+    Then we get the function 
+    \[F(x,y) = \mu(x)y - \int \mu(x)r(x)dx + k\]
+    and our (implicit) general solution is 
+    \[\mu(x)y - \int\mu(x)r(x)dx = C\]
+    We can find an explicit solution by solving for $y$, 
+    \begin{align*}
+        &\mu(x)y - \int\mu(x)r(x)dx = C\\
+        \implies &\mu(x)y = \int\mu(x)r(x)dx + C\\
+        \implies &y = \frac{\int\mu(x)r(x)dx + C}{\mu(x)}\\
+        \implies &y = \frac{\int\mu(x)r(x)dx + C}{\exp\left(\int f(x)dx\right)}\\
+        \implies &y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(\int f(x)\right)^{-1}
+    \end{align*}
+\textbf{Example.} Solve the IVP 
+\[y' - 2xy = x \ \ y(0) = \frac{1}{2}\]
+\textbf{Solution.} Clearly this is a linear first order ODE witih $f(x) = -2x$, and $r(x) = x$. Then we can apply the formula to get the general solution
+\begin{align*}
+    y &= \left(\int \exp\left(\int f(x)dx\right)r(x)dx +C \right)\exp\left(-\int f(x)dx\right)  \\
+    &=  \left(\int \exp\left(\int -x^2dx\right)xdx + C\right)\exp\left(-\int -2xdx\right)\\
+    &= \left(\int x e^{-x^2}xdx + C\right)e^{x^2}\\
+\end{align*}
+We can solve te integral by substitution, set $u \coloneqq -x^2$, $du = -2xdx$, $dx = \frac{du}{-2x}$, then we get 
+\begin{align*}
+    \int xe^{-x^2}dx &= \int xe^u \frac{du}{-2x}\\
+    & = -\frac{1}{2}\int e^udu\\
+    &= -\frac{1}{2} e^{-x^2}
+\end{align*}
+Then we get the explicit general solution
+\[y =  \left(-\frac{1}{2}e^{-x^2} + C\right)  e^{x^2} = -\frac{1}{2} + Ce^{x^2}\]
+We can solve for $C$ using the initial condition $y(0) = \frac{1}{2}$,
+\[\frac{1}{2} = -\frac{1}{2} + C \implies C = 1\]
+So our explicit solution is 
+\[y = e^{x^2} -\frac{1}{2}\] 
+
 
 
 \end{document}
