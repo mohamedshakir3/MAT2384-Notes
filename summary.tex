@@ -152,7 +152,7 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
 
 \begin{document}
 
-\begin{center}{\large{\textbf{MAT 2384 Summary Sheet}}}\\
+\begin{center}{\large{\textbf{MAT 2384 Summary Sheet: Ordinary Differential Equations}}}\\
 \end{center}
 
 
@@ -167,7 +167,7 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
         \textbf{Definition.} A first order ODE is called seperable if it can be written in the form \\[-2ex]
         \[F(x)dx = G(y)dy\]
         \begin{redbox}{Steps to Solving Seperable ODE's}
-            \begin{enumerate}
+            \begin{enumerate}[align=left]
                 \item Write $y' = \frac{dy}{dx}$
                 \item Seperate the ODE to write it in the form $F(x)dx = G(y)dy$
                 \item Integrate both sides
@@ -191,33 +191,95 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
         \[\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\]
     \end{bluebox}\\[-2ex]
 \end{blackbox}
-\begin{blackbox}{Iterative Methods to Solving $f(x) = 0$}
-    \textbf{Theorem.} (Intermediate Value Theorem). Let $f: [a,b] \rightarrow \mathbb{R}$ be a continuous function. Let $y \in \mathbb{R}$ between $f(a)$ and $f(b)$. Then there exists $z \in [a,b]$ such that $f(z) = y$.
-    \begin{bluebox}{Fixed Point Iteration}
-        \textbf{Definition.} The value $x = r$ is a fixed point for $g(x)$ if $g(r) = r$.\\[1ex]
-        \textbf{Definition.} The iteration sequence is given as 
-        \[x_{n+1} = g(x_n)\]
-        with $x_0$ being given. \\[1ex]
-        \textbf{Theorem.} Assume that the function $g(x)$ has a fixed-point $s$ on an interal $I$, if 
-        \begin{itemize}
-            \item $g(x)$ is continuous on $I$,
-            \item $g'(x)$ is continuous on $I$, and
-            \item $|g'(x)| < 1$ for all $x \in I$.
-        \end{itemize}
-        Then then the iteration sequence converges.
-        \begin{redbox}{Steps to Solve Using Fixed-Point Iteration}
-           
-            Then the steps for solving are as follows,
-            \begin{enumerate}
-                \item Start with $f(x) = 0$
-                \item Rewrite $f(x) = 0$ under the form $x = g(x)$
-                \item Verify the iteration sequence $x_0, x_1 = g(x_0), \ldots, x_n = g(x_{n-1})$ converges using the above theorem 
-                \item Compute the terms of the sequence and stop when the required accuracy is reached (i.e when 2 consecutive terms have the same $k$ decimal places where $k$ is the desired accuracy).
-            \end{enumerate}
-        \end{redbox}
-    \end{bluebox} 
+\begin{blackbox}{Exact First Order ODE's}
+    \begin{bluebox}{Steps To Solving}
+        \begin{enumerate}[align=left]
+            \item Check exactness: $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$
+            \item Look for a function $F(x,y)$ such that\\[-0.0001mm]
+            \[\frac{\partial F}{\partial x} = M, \ \frac{\partial F}{\partial y} = N\]
+            Do this by integrating $M$ with respect to $x$ or $N$ with respect to $y$ then differentiate the equation with respect to the other variable respectively.
+            \item The general solution is $F(x,y) = C$
+            \item If an initial condition is given, solve for the integration constant $C$.
+        \end{enumerate}
+    \end{bluebox}
+    {\footnotesize
+    \textbf{Example.} Solve the following IVP \\[-2ex]
+    \[(6x - 2y^2 + 2xy^3)dx + (3x^2y^2-4xy)dy = 0\]
+    \textbf{Solution.} Check for exactness \\[-2ex]
+    \[\frac{\partial M}{\partial y} = -4y + 6xy^2 = \frac{\partial N}{\partial x}\]
+    \[F(x,y) = \int 3x^2y^2 - 4xydy = x^2y^3 - 2xy^2 + h(x)\]
+    \[\frac{\partial F}{\partial x} = 2xy^3 - 2y^2 + h'(x) = M \implies h'(x) = 6x\]
+    \[h(x) = \int 6xdx = 3x^2 + k\]
+    Our general solution is  \\[-2ex] 
+    \[F(x,y) = x^2y^3 - 2xy^2 + 3x^2 = C\]
+    }
+\end{blackbox} 
+\begin{blackbox}{ODEs With an Integrating Factor}
+    \textbf{Definition.} We say that the function $\mu(x,y)$ is an integrating factor of a first order ODE in differential form if the following equation is exact \\[-2ex]
+    \[\mu(x,y)M(x,y)dx + \mu(x,y)N(x,y)dy = 0\]
+    \begin{redbox}{Theorem}
+        If \\[-6ex]
+        \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = g(y)\]
+        for some function $g(y)$, then\\[-2ex]
+        \[\mu(y) = \exp\left(-\int g(y) dy\right)\]
+        If \\[-5ex]
+        \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = f(x)\]
+        for some function $f(x)$, then\\[-2ex]
+        \[\mu(x) = \exp\left(\int f(x) dy\right)\]
+    \end{redbox}\\[-2ex]
 \end{blackbox}
+\begin{blackbox}{Linear First-Order ODEs}
+    \textbf{Definition.} A first order ODE is called linear if it can be written in the form\\[-2ex]
+    \[y' + f(x)y = r(x)\]
+    \begin{bluebox}{Steps to Finding General Solution}
+        Given a linear first-order ODE in the form $y' + f(x)y = r(x)$, find $y$ using 
+        \[y = \frac{\int\mu(x)r(x)dx + C}{\exp\left(\int f(x)dx\right)}\]
+        {\footnotesize
+        \[y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(\int f(x)\right)^{-1}\]
+        }
+    \end{bluebox}\\[-2ex]
+\end{blackbox} 
 
 
+\end{multicols*}
+\begin{center}{\large{\textbf{Numerical Methods}}}\\
+\end{center}
+\begin{multicols*}{3}
+    \begin{blackbox}{Iterative Methods to Solving $f(x) = 0$}
+        \textbf{Theorem.} (Intermediate Value Theorem). Let $f: [a,b] \rightarrow \mathbb{R}$ be a continuous function. Let $y \in \mathbb{R}$ between $f(a)$ and $f(b)$. Then there exists $z \in [a,b]$ such that $f(z) = y$.
+        \begin{bluebox}{Fixed Point Iteration}
+            \textbf{Definition.} The value $x = r$ is a fixed point for $g(x)$ if $g(r) = r$.\\
+            \textbf{Definition.} The iteration sequence is given as \\[-2ex]
+            \[x_{n+1} = g(x_n)\]
+            with $x_0$ being given. \\[1ex]
+            \textbf{Theorem.} Assume that the function $g(x)$ has a fixed-point $s$ on an interal $I$, if 
+            \begin{itemize}
+                \item $g(x)$ is continuous on $I$,
+                \item $g'(x)$ is continuous on $I$, and
+                \item $|g'(x)| < 1$ for all $x \in I$.
+            \end{itemize}
+            Then then the iteration sequence converges.
+            \begin{redbox}{Steps to Solve Using Fixed-Point Iteration}
+               
+                Then the steps for solving are as follows,
+                \begin{enumerate}
+                    \item Start with $f(x) = 0$
+                    \item Rewrite $f(x) = 0$ under the form $x = g(x)$
+                    \item Verify the iteration sequence $x_0, x_1 = g(x_0), \ldots, x_n = g(x_{n-1})$ converges using the above theorem 
+                    \item Compute the terms of the sequence and stop when the required accuracy is reached (i.e when 2 consecutive terms have the same $k$ decimal places where $k$ is the desired accuracy).
+                \end{enumerate}
+            \end{redbox}
+        \end{bluebox}\\[-2ex]
+    \end{blackbox}
+    \begin{blackbox}{Newton's Method}
+        Given an equation equation $f(x) = 0$ and a starting point $x_0$, the Newton's method is given as\\[-2ex]
+        \[x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}\]
+        Calculate values for $x_n$ until you reach the accuracy.\\
+        {\footnotesize
+        \textbf{Example.} Approximate the root for the equation $x^3 + 12x - 3$ to 6 decimal places with $x_0 = 1.8$  \\
+        \textbf{Solution.}\\[-5ex]
+        \[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 0.675138, \ldots, x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 0.248748\]\\[-4ex]        \[x_4 = x_3 - \frac{f(x_3)}{f'(x_3)} = 0.248718, \ x_5 = x_4 - \frac{f(x_4)}{f'(x_4)} = 0.248718\]
+        }
+    \end{blackbox}
 \end{multicols*}
 \end{document}
