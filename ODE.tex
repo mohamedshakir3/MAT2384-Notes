@@ -527,7 +527,8 @@ Given a linear first-order ODE in the formm $y' + f(x)y = r(x)$, we can find the
         \implies &\mu(x)y = \int\mu(x)r(x)dx + C\\
         \implies &y = \frac{\int\mu(x)r(x)dx + C}{\mu(x)}\\
         \implies &y = \frac{\int\mu(x)r(x)dx + C}{\exp\left(\int f(x)dx\right)}\\
-        \implies &y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(\int f(x)\right)^{-1}
+        \implies &y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(\int f(x)\right)^{-1}\\
+        \implies &y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(-\int f(x)\right)
     \end{align*}
 \textbf{Example.} Solve the IVP 
 \[y' - 2xy = x \ \ y(0) = \frac{1}{2}\]
@@ -537,7 +538,7 @@ Given a linear first-order ODE in the formm $y' + f(x)y = r(x)$, we can find the
     &=  \left(\int \exp\left(\int -x^2dx\right)xdx + C\right)\exp\left(-\int -2xdx\right)\\
     &= \left(\int x e^{-x^2}xdx + C\right)e^{x^2}\\
 \end{align*}
-We can solve te integral by substitution, set $u \coloneqq -x^2$, $du = -2xdx$, $dx = \frac{du}{-2x}$, then we get 
+We can solve the integral by substitution, set $u \coloneqq -x^2$, $du = -2xdx$, $dx = \frac{du}{-2x}$, then we get 
 \begin{align*}
     \int xe^{-x^2}dx &= \int xe^u \frac{du}{-2x}\\
     & = -\frac{1}{2}\int e^udu\\
@@ -549,7 +550,123 @@ We can solve for $C$ using the initial condition $y(0) = \frac{1}{2}$,
 \[\frac{1}{2} = -\frac{1}{2} + C \implies C = 1\]
 So our explicit solution is 
 \[y = e^{x^2} -\frac{1}{2}\] 
-
-
-
+\textbf{Example.} Solve the IVP
+\[y' - 4y = x; \ y(0) = \frac{15}{16}\]
+\textbf{Solution.} This is a linear first-order ODE with $f(x) = -4$, and $r(x) = x$. Then we can apply the formula to get the general solution
+\begin{align*}
+    y &= \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(-\int f(x)\right)\\
+    &= \left(\int \exp\left(\int -4dx\right)xdx + C\right)\exp\left(-\int -4dx\right)\\
+    &= \left(\int e^{-4x}xdx + C\right)e^{4x}\\
+\end{align*}
+Now we can solve the integral by parts, set $u = x$, $v' = e^{4x}$, $u' = 1$, $v = \int e^{-4x}dx = -\frac{1}{4}e^{-4x}$, then we get 
+\begin{align*}
+    \int e^{-4x}xdx &= uv - \int u'vdx\\
+    &= -\frac{1}{4}xe^{-4x} - \int -\frac{1}{4}e^{-4x}dx\\
+    &= -\frac{1}{4}xe^{-4x} - \frac{1}{16}e^{-4x}
+\end{align*}
+Then, we get the general solution 
+\[y = \left(-\frac{1}{4}xe^{-4x} - \frac{1}{16}e^{-4x} + C\right)e^{4x} = -\frac{1}{4}x - \frac{1}{16} + Ce^{4x}\]
+Using our intial condition $y(0) = \frac{15}{16}$, we can solve for $C$,
+\[\frac{15}{16} = -\frac{1}{16} + C \implies C = 1 \]
+Therefore, our explicit solution is
+\[y = -\frac{1}{4}x - \frac{1}{16} + e^{4x}\]
+\textbf{Example.} Solve the IVP
+\[(1 + \cos x)y' - (\sin x)y = 2x; \ y(0) = \frac{1}{2}\]
+\textbf{Solution.} We have to make the coefficient of $y'$ to be 1, so we divide both sides by $1 + \cos x$ to get
+\[y' - \frac{\sin x}{1 + \cos x} y = \frac{2x}{1 + \cos x}\]
+Now we can use our formula for linear ODE's,
+\begin{align*}
+    y &= \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(-\int f(x)dx\right)\\
+    &= \left(\int \exp\left(\int - \frac{\sin x}{1 + \cos x}dx\right)\frac{2x}{1 + \cos x}dx + C\right)\exp\left(-\int- \frac{\sin x}{1 + \cos x}\right)\\
+\end{align*}
+Now computing the integral of $f(x)$, set $u = 1 + \cos x$, $du = -\sin x dx$
+\begin{align*}
+    \int \frac{-\sin x}{1 + \cos x} dx &= \int \frac{-\sin x}{u} \frac{du}{- \sin x}\\
+    &= \int \frac{1}{u}du\\
+    &= \ln|u| \\
+    &= \ln (1 + \cos x)
+\end{align*} 
+Therefore, we have 
+\begin{align*}
+    y &= \left(\int \exp\left(\int - \frac{\sin x}{1 + \cos x}dx\right)\frac{2x}{1 + \cos x}dx + C\right)\exp\left(-\int- \frac{\sin x}{1 + \cos x}\right)\\
+    &= \left(\int \exp(\ln(1 + \cos x))\frac{2x}{1 + \cos x}dx + C\right)\exp\left(-\ln (1 + \cos x)\right)\\
+    &= \left(\int (1 + \cos x)\frac{2x}{1 + \cos x}dx + C\right)(1 + \cos x)^{-1}\\
+    &= \frac{\left(\int 2xdx + C\right)}{1 + \cos x}\\
+    &= \frac{x^2 + C}{1 + \cos x}\\
+\end{align*}
+Using our inital condition $y(0) = \frac{1}{2}$, we get 
+\[\frac{1}{2} = \frac{C}{2} \implies C = 1\]
+Therefore, our explicit solution is
+\[y = \frac{x^2 + 1}{1 + \cos x}\]
+\section{First-Order Bernoulli ODE's}
+\begin{definition}
+    A first-order ODE is called of \emph{Bernouilli} type if it can be written in the form
+    \[y' + f(x)y = r(x)y^a\]
+    for some $a \in \real$.  
+\end{definition}
+\subsection{Steps to Solving Bernoulli type ODE's}
+\begin{enumerate}
+    \item Let $u = y^{1-a}$
+    \item Compute $u'$:
+    \[u' = (1-a)y^{-1}y'\]
+    \item Isolate $y'$ from the original ODE and substitute into $u'$
+    \item The resulting ODE is linear that we solve for $u$.  
+\end{enumerate}
+\textbf{Example.} Solve the IVP
+\[y' + \frac{4}{x}y = -x^2y^2; \ x > 0, \ y(1) = \frac{1}{3}\]
+\textbf{Solution.} This is a first order Bernouilli ODE, with $f(x) = \frac{4}{x}$, $r(x)  = -x^2$, and $a = 2$. Let $u = y^{1 - a} = y^{-1}$, then 
+\begin{align*}
+    u' &= -y^{-2}y' = -y^{-2}\left(-\frac{4}{x}y - x^3y^2\right)\\
+    &= \frac{4}{x}y^{-1} + x^3\\
+    &= \frac{4}{x}u + x^3\\
+    &= u' - \frac{4}{x}u = x^3
+\end{align*}
+Now this is a linear first-order ODE in the function $u$ with $f(x) = -\frac{4}{x}$ and $r(x) = x^3$. Then, the general solution is
+\begin{align*}
+    u &= \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(-\int f(x) \right)\\
+    &= \left(\int \exp\left(\int -\frac{4}{x}\right)x^3dx + C\right)\exp\left(-\int -\frac{4}{x}dx\right)\\
+    &= \left(\int \exp(-4\ln x)x^3 dx+ C \right)\exp(4\ln x)\\
+    &= \left(\int x^{-4}x^3dx + C\right)x^4\\
+    &= \left(\int x^{-1}dx + C\right)x^4\\
+    &= \left(\ln x + C\right)x^4\\
+\end{align*}
+Now, we know $u = y^{-1}$, so
+\[y = \frac{1}{x^4(\ln x + C)}\]
+Using our intial condition $y(1) = \frac{1}{3}$, 
+\[\frac{1}{3} = \frac{1}{1 \cdot (\ln 1 + C)} = \frac{1}{C} \implies C = 3\]
+Therefore, the explicit solution to our IVP is 
+\[y = \frac{1}{x^4(\ln x + 3)}\]
+\textbf{Example.} Solve the IVP
+\[y' + \frac{2}{x}y = 2 \sqrt{y}; \ x > 0 \ y(1) = 1\]
+\textbf{Solution.} This is a first order Bernouilli ODE, with $f(x) = \frac{2}{x}$, $r(x) = 2$, and $a = \frac{1}{2}$. Let $u = y^{1 - a} = y^{\frac{1}{2}} = \sqrt{y}$. Then, 
+\begin{align*}
+    u' &= \frac{1}{2}y^{-\frac{1}{2}}y'\\
+    &= \frac{1}{2}y^{-\frac{1}{2}}\left(-\frac{2}{x}y + 2y^{\frac{1}{2}}\right)\\
+    &= -\frac{1}{x}y^{\frac{1}{2}} + 1
+\end{align*} 
+Then we get the linear first order ODE in $u$
+\[u' + \frac{1}{x}u = 1\]
+Our general solution for $u$ is 
+\begin{align*}
+    u &= \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(-\int f(x) dx\right)\\
+    &= \left(\int \exp\left(\int\frac{1}{x}dx\right)1dx + C\right)\exp\left(-\int \frac{1}{x}dx\right)\\
+    &= \left(\int \exp(\ln x)dx + C\right)\exp(-\ln x)\\
+    &= \left(\int xdx + C\right)\exp(-2\ln x)\\
+    &= \left(\frac{1}{2}x^2 + C\right)x^{-1}\\
+    &= \frac{x}{2} + \frac{C}{x}
+\end{align*}
+Then using your equation for $u$ in terms of $y$, 
+\[u = \sqrt{y} \implies y =\left(\frac{x}{2}+  \frac{C}{x}\right)^2\]
+Using our initial condition $y(1) = 1$, 
+\[1 = \left(\frac{1}{2} + C\right)^2 \implies C = \frac{1}{2}\]
+Therefore, the explicit solution to our IVP is
+\[y = \left(\frac{x^2 + 1}{2x}\right)^2\]
+\chapter{Second Order Linear Homogeneous ODEs}
+\begin{definition}[Linear Independence]
+    We say that the functions $y_1, y_2, \ldots, y_n$ are linearly indepedent on an interval $I$ if 
+    \[c_1y_1 + c_2y_2 + \cdots + c_ny_n = 0 \implies c_1 = c_2 = \cdots = c_n = 0\]
+\end{definition}
+\begin{theorem}
+    Two functions $y_1,y_2$ are linearly indepedent if and only if $\frac{y_1}{y_2}$ does not equal a constant. 
+\end{theorem}
 \end{document}

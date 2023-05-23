@@ -121,7 +121,69 @@ Therefore by the intermediate value theorem, there exists $c \in [0,2]$ such tha
 \[x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 0.248748\]
 \[x_4 = x_3 - \frac{f(x_3)}{f'(x_3)} = 0.248718\]
 \[x_5 = x_4 - \frac{f(x_4)}{f'(x_4)} = 0.248718\]
-Therefore, the our root is $0.248718$ correct to 6 decimal places.
-
-
-\end{document}
+Therefore, the our root is $0.248718$ correct to 6 decimal places.\\[3ex]
+\textbf{Example.} Consider the equation 
+\[x^3 - 2x - 5 = 0\]
+\begin{enumerate}[label=(\roman*)]
+    \item Prove that the equation has a unique root in $[2,3]$
+    \item Starting with $x_0 = 3$, estimate the root of the equation to 6 decimal places using Newton's method.
+\end{enumerate}
+\textbf{Solution.} 
+\begin{enumerate}[label=(\roman*)]
+    \item We have $f(2) = -1$ and $f(3) = 16$, therefore by the intermediate value theorem there exists $c \in [2,3]$ such that $f(c) = 0$. $f'(x) = 3x^2 - 2$ is injective since if $f(x_1) = f(x_2)$, then we have
+    \begin{align*}
+        &f(x_1) = f(x_2)\\
+        \implies& x_1^3 - 2x_1 - 5 = x_2^3 - 2x_2 - 5\\
+        \implies& x_1^3 - 2x_1 = x_2^3 - 2x_2\\
+    \end{align*} 
+    Then $x^3$ and $x$ are injective functions, so we must have that $x_1 = x_2$ and therefore the root is unique. Alternatively, we can look at the derivative on its interval, 
+    \begin{align*}
+        2 \leq x \leq 3\\
+        4 \leq x^2 \leq 9\\
+        12 \leq 3x^2 \leq 27\\
+        10 \leq 3x^2 - 2 \leq 25\\
+    \end{align*}
+    Therefore the derivative is positive so the function is strictly increasing, and thus injective.
+    \item Starting with $x_0 = 3$, using Newton's method we get 
+    \[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 3 - \frac{3^3 - 2(3) - 5}{3(3)^2 - 2} = 2.600000\]
+    \[x_2 = 2.6 - \frac{f(2.6)}{f'(2.6)} = 2.127197\]
+    \[x_3 x_2 - \frac{f(2.127197)}{f'(2.127197)} = 2.0945136\]
+    \[x_4 = x_3 - \frac{f(2.094552)}{f'(2.094552)} = 2.094552\]
+    \[x_5 = x_4 - \frac{f(x_4)}{f'(x_4)} = 2.094551 \]
+    \[x_6 = x_5 - \frac{f(x_5)}{f'(x_5)} = 2.094551\]
+    Therefore, we have $x \approx 2.094551$ correct to 6 decimal places.
+\end{enumerate}
+\noindent
+\textbf{Example.} Use Newton's Method with $x_0 = 2$ to estimate the value of $\sqrt[3]{7.9}$ correct to 6 decimal places.\\[2ex]
+\textbf{Solution.} We can set $x \coloneqq \sqrt[3]{7.9}$, so we have $x^3 - 7.9 = 0$. Then this can be solved the same as the previous examples.
+\section{The Secant Method}
+The tangent line to the curve of $y = f(x)$ with the point of tangency $(x0, f(x0)$ was used in Newton's approach. The graph of the tangent line about $x = \alpha$ is essentially the same as the graph of $y = f(x)$ when $x_0 \approx \alpha$. The root of the tangent line was used to approximate $\alpha$. Consider employing an approximating line based on interpolation. Given 2 root estimations $x_0$ and $x_1$, then we have a linear function
+\[q(x) = a_0 + a_1x\]
+with $q(x_0) = f(x_0)$, and $q(x_1) = f(x_1)$. This line is alo known as the secant line, with the formula 
+\[q(x) = \frac{(x_1 - x)f(x_0) + (x-x_0)f(x_1)}{x_1 - x_0}\]
+The linear equation $q(x) = 0$ with the root denoted by $x_2$ is given by
+\[x_2 = x_1 - f(x_1) \cdot \frac{x_1 - x_0}{f(x_1) - f(x_0)}\]
+This equation can now be employed for every term in the sequence, 
+\[x_{n+1} = x_n - f(x_n) \cdot \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1}) } \]
+\textbf{Example.} Use the secant method with $x_0 = 2$ and $x_1 = 1.9$ to estimate the root of the equation to 6 decimal places 
+\[2\sin x - x = 0\]
+\textbf{Solution.} We have $f(x) = 2 \sin x - x$, we can start calculating the terms of the sequnce 
+\[x_2 = x_1 - f(x_1)\frac{x_1 - x_0}{f(x_1) - f(x_0)} = 1.9 - (2\sin(1.9) - 1.9)\frac{1.9 - 2}{(2 \sin(1.9) - 1.9) - (2 \sin (2) - 2)} = 1.895747\]
+\[x_3 = x_2 - f(x_2)\frac{x_2 - x_1}{f(x_2) - f(x_1)} = 1.895747\]
+Therefore the root is $x \approx 1.895747$ correct to 6 decimal places.
+\chapter{Interpolation}
+Given a set of $n+1$ data points $(x_0, f_0), \ldots, (x_n, f_n)$ where 
+\[f_i = f(x_i)\]
+for some unkown function $f$, the goal is to  find a \emph{polynomial} function of degree $n$, say $p_n(x)$, where its graph goes through all the datapoints. We then can use the approximation $f(x) \approx p_n(x)$.
+\begin{theorem}
+    Given a collection of $n+1$ data points $(x_0, f_0), \ldots, (x_n, f_n)$ in the cartesian plane such that 
+    \[x_0 < x_1 < x_2 < \cdots < x_n\]
+    Then there exists a unique polynomial of degree $\leq n$ such that 
+    \[p_n(x_i) = f_i \ \forall i \in \{0, 1, \ldots, n\}\]
+\end{theorem}
+If we use the approximation $f(x) \approx p_n(x)$, then the absolute error ($|f(x) - p_n(x)|$) is given by the following theorem. 
+\begin{theorem}[Error Formula]
+    The error formula with the above notation is 
+    \[|f(x) - p_n(x)| = |(x-x_0)(x-x_1)\cdots(x-x_n)\frac{f^{(n+1)}(t)}{(n+1)!}\]
+\end{theorem}
+\end{document} 
