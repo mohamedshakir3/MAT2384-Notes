@@ -669,4 +669,107 @@ Therefore, the explicit solution to our IVP is
 \begin{theorem}
     Two functions $y_1,y_2$ are linearly indepedent if and only if $\frac{y_1}{y_2}$ does not equal a constant. 
 \end{theorem}
+\section{Wronskian}
+\begin{definition}[Wronskian]
+    Let $y_1, y_2, \ldots, y_n$ be $n$ functions such that the first $n-1$ derivatives of each function exists, and are continuous on $I$. The \emph{Wronskian} of $y_1, y_2, \ldots y_n$ at a point $x \in I$ is the determinant
+    \[W[y_1,y_2,\ldots,y_n](x) = \det\begin{bmatrix}
+        y_1(x) & y_2(x) & \cdots & y_n(x)\\
+        y'_1(x) & y'_2(x) & \cdots & y'_n(x)\\
+        \vdots & \vdots & \ddots & \vdots\\
+        y_1^{(n-1)}(x) & y_2^{(n-1)}(x) & \cdots & y_n^{(n-1)}(x)
+    \end{bmatrix}\]
+\end{definition}
+\noindent
+\textbf{Example.} Take $y_1 = 1$, $y_2 = \sin x$, $y_3 = \cos x$. Then, the Wronskian is 
+\begin{align*}
+    W[y_1, y_2,y_3](x) &= \det\begin{bmatrix}
+        1 & \sin x & \cos x\\
+        0 & \cos x & -\sin x\\
+        0 & -\sin x & -\cos x
+    \end{bmatrix} \\
+    &= 1 \det \begin{bmatrix}
+        \cos x & -\sin x\\
+        -\sin x & -\cos x
+    \end{bmatrix} - 0 + 0\\
+    &= \cos^2x - \sin^2x\\
+    &= -(\cos^2x + \sin^2x) = -1        
+\end{align*}
+
+\begin{theorem}
+    Let $y_1,y_2,\ldots,y_n$ be continuous functions with continuous first $n-1$ derivatives on an interval $I$. If $W[y_1,y_2,\ldots,y_n](x) \neq 0$ for some $x \in I$, then $y_1,y_2,\ldots,y_n$ are linearly independent on $I$.
+\end{theorem}
+\textbf{Example.} $y_1 = x$, $y_2 = e^x$, $y_3 = e^{2x}$. Prove that $\{y_1,y_2,y_3\}$ are linearly independent on $\mathbb{R}$.\\[3ex]
+\textbf{Solution.} We'll use the Wronskian to show that these functions are linearly independent.
+\begin{align*}
+    W[y_1,y_2,y_3](x) &=  \det\begin{bmatrix}
+        x & e^x & e^{2x}\\
+        1 & e^x & 2e^{2x}\\
+        0 & e^x & 4e^{2x}
+    \end{bmatrix}\\
+    &=\det \begin{bmatrix}
+        0 & -xe^x + e^x & -2xe^{2x}+e^{2x}\\
+        1 & e^{x} & 2e^{2x}\\
+        0 & e^x & 4e^{2x}
+    \end{bmatrix}\tag{$-xR_2 + R_1 \to R_1$}\\
+    &= -\det\begin{bmatrix}
+        -xe^x + e^x & -2e^{2x} + e^{2x}\\
+        e^x & 4e^{2x}
+    \end{bmatrix}\\
+    &= -e^{3x}(3-2x)
+\end{align*}
+
+\begin{definition}
+    An ODE of order $n$ is called \emph{linear} if it is of the form 
+    \[a_n(x) y^{(n)} + a_{n-1}(x)y^{(n-1)} + \cdots + a_1(x)y' + a_0(x)y = r(x)\]
+    If $r(x) = 0$, then the ODE is called \emph{homogeneous}. If $r(x) \neq 0$, then the ODE is called \emph{non-homogeneous}.
+\end{definition}
+
+\textbf{Example.} 
+\[2xy''' + e^xy'' - y = \frac{1}{1+x^2}\]
+This is a linear non-homogeneous ODE.
+\begin{theorem}
+    The set of all solutions to a homogeneous linear ODE of order $n$
+    \[a_n(x) y^{(n)} + a_{n-1}(x)y^{(n-1)} + \cdots + a_1(x)y' + a_0(x)y = 0\]
+    is a vector space of dimension $n$.
+\end{theorem}
+\subsection{Steps to finding a general solution of a homogeneous linear ODE}
+The theorem suggets the following steps to finding the general solution to a homogeneous linear ODE of order $n$:
+\begin{enumerate}
+    \item Find $n$ linearly indepdent solutions $y_1,y_2,\ldots,y_n$ to the ODE.
+    \item $\{y_1, y_2,\ldots,y_n\}$ form a basis of solutions to the ODE.
+    \item The general solution to the ODE is a linear combination of the basis functions 
+    \[y = c_1 y_1 + c_2y_2 + \cdots + c_ny_n\]
+\end{enumerate}
+In this chapter, we want to find the general solution to second order linear homogeneous ODEs
+\[a_2(x)y'' + a_1(x)y' + a_0(x)y = 0\]
+\section{Second-Order Linear Homogeneous ODEs with Constant Coefficients}
+For this group of ODE's, we consider the case when $a_2(x), a_1(x), a_0(x)$ are constants. In this case, we can write the ODE as
+\[ay'' + by' + cy = 0\]
+We'll look at an example to illustrate the process of finding solutions for this type of ODE.\\[3ex]
+\textbf{Example.} Consider the ODE 
+\[y'' - y = 0\]
+\textbf{Solution.} We know that we need 2 linearly independent solutions to the ODE. We have that $y'' - y = 0 \implies y'' = y$. Two functions that satisfy this equation are $y_{1} = e^x$, and $y_2 = e^{-x}$. We can check that these are linearly indepedent by checking their ratio 
+\[\frac{e^x}{e^{-x}} = e^{2x}\]
+Therefore, these solutions form a basis for the solution space for $y'' - y = 0$. Then the general solution of the ODE is a linear combination of the the basis functions 
+\[y = c_1e^x + c_2e^{-x}\]
+The above example suggetss that we look for \emph{exponential} solutions in the case of constant coefficients
+\[y'' + ay' + by = 0\]
+In general, we have
+\[y = e^{\lambda x}\]
+for some constant $\lambda$. Then we can differentiate $y$ to get 
+\[y' = \lambda e^{\lambda x}, \ y'' = \lambda^2 e^{\lambda x}\]
+Plugging our equations into our ODE, we get
+\[\lambda^2 e^{\lambda x} + a\lambda e^{\lambda x} + b e^{\lambda x} = 0 \implies \lambda^2 + a \lambda + b = 0\]
+This is our \emph{characteristic equation}. There are 3 possible cases for the roots of the (quadratic) characteristic equation,
+\begin{itemize}
+    \item \textbf{Case 1:} We have two distinct real roots $\lambda_1, \lambda_2$, then $y_1 = e^{\lambda x}$, $y_2 = e^{\lambda_2x}$. Then our general solution is 
+    \[y = c_1 e^{\lambda_1 x} + c_2 e^{\lambda_2 x}\]
+    \item \textbf{Case 2:} We have one real root $\lambda$ with multiplicity 2. In this case, $y_1 = e^{\lambda x}$ is one solution, and our second solution is $y_2 = xe^{\lambda x}$. Then our general solution is
+    \[y = c_1e^{\lambda x} + c_2 x e^{\lambda x}\]
+    \item \textbf{Case 3:} We have two complex conjugate roots $\lambda_1 = \alpha + i\beta$ and $\lambda_2 = \alpha - i\beta$. In this case, we can show 
+    \[y_1 = e^{\alpha x}\cos(\beta x), \ y_2 = e^{\alpha x}\sin(\beta x)\]
+    is a bais of solutions, so 
+    \[y = c_a e^{\alpha x} \cos (\beta x)  + c_2 e^{\alpha x}\sin(\beta x)\]
+\end{itemize}
+
 \end{document}
