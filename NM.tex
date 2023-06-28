@@ -232,10 +232,90 @@ where $f_i = f(x_i)$ for an unknown function $f$.
     \[f(1) \approx p_2(x) = 2.50000\]
     \item We can use the error formula to find an upper bound for the error,
     \begin{align*}
-        |f(1) - p_2(1)| &= \left|(1 - 0.7)(1-.13)(1-1.6)\frac{f'''(t)}{3!}\right|
+        |f(1) - p_2(1)| &= \left|(1 - 0.7)(1-0.13)(1-1.6)\frac{f'''(t)}{3!}\right|
         &= 0.009 |f'''(t)|\\
         0.0009(2) = 0.0018 &\leq |f(1) - p_2(1)| \leq 0.009(3) = 0.027
     \end{align*}
     Therefore our lower bound is 0.0018 and our upper bound is 0.027.
 \end{enumerate}
+\textbf{Example.} Consider the 4 points $(x_i,f_i)$, 
+\[(0,1), \ (1,0.765) \ (2,0.224), \ (3, -0.260) \]
+\begin{enumerate}[label=(\roman*)]
+    \item Find the Interpolation polynomial $p_3(x)$ using your Lagrange. Round your answer to 3 decimal places.
+    \item Interpolate a value for $f(2.5)$
+    \item GIven that $0.75 \leq |f^{(4)}(t)| \leq 1.17$ for any $t \in [0,3]$, give an upper and a lower bound for the error in the approximation $f(2.5) \approx p_3(2.5)$.
+\end{enumerate}
+\textbf{Solution.} 
+\begin{enumerate}[label=(\roman*)]
+    \item We start with the Lagrange polynomial
+    \[p_3(x) = L_0(x)f_0 + L_1(x)f_1 + L_2(x)f_2 + L_3(x)f_3\]
+    \begin{align*}
+        L_0(x) &= \frac{(x-x_1)(x-x_2)(x-x_3)}{(x_0-x_1)(x_0-x_2)(x_0-x_3)}\\
+        &= \frac{(x-1)(x-2)(x-3)}{(0-1)(0-2)(0-3)}\\
+        &= -0.167x^3 + x^2 - 1.833x + 1\\
+        L_1(x) &= \frac{(x-x_0)(x-x_2)(x-x_3)}{(x_1-x_0)(x_1-x_2)(x_1-x_3)}\\
+        &= \frac{(x-0)(x-2)(x-3)}{(1-0)(1-2)(1-3)}\\
+        &= 0.5x^3 - 2.5x^2 + 3x\\
+        L_2(x) &= \frac{(x-x_0)(x-x_1)(x-x_2)}{(x_2-x_0)(x_2-x_1)(x_2-x_3)}\\
+        &= \frac{(x-0)(x-1)(x-3)}{(2-0)(2-1)(2-3)}\\
+        &= -0.5x^3 + 2x^2 - 1.5x\\
+        L_3(x) &= \frac{(x-x_0)(x-x_1)(x-x_2)}{(x_3-x_0)(x_3-x_1)(x_3-x_2)}\\
+        &= \frac{(x-  0)(x-1)(x-2)}{(3-0)(3-1)(3-2)}\\
+        &= 0.167x^3 - 0.5x^2 + 0.33x
+    \end{align*}
+    Then,
+    \begin{align*}
+        p_3(x) &= (-0.167x^3 + x^2 - 1.833x + 1)(1) + ( 0.5x^3 - 2.5x^2 + 3x)(0.765)\\
+        &+ (-0.5x^3 + 2x^2 - 1.5x)(0.224)\\
+        &+ (0.167x^3 - 0.5x^2 + 0.33x)(-0.260)\\
+        &= 0.061x^3 - 0.335x^2 + 0.040x + 1  
+    \end{align*} 
+    \item Then we can calculate $f(2.5) \approx p_3(2.5)$
+    \[p_3(2.5) = 0.061(2.5)^3 - 0.335(2.5)^2 + 0.040(2.5) + 1 = -0.048\]
+    \item Then the error is given by 
+    \begin{align*}
+        |f(2.5) - p_3(2.5)| &= \left|(2.5-0)(2.5-1)(2.5-2)(2.5-3)\frac{f^{(4)}(t)}{4!}\right|\\
+        &= 0.039|f^{(4)}(t)|\\
+    \end{align*}
+    Then using $0.75 \leq |f^{(4)}(t)| \leq 1.17$, we have
+    \[0.039(0.75) \leq |f(2.5) - p_3(2.5)| \leq 0.039(1.17)\]
+\end{enumerate}
+
+\section{Newton's Divided Difference Interpolation Polynomial}
+Similar to Lagrange Interpolation, we start with $n$ datapoints $(x_0,f_0),\ldots,(x_n,f_n)$ where $f_i = f(x_i)$ for some unknown function $f$. 
+\begin{definition}
+    Given a node $x_i$, 
+    \begin{enumerate}
+        \item The \emph{first divided difference} at $x_i$ is defined as 
+        \[f(x_i,x_{i+1}) = \frac{f_{i+1}- f_i}{x_{i+1} - x_i}\]
+        \item The \emph{second divided difference} at $x_i$ is 
+        \[f(x_i, x_{i+1}, x_{i+2}) = \frac{f(x_{i+1}, x_{i+2}) - f(x_1,x_{i+1})}{x_{i+2}-x_i}\]
+        \item In general, the $k$th divided difference at $x_i$ is 
+        \[f(x_i, x_{i+1}, \ldots x_{i+k}) = \frac{f(x_{i+1},\ldots, x_{i+k}) - f(x_i, \ldots x_{i+k-1})}{x_{i+k}-x_i}\]
+    \end{enumerate}
+\end{definition}
+
+Then, we can define Newton's Interpolation polynomial as 
+\begin{align*}
+    p_n(x) &= f_0 + f(x_0,x_1)(x-x_0)\\
+    &+ f(x_0,x_1,x_2)(x-x_0)(x-x_1) + \cdots\\
+    &+ f(x_0,\ldots,x_n)(x-x_0)(x-x_1)\cdots(x - x_n)
+\end{align*}
+\textbf{Example.} Given 3 datapoints, 
+\[(1.2, 4.5), (1.7,5.9), (2.1,7.4) \]
+Calculate the interpolation polynomial using Newton's Divided Difference method and approximate $f(1.8)$.\\[2ex]
+\textbf{Solution.} We start by calculating \emph{all} the first divided differences,
+\[f(x_0, x_1) = \frac{f_1 - f_0}{x_1 - x_0} = \frac{5.9-4.5}{1.7-1.2} = 2.8\]
+\[f(x_1,x_2) = \frac{f_2-f_1}{x_2-x_1}=\frac{7.4-5.9}{2.1-1.7} = 3.75\]
+Now we can calculate all the second divided differences, in this case there is only one 
+\[f(x_0,x_1,x_2) = \frac{f(x_1, x_2) - f(x_0,x_1)}{x_2-x_0} = \frac{3.75 - 2.8}{2.1 - 1.2} = 1.05556\]
+So the Newton's Interpolation polynomial is
+\begin{align*}
+    p_2(x) &= f_0 + f(x_0,x_1)(x-x_0) + f(x_0,x_1,x_2)(x-x_0)(x-x_1)\\
+    &= 4.5 + 2.8(x-1.2) + 1.05556(x-1.2)(x-1.7)\\
+    &= 1.05556x^2 - 0.26111x + 3.29333
+\end{align*}
+Then we can use this polynomial to approximate $f(1.8)$,
+\[f(1.8) \approx p_2(1.8) = 6.24333\]
+
 \end{document} 
