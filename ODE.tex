@@ -1325,4 +1325,72 @@ Now we can use our initial conditions to solve for our constants,
 \[y'(1) = 0 \implies c_1 + 2c_2 = -4\]
 Then we get $c_2 = -1$, $c_1 = -2$. Therefore our unique solution is
 \[y = -2x - 1x^2 + 6\sqrt{x} - 2x^{-1/2}\]
+\textbf{Example.} Find the general solution for the ODE 
+\[x^3y''' -3x^2y'' + 6xy' - 6y = 3(1 + \ln x) \]
+\textbf{Solution.} The corresponding homogeneous ODE is
+\[x^3y''' - 3x^2y'' + 6xy' - 6y = 0\]
+We take $y = x^m$ as a solution and compute 
+\[y' = mx^{m-1}\]
+\[y'' = m(m-1)x^{m-2}\]
+\[y''' = m(m-1)(m-2)x^{m-3}\]
+Then we plug back in 
+\[m(m-1)(m-2) - 3m(m-1) + 6m - 6 = 0\]
+We can factor this as 
+\[(m-1)(m(m-2) - 3m + 6) = (m-1)(m-2)(m-3)\]
+So we have 3 unique real roots $m_1 = 1$, $m_2 = 2$, $m_3 = 3$. So our basis of solutions is
+\[\{x^1, x^2,x^3\}\]
+Now using variation of parameters, we have a solution of the form
+\[y_p = u_1y_1 + u_2y_2 + u_3y_3 = u_1x + u_2x^2 + u_3x^3\]
+We must find $u_1$, $u_2$, and $u_3$ such that they satisfy the following system of equations
+\[\begin{cases}
+    u_1'x + u_2'x^2 + u_3'x^3 &= 0\\
+    u_1' + 2u_2'x + 3u_3'x^2 &= 0\\
+    u_1'(0) + 2u_2' + 6u_3'x &= \frac{3(1 + \ln x)}{x^3}
+\end{cases} \rightarrow \begin{cases}
+    u_1' + u_2'x + u_3'x^2 &= 0\\
+    u_1' + 2u'_2x + 3u_3'x^2 &= 0\\
+    0 + 2u_2' + 6xu_3' &= \frac{3(1+\ln x)}{x^3}
+\end{cases}\]
+Subtracting the first equation from the second one we get 
+\[u_2'x + 2u_3x^2 = 0 \implies u_2' + 2u_3'x = 0\]
+Now we we subtract 2 times this equation from equation 3 to get
+\[2xu_3' = \frac{3(1+\ln x)}{x^3} \implies u_3' = \frac{3(1+\ln x)}{2x^4}\]
+Then 
+\[u_2' = -\frac{3(1+\ln x)}{x^3}\]
+\[u_1' = xu'_2 - x^2u_3' = \frac{3(1+\ln x)}{x^2} - \frac{3(1+\ln x)}{x^2} = \frac{3-\ln x}{2x^2}\]
+Now we integrate each function 
+\begin{align*}
+    u_1 &= \int u_1'dx\\
+    &= \int \frac{3-\ln x}{2x^2}dx\\
+    &= (3-\ln x)\left(-\frac{1}{2x}\right) - \int \frac{1}{2x^2}dx\\
+    &= \frac{\ln x - 3}{2x} - \frac{1}{2}\int x^{-2}dx\\
+    &= \frac{\ln x - 3}{2x} + \frac{1}{2x}\\
+    &= \frac{\ln x - 2}{2x}\\
+    u_2 &= \int u_2'dx\\
+    &= \int \frac{-3(1+\ln x)}{x^3}dx\\
+    &= -3(1+\ln x)\left(-\frac{1}{2x^2}\right) - \int \frac{3}{x^3}dx\\
+    &= \frac{3(1+\ln x)}{2x^2} - \frac{3}{2}\int x^{-3}dx\\
+    &= \frac{3(1+ \ln x)}{2x^2} + \frac{3}{4x^2}\\
+    &= \frac{6 (1 + \ln x) + 3 }{4x^2}\\
+    u_3 &= \int u_3'dx\\
+    &= \int \frac{3(1+\ln x)}{2x^4}dx\\
+    &= 3(1 + \ln x) \left(-\frac{1}{6x^3}\right) - \int \frac{3}{x}\frac{1}{6x^3}dx\\
+    &= -\frac{1 + \ln x}{2x^3} + \frac{1}{2}\int x^{-4}dx\\
+    &= \frac{-4-3\ln x}{6x^3}
+\end{align*}
+Therefore our particular solution is
+\begin{align*}
+    y_p &= \frac{\ln x - 2}{2x} \cdot x + \frac{6\ln x + 9}{4x^2} \cdot x^2 - \frac{4 + 3 \ln x}{6x^3}\cdot x^3\\
+    &= \frac{\ln x - 2}{2} + \frac{6\ln x + 9}{4} - \frac{4 + 3 \ln x}{6}\\
+    &= \frac{6\ln x - 12}{12} + \frac{18\ln x + 27}{12} - \frac{8 + 6 \ln x}{12}\\
+    &= \frac{6\ln x + 18 \ln x - 6 \ln x - 12 + 27 - 6}{12}\\
+    &= \frac{18\ln x + 9}{12}\\
+    &= \frac{6\ln x + 3}{4}
+\end{align*}
+Thus our general solution is 
+\[y = c_1x + c_2x^2 + c_3x^3 + \frac{6\ln x + 3}{4}\]
 \end{document}
+
+
+
+

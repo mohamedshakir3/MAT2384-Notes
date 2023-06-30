@@ -333,5 +333,71 @@ So we approximate the integral with
 \[\int_a^b f(x)dx \approx h[f(x_1^*) + f(x_2^*) + \cdots + f(x_n^*)]\]
 The error in the midpoint rule satifies the following inequality 
 \[|E_m| \leq \frac{M(b-a)^3}{24n^2}\]
-where $M$ is an upper bound for $|f''(t)|$ for $t \in [a,b]$.
-\end{document} 
+where $M$ is an upper bound for $|f''(t)|$ for $t \in [a,b]$. To find an upperbound $|f''(x)|$, it might be useful to compute $f'''(x)$ to see if $f''(x)$ is decreasing or increasing. If $f''(x)$ is decreasing, then we can use $f''(a)$ as an upper bound, and if $f''(x)$ is increasing, then we can use $f''(b)$ as an upper bound.\\[2ex]
+\textbf{Example.} Consider the integral 
+\[I = \int_1^2 x \ln x dx\]
+Use the midpoint rule to estimate the value of $I$ with a maximum error of $0.001$. \\[2ex]
+\textbf{Solution.} We first need to divide the interval $[1,2]$ into $n$ subintervals of length $h = \frac{1}{n}$. Then we can calculate the value for $n$ to meet the error requirement,
+\[f(x) = x \ln x\]
+\[f'(x) = \ln x + 1\]
+\[f''(x) = \frac{1}{x}\]
+\[f'''(x) = -\frac{1}{x^2}\]
+The third derivative is negative on $[1,2]$ so $f''(x)$ is decreasing, therefore 
+\[f''(2) \leq f''(x) \leq f''(1) \implies |f''(x)| \leq 1\]
+So $M = 1$, then 
+\[|E_m| \leq \frac{1 (2-1)^3}{24n^2} \leq 0.001 \implies n \geq 6.45\]
+We take $n = 7$ to have an error at most $0.001$. Then we can calculate $h$ 
+\[h = \frac{b-a}{n} = \frac{1}{7}\]
+\[x_1^* = \frac{1 + 8/7}{2} = \frac{15}{14}\]
+\[x_2^* = x_1^* + \frac{1}{7} = \frac{17}{14}\]
+\[x_3^* = x_2^* + \frac{1}{7} = \frac{19}{14}\]
+\[x_4^* = x_3^* + \frac{1}{7} = \frac{21}{14}\]
+\[x_5^* = x_4^* + \frac{1}{7} = \frac{23}{14}\]
+\[x_6^* = x_5^* + \frac{1}{7} = \frac{25}{14}\]
+\[x_7^* = x_6^* + \frac{1}{7} = \frac{27}{14}\]
+Then we can calculate the approximation of the integral,
+\begin{align*}
+    \int_1^2 x\ln x &\approx h[f(x_1^*) + \cdots + f(x_7^*)]\\
+    &= \frac{1}{7}\left[\frac{15}{14} \ln \left(\frac{15}{14}\right) + \cdots + \frac{27}{14}\ln\left(\frac{27}{14}\right)\right]\\
+    &= 0.63571
+\end{align*}
+\textbf{Example.} Estimate the value of the following integral uing the midpoint rule with a maximal absolute error of $0.001$.
+\[I = \int_0^{0.5}x\cos x dx\]
+\textbf{Solution.} We have to first find $n$ 
+\[f(x) = x\cos x\]
+\[f'(x) = \cos x - x\sin x\]
+\[f''(x) = -\sin x - \sin x - x\cos x = -2\sin x - x\cos x\]
+We can see that 
+\begin{align*}
+    |-2\sin x - x\cos x| &\leq |-2\sin x| + |-x\cos x|\\
+    &= 2|\sin x| + |x||\cos x|\\
+    &\leq 2 + |x|\\
+    &\leq 2.5   
+\end{align*}
+Thus $M = 2.5$, then by the error formula we have
+\begin{align*}
+    |E_m| &\leq \frac{2.5(0.5-0)}{24n^2} \leq 0.001  \implies n \geq \sqrt{\frac{2.5(0.5)^3}{24(0.001)}} = 2.79
+\end{align*}
+We take $n = 3$. Then we can calculate $h$,
+\[h = \frac{0.5 -0}{3} = \frac{1}{6}\]
+\[x_1^* = \frac{0 + 1/6}{2} = \frac{1}{12}\]
+\[x_2^* = x_1^* + \frac{1}{6} = \frac{1}{4}\]
+\[x_3^* = x_2^* + \frac{1}{6} = \frac{5}{12}\]
+By the midpoint rule, we have 
+\begin{align*}
+    \int_{0}^{0.5} x\cos x dx &\approx h[f(x_1^*) + f(x_2^*) + f(x_3^*)]\\
+    &= \frac{1}{6}\left[\frac{1}{12}\cos \left(\frac{1}{12}\right) + \frac{1}{4}\cos \left(\frac{1}{4}\right) + \frac{5}{12}\cos \left(\frac{5}{12}\right)\right]
+\end{align*}
+
+\section{Trapezoidal Rule}
+Similar to the mid-point rule, we start by dividing the interval for the integral 
+\[\int_a^b f(x)dx\]
+into $n$ subintervals $(x_0,x_1)$, $(x_1,x_2)$,$\ldots$,$(x_{n-1}, x_n)$. The length of the intervals $h$ is 
+\[h = \frac{b-a}{n}\]
+we approximate $f(x)$ with the linear function to calculate the areas of the trapezoids that are formed by the graph of $f(x)$ and the $x$-axis. So 
+\[\int_a^b f(x)dx\approx \frac{h}{2}\left[f(a) + 2f(x_1) + 2f(x_2) + \cdots + 2f(x_{n-1}) + f(x_n)\right]\]
+\begin{theorem}
+    The absolute error $|E_T$ in the Trapezoidal rule satisfies
+    \[|E_T| \leq \frac{M(b-a)^3}{12n^2}\]
+\end{theorem}
+\end{document}
