@@ -1212,4 +1212,117 @@ We need the coefficients on the left to match the coefficients on the right, so 
 \[y_p = x + 1 + x\sin x \]
 Therefore our general solution for the non homogeneous ODE is 
 \[y = y_H + y_p = c_1\cos x + c_2\sin x + x + 1 + x\sin x\]
+\textbf{Example.} Solve the IVP 
+\[y''' + y'' = 2e^{-x} + 18x - 2; y(0) = 1, y'(0) = -2, y''(0) = 0\]
+\textbf{Solution.} The corresponding homogeneous ODE is
+\[y''' + y'' = 0\]
+The characteristic equation is
+\[\lambda^3 + \lambda ^2 = 0\]
+Factoring this we get
+\[\lambda^2(\lambda + 1) = 0\]
+Therefore $\lambda_1 = \lambda_2 = 0$, and $\lambda_3 = -1$. Then our basis of solutions is 
+\[\{e^{0x}, xe^{0x},e^{-x}\} = \{1, x, e^{-x}\} \]
+Then, we have $r(x) = 2e^{-x} + 18x - 2$. For $r_1(x) = 2e^{-x}$, our choice from rule 1 is $y_p = Ae^{-x}$. This is in our basis of solutions so we have to modify it by multiplying by $x$. We get $y_p = Axe^{-x}$. Next, we have $r_2(x) = 18x-2$. Then we choose a polynomial of degree 1 $y_p = Bx + C$. This is in our basis of solutions so we must modify it by multiplying by $x^2$. We get $y_p = Bx^3 + Cx^2$. Therefore our choice for $y_p$ is
+\[y_p = Axe^{-x} + Bx^3 + Cx^2\]
+Now we must differentiate and plug back into our non homogeneous ODE
+\[y'_p = Ae^{-x} - Axe^{-x} + 3Bx^2 + 2Cx\]
+\[y''_p = -Ae^{-x} - Ae^{-x} + Axe^{-x} + 6Bx + 2C= -2Ae^{-x} + Axe^{-x} 6Bx + 2C\]
+\[y'''_p = 2Ae^{-x} + Ae^{-x} - Axe^{-x} + 6B = 3Ae^{-x} - Axe^{-x + 6B}\]
+\begin{align*}
+    2e^{-x} + 18x - 2 &= 3Ae^{-x} - Axe^{-x} + 6B -2Ae^{-x} + Axe^{-x} 6Bx + 2C\\
+    &= Ae^{-x} + 6Bx + 6B + 2C
+\end{align*}
+So we have $A = 2$, $6B = 18 \implies B = 3$, $6B + 2C = -2 \implies 18 + 2C = -2 \implies C = -10$. Therefore our particular solution is
+\[y_p = 2xe^{-x} + 3x^3 - 10x^2\]
+Now, we have our general solution 
+\[y = y_H + y_p = c_1 + c_2x + c_3e^{-x} + 2xe^{-x} + 3x^3 - 10x^2\]
+Using our initial conditions we can solve for our constants,
+\[y' = c_2 - c_3e^{-x} + 2e^{-x} - 2xe^{-x} + 9x^2 - 20x\]
+\[y'' = c_3e^{-x} - 2e^{-x} - 2e^{-x} + 2xe^{-x} + 18x - 20 = c_3e^{-x} - 4e^{-x} + 2xe^{-x} + 18x - 20\]
+\[y(0) = 1 \implies c_1 + c_3 = 1\]
+\[y'(0) = -2 \implies c_2 - c_3 + 2 = -2 \implies c_2 -c_3 = -4\]
+\[y''(0) = 0 \implies c_3 - 4 - 20 = 0 \implies c_3 = 24\]
+Therefore, $c_1 = -23$, $c_2 = 20$, $c_3 = 24$. Thus our unique solution is
+\[y = -23 + 20x + 24e^{-x} + 2xe^{-x} + 3x^3 - 10x^2\]
+\textbf{Example.} Find the general solution of the ODE 
+\[y''' - 2y'' - 9y' + 18y = 5e^{2x} - 18x^2 - 18x + 40\]
+\textbf{Solution.} The corresponding homogeneous ODE is 
+\[y''' - 2y'' - 9y' + 18y = 0\]
+The characteristic equation is
+\[\lambda^3 - 2\lambda^2 - 9\lambda + 18 = 0\]
+We can factor this my grouping to get 
+\[\lambda^2(\lambda - 2) -9(\lambda-2) = (\lambda-2)(\lambda^2-9) = (\lambda-2)(\lambda -3)(\lambda +3)= 0 \]
+So we have 3 unique real roots $\lambda_1 = 2$, $\lambda_2 = 3$, $\lambda_3 = -3$. Then our basis of solutions is
+\[\{e^{2x}, e^{3x}, e^{-3x}\}\]
+Then, we have $r(x) = 5e^{2x} - 18x^2 - 18x - 40$. For $r_1(x) = 5e^{2x}$, our choice is $y_p = Ae^{2x}$. This is in our basis of solutions so we must modify it to get $y_p = Axe^{2x}$, then for $r_2(x) = -18x^2 - 18x + 40$, our choice is $y_p = Bx^2 + Cx + D$. This is not in our basis of solutions so we do not need to modify it. Therefore our choice for $y_p$ 
+\[y_p = Axe^{2x} + Bx^2 + Cx + D\]
+So we have 
+Now we differential and plug back into our non homogeneous ODE,
+\[y'_p = Ae^{2x} + 2Axe^{2x} + 2Bx + C\]
+\[y''_p = 2Ae^{2x} + 2Ae^{2x} + 4Axe^{2x} + 2B = 4Ae^{2x} + 4Axe^{2x} + 2B\]
+\[y'''_p = 8Ae^{2x} + 4Ae^{2x} + 8Axe^{2x} = 12Ae^{2x} + 8Axe^{2x}\]
+
+\begin{align*}
+    5e^{2x} - 18x^2 - 18x + 40 &= 12Ae^{2x} + 8Axe^{2x} - 8Ae^{2x}\\
+    &- 8Axe^{2x} - 4B - 9Ae^{2x} - 18Axe^{2x} - 18Bx- 9C\\
+    &+ 18Axe^{2x} + 18Bx^2 + 18Cx + 18D\\
+    &= -5Ae^{2x} + 18Bx^2 + 18Cx - 18Bx + 18D - 4B - 9C\\
+    &= 5Ae^{2x} + 18Bx^2 + (18C - 18B)x + 18D - 4B - 9C
+\end{align*}
+We get the equations $-5A = 5 \implies A = -1$, $18B = -18 \implies B = -1$, $18C - 18B = -18 \implies C = -2$, $18D - 4B - 9C = 18D + 4 + 18 = 40 \implies D = 1$. Therefore our particular solution is
+\[y_p = -xe^{2x} - x^2 - 2x + 1\] 
+Therefore our general solution to the non homogeneous ODE is 
+\[y = c_1e^{2x} + c_2e^{3x} + c_3e^{-3x} - xe^{2x} - x^2 - 2x + 1\]
+\section{The Method of Variation of Parameters}
+Given a non homogeneous ODE of the form
+\[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0y(x) = r(x)\]
+Our goal is to find $y_p$ in the equation $y = y_H + y_p$. The method of variation of parameters suggests a particular solution of the form 
+\[y_p = u_1y_1 + u_2y_2 + \cdots + u_ny_n\]
+Where $\{y_1,y_2,\ldots,y_n\}$ is a basis of solutions for the corresponding homogeneous ODE 
+\[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0(x)y = 0\]
+$u_1, u_2, \ldots, u_n$ are functions that satisfy the following system of equations 
+\[\begin{cases}
+    u_1'y_1 + u2'y_2 + \cdots + u_n'y_n & =0\\
+    u_1'y_1' + u2'y_2' + \cdots + u_n'y_n' &= 0\\
+    \vdots & \vdots\\
+    u_1'y_1^{(n-1)} + u_2'y_2^{(n-1)} + \cdots + u_n'y_n ^{(n-1)} &= \frac{r(x)}{a_n(x)}
+\end{cases}\]
+\textbf{Example.} Solve the IVP 
+\[x^2y'' - 2xy' + 2y = 3\sqrt{x}; y(1) = 1, y'(1) = 0\]
+\textbf{Solution.} The corresponding homogeneous ODE is 
+\[x^2y'' - 2xy' + 2y = 0\]
+The characteristic equation is
+\[m^2 - 3m + 2 = 0 \implies (m-1)(m-2)=0\]
+This gives us $m_1 = 1$, $m_2 = 2$. So our basis of solutions is
+\[\{x^1,x^2\} \implies y_H = c_1x + c_2x^2\]
+Now we must use variation of parameters for $y_p$. We have a solution of the form 
+\[y_p = u_1y_1 + u_2y_2 = u_1x + u_2x^2\]
+We must find $u_1$ and $u_2$ such that they satisfy the following system of equations 
+\[\begin{cases}
+    u_1'x + u_2'x^2 &= 0\\
+    u_1' + 2u_2'x &= \frac{r(x)}{a_2(x)} = \frac{3\sqrt{x}}{x^2}\\
+\end{cases}\]
+Now we can combine the equations to get
+\[xu_2' = 3x^{-3/2} \implies u_2' = 3x^{-5/2}\]
+Similarly, $u_1' = -3x^{-3/2}$. Now we can integrate to find $u_1$ and $u_2$, 
+\begin{align*}
+    u_1 &= \int u_1'dx\\
+    &= \int -3x^{-3/2}dx\\
+    &= -3 \int x^{-3/2}dx\\
+    &= -3 \frac{x^{-1/2}}{-1/2}\\
+    &= \frac{6}{\sqrt{x}}\\
+    u_2 &= \int 3x^{-5/2}dx\\
+    &= 3 \frac{x^{-3/2}}{-3/2}\\
+    &= -2x^{-3/2}
+\end{align*} 
+Thus our particular solution is
+\[y_p = u_1y_1 + u_2 y_2 = \frac{6}{\sqrt{x}}x - 2x^{-3/2}x^{2} = \frac{6x-2}{\sqrt{x}}\]
+Therefore our general solution is
+\[y = y_H + y_p = c_1x + c_2x^2 + 6\sqrt{x} - 2x^{-1/2}\]
+Now we can use our initial conditions to solve for our constants,
+\[y' = c_1 + 2c_2x + 3x^{-1/2} + x^{-3/2}\]
+\[y(1) = 1 \implies c_1 + c_2 = -3\]
+\[y'(1) = 0 \implies c_1 + 2c_2 = -4\]
+Then we get $c_2 = -1$, $c_1 = -2$. Therefore our unique solution is
+\[y = -2x - 1x^2 + 6\sqrt{x} - 2x^{-1/2}\]
 \end{document}

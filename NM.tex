@@ -318,4 +318,20 @@ So the Newton's Interpolation polynomial is
 Then we can use this polynomial to approximate $f(1.8)$,
 \[f(1.8) \approx p_2(1.8) = 6.24333\]
 
+\chapter{Numerical Integration}
+
+The fundemental theorem of calculus states that if $f$ is continuous on $[a,b]$, then
+\[\int_{a}^{b} f(x)dx = F(b) - F(a)\]
+where $F'(x) = f(x)$. In practice, it is often difficult to find an antiderivative of $f(x)$, so the goal of this chapter is to explore numerical methods to estimate the value of the integral.
+
+\section{Midpoint Method}
+The idea is to divide the interval $[a,b]$ into $n$ subintervals of equal length, and approximate the function $f(x)$ with the constant function $y = f(x_i^*)$ on $[x_i, x_{i+1}]$ where 
+\[x_i^* = \frac{x_i + x_{i+1}}{2}\]
+is the mid point of the sub interval. The length of each subinterval is
+\[h = \frac{b-a}{n}\]
+So we approximate the integral with 
+\[\int_a^b f(x)dx \approx h[f(x_1^*) + f(x_2^*) + \cdots + f(x_n^*)]\]
+The error in the midpoint rule satifies the following inequality 
+\[|E_m| \leq \frac{M(b-a)^3}{24n^2}\]
+where $M$ is an upper bound for $|f''(t)|$ for $t \in [a,b]$.
 \end{document} 
