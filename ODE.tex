@@ -1116,4 +1116,100 @@ We can use Guass Jordan elimination to solve this system of equations,
     \[y''(1) = 0 \implies 0 = 2c_2 + 2c_3 \implies 0 = c_2 + c_1\]
     We can solve this system of equations using Guass Jordan elimination, and we find $c_1 = c_2 = 1$ and $c_3 = -1$. Therefore our unique solution is
     \[y = x +x^2 - 1x^{-1}\] 
+
+\chapter{Non Homogeneous Linear ODEs}
+
+We turn our attention to solving non-homogeneous linear ODEs of the form 
+\[a_n(x)y^{(n)} + \cdots a_(x)y' + a_0(x)y = r(x)\]
+
+\begin{theorem}
+    If $a_n(x), \ldots, a_0(x), r(x)$ are continuous, then the general solution to the ODE has teh form 
+    \[y = y_H + y_P\]
+    where $y_H$ is the general solution to the corresponding homogeneous ODE 
+    \[a_n(x)y^{(n)} + \cdots a_1(x)y' + a_0(x)y = 0\]
+    and $y_P$ is any particular solution to the non-homogeneous ODE.
+\end{theorem}
+We will learn 2 methods to find $y_P$, the method of undetermined coefficients and the method of variation of parameters.
+\section{The Method of Undetermined Coefficients}
+The goal of this method is to find on particular solution to 
+\[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0(x)y = r(x)\]
+This method works under the following two conditions, 
+\begin{enumerate}
+    \item All the coefficients on the left $(a_n(x), \ldots, a_0(x))$ are constant, or
+    \item $r(x)$ is either a polynomial, an exponential function, a sinusoidal function, or a combination of these.
+\end{enumerate}
+
+\subsection{Decsription of The Method}
+The undetermined Coefficients method is based on the following three rules, 
+\begin{itemize}
+    \item \textbf{Rule 1: Basic Rule.} If $r(x)$ is an exponential in the form $ke^{\lambda x}$, then our choice for $y_p$ is $Ae^{\lambda x}$. If it is a polynomial of degree $n$, then our choice for $y_p$ is a polynomial of degree $n$. If we have a sinusoidal function, $k\cos(wx)$ or $k\sin(wx)$, then we have $y_p = A\cos(wx) + B\sin(wx)$. If we have a combination of exponentional and sinusoidal $ke^{\alpha x}\cos(wx)$ or $ke^{\alpha x}\sin(wx)$, then $y_p = Ae^{\alpha x}\cos(wx) + Be^{\alpha x}\sin(wx)$. Then if we have a combination of a polynomial and exponentional $r(x) = p(x)e^{\lambda x}$, then $y_p = q(x)e^{\lambda x}$ where $q(x)$ is a polynomial of the same degree as $p(x)$.
+    \item \textbf{Rule 2: The Modifcation Rule.} If at least one term in our inital choice of $y_p$ form rule 1 is an element of the basis of solutions for the corresponding homogeneous ODE, we modify our choice by multiplying with $x$. We repeate this process until no term in our choice is is common with the solutions of the corresponding homogeneous ODE. 
+    \item \textbf{Rule 3: The Sum Rule.} If $r(x) = r_1(x) + \cdots r_t(x)$ then we choose $y_p$ as the sum of the particular solution corresponding to each $r_i(x)$.
+\end{itemize}
+\textbf{Example.} Solve the following IVP 
+\[y''' + 3y'' - 4y' = 15e^x + 34\sin x; y(0) = 5, y'(0) = 1, y''(0) = -1\]
+\textbf{Solution.} The corresponding homogeneous ODE is 
+\[y''' + 3y'' - 4y' = 0\]
+The characteristic equation is 
+\[\lambda^3 + 3\lambda^2 - 4 \lambda = 0\]
+Factoring this we get 
+\[\lambda(\lambda^2 + 3\lambda - 4) = \lambda(\lambda-1)(\lambda+4) = 0\]
+We have three real roots $\lambda_1 = 0$, $\lambda_2 = 2$, $\lambda = -4$. So our basis of solutions is 
+Then our basis of solutions is 
+\[{e^{0x}, e^x, e^{-4x}}\]
+The general solution of the homogeneous ODE is 
+\[y_H = c_1 + c_2e^x + c_3e^{-4x}\]
+For $y_p$, we can apply the undetermined coefficients method. We have $r(x) = 15e^x + 34\sin x$. Using the sine rule, we start with $r_1(x) = 15e^x$. From rule 1, we have a choice $y_p = Ae^x$. Now $Ae^x$ is in the basis of solutions for $y_H$ so we must modify our choice by multiplying by $x$ to get 
+\[y_p = Axe^x\]
+Our other term $r_2(x) = 34\sin x$, from rule 1 we have a choice $y_p = B\sin x + C\cos x$. This is not in our basis of solutions for the homogeneous ODE so we do not need to modify it. Therefore, our choice for $y_p$ is
+\[y_p = Axe^x + B\cos x + C \sin x\]
+Now we can use our initial conditions to find $A$, $B$, and $C$.
+\[y'_p = Ae^x + Axe^x - B\sin x + C \cos x\]
+\[y''_p = 2Ae^x + Axe^x - B \cos x - C \sin x\]
+\[y''' = 3Ae^x + Axe^x + B \sin x - C \cos x\]
+Now we plug our equations into the non homogeneous ODE, 
+\begin{align*}
+    15e^x + 34\sin x &= 3Ae^x + Axe^x + B\sin x - C \cos x + 6Ae^x + 3Axe^x\\
+    &-3C\cos x - 3C\sin x - 4Ae^x - 4Axe^x + 4B\sin x - 4C\cos x\\
+    &= 5Ae^x + (-5C - 3B)\cos x + (5B - 3C)\sin x
+\end{align*}
+We need the coefficients on the left to match the coefficients on the right, so we get the following equations. $5A = 15$, $-5C - 3B = 0$, $5B - 3C = 34$. It's easy to see that $A = 3$, $B = 5$, and $C = -3$. Thus our particular solution is 
+\[y_p = 3xe^x + 5\cos x - 3 \sin x \] 
+Therefore our general solution for the non homogeneous ODE is $y = y_H + y_p$,
+\[y = c_1 + c_2e^x + c_3e^{-4x} + 3xe^x + 5\cos x - 3 \sin x\]
+Using our initial conidtions we can solve for our constants, 
+\[y' = c_2e^x - 4c_3e^{-4x} + 3e^x + 3xe^x - 5 \sin x - 3 \cos x\]
+\[y'' = c_2e^x + 16c_3e^{-4x} + 3e^x + 3e^x + 3xe^x - 5\cos x + 3 \sin x\]
+\[y(0) = 5 \implies 5 = c_1 + c_2 + c_3 + 5 \implies c_1+ c_2 + c_3 = 0\]
+\[y'(0) = 1 \implies c_2 - 4c_3 = 1\]
+\[y''(0) = -1 \implies c_2 + 16c_3 = -2\]
+\textbf{Example.} Find the general solution to the ODE, 
+\[y'' + y = x+1 + 2\cos x\]
+\textbf{Solution.} The corresponding homogeneous ODE is
+\[y'' + y = 0\]
+The characteristic equation is
+\[\lambda^2 + 1 = 0\]
+So we have 2 complex conjugate roots $\lambda = \pm i$, so our basis of solutions is
+\[\{e^{0x}\cos x, e^{0x}\sin x\} = \{\cos x, \sin x\}\]
+The general solution to our homogeneous ODE is 
+\[y_H = c_1\cos x + c_2 \sin x\]
+We can apply the undertermined coefficients method 
+\[r(x) = x+1 + 2 \cos x\]
+For $r_1(x) = x+1$, our choice from rule 1 is $y_p = Ax + B$. This is not in our basis of solutions for $y_H$ so we do not need to modify it. For $r_2(x) = 2 \cos x$, we have $y_p = D \cos x + D\sin x$. This is in our basis of solutions so we have to modify it by multiplying by $x$. We get 
+\[y_p = Ax + B + Cx\cos x + Dx \sin x\]
+Now we can plug our equations into the non homogeneous ODE,
+\[y'_p = A + C\cos x - Cx\sin x + D\sin x + Dx\cos x\]
+\begin{align*}
+    y'' &= -C\sin x - C\sin x - Cx\cos x + D\cos x\\
+    &- Dx\sin x = -2C\sin x - Cx\cos x + 2D \cos x - Dx \sin x  
+\end{align*}
+\begin{align*}
+    x+1 + 2\cos x &= -2c\sin x - Cx\cos x + 2D\cos x - Dx\sin x \\
+    &+ Ax + B + Cx \cos x + Dx \sin x\\
+    &=-2C\sin x + 2D\cos x + Ax + B
+\end{align*}
+We need the coefficients on the left to match the coefficients on the right, so we get the following equations, $-2C = 0$, $2D = 2$, $A = 1$, $B = 1$. Therefore our particular solution is
+\[y_p = x + 1 + x\sin x \]
+Therefore our general solution for the non homogeneous ODE is 
+\[y = y_H + y_p = c_1\cos x + c_2\sin x + x + 1 + x\sin x\]
 \end{document}
