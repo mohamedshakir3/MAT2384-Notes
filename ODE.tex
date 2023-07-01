@@ -1451,7 +1451,288 @@ To solve the homogeneous system $Y' = AY$,
     where $V_1$, $V_2$ have real entries. Then the general solution is
     \[y = c_1V_1 + c_2V_2\]
 \end{enumerate}
+
+\textbf{Example.} Solve the following IVP 
+\[\begin{cases}
+    y_1' = 2y_1 + 9y_2 & y_1(0) = -1\\
+    y_2' = y_1 + 2y_2 & y_2(0) = 2
+\end{cases}\]
+\textbf{Solution.} We start by rewriting this in matrix form, 
+\[Y' = \begin{bmatrix}
+    2 & 9\\
+    1 & 2
+\end{bmatrix}Y\]
+Then we find the eigenvalues of $A$ by solving the characteristic equation
+\[\det\begin{bmatrix}
+    \lambda - 2 & -9\\
+    -1 & \lambda - 2
+\end{bmatrix} = (\lambda - 2)^2 - 9 = \lambda^2 - 4\lambda - 5\]
+Our roots are $\lambda_1 = -1$, $\lambda_2 = 5$. We have two distinct real eigen values so our general solution is
+\[Y = c_1V_1e^{-x} + c_2V_2e^{5x}\]
+We want to find $V_1$ and $V_2$, we solve the 
+\[[A + I| 0] = \begin{bmatrix}
+    3 & 9 & 0\\
+    1 & 3 & 0
+\end{bmatrix}\]
+We have $x_2$ is a free variable $x_2 = t$, and $x_1 = -3t$. Thus our eigenvector is 
+\[V_1 = \begin{bmatrix}
+    -3t\\
+    t
+\end{bmatrix} = t\begin{bmatrix}
+    -3\\
+    1
+\end{bmatrix}\]
+For $\lambda_2 = 5$, we solve the system
+\[[A - 5I|0] = \begin{bmatrix}
+    -3 & 9 & 0\\
+    1 & -3 & 0
+\end{bmatrix}\]
+This gives us $x_2 = t$, $x_1 = 3t$. Thus our eigenvector is
+\[V_2 = \begin{bmatrix}
+    3t\\
+    t
+\end{bmatrix} = t\begin{bmatrix}
+    3\\
+    1
+\end{bmatrix}\]
+Therefore our general solution is
+\[Y = c_1\begin{bmatrix}
+    -3\\
+    1
+\end{bmatrix}e^{-x} + c_2\begin{bmatrix}
+    3\\
+    1
+\end{bmatrix}e^{5x} = \begin{bmatrix}
+    -3c_1e^{-x} + 3c_e^{5x}\\
+    c_1e^{-x} + c_2e^{5x}
+\end{bmatrix}\]
+Now we can use our initial conditions,
+\[y_1(0) = -1 \implies -3c_1 + 3c_3 = -1\]
+\[y_2(0) = 2 \implies c_1 + c_2 = 2\]
+Solving this gives us $c_1 = \frac{7}{6}$, $c_2 = \frac{5}{6}$. Therefore our unique solution is
+\[Y = \begin{bmatrix}
+    -\frac{7}{2}e^{-x} + \frac{5}{2}e^{5x}\\
+    \frac{7}{6}e^{-x} + \frac{5}{6}e^{5x}
+\end{bmatrix}\]
+
+\textbf{Example.} Solve the IVP 
+\[Y' = \begin{bmatrix}
+    1 & - 1\\
+    1 & 3
+\end{bmatrix}Y; Y(0) = \begin{bmatrix}
+    1\\
+    3
+\end{bmatrix}\]
+\textbf{Solution.} Solve for the eigenvalues of $A$ 
+\[\det\begin{bmatrix}
+    \lambda - 1 & 1\\
+    -1 & \lambda - 3
+    \end{bmatrix} = (\lambda - 1)(\lambda - 3) + 1 = \lambda^2 - 4\lambda + 4 = (\lambda - 2)^2\]
+We have $\lambda = 2$ with multiplicity 2, so we find the eigenvector by solving the system
+\[[A - 2I|0] = \begin{bmatrix}
+    -1 & -1 & 0\\
+    1 & 1 & 0
+\end{bmatrix}\]
+Solving this gives us $x_2 = t$, $x_1 = -t$. Thus our eigenvector is
+\[V = \begin{bmatrix}
+    -1\\
+    1
+\end{bmatrix}\]
+The generalized eigenvector $\rho$ is the solution to the system
+\[[A - 2I | V] = \begin{bmatrix}
+    -1 & -1 & -1\\
+    1 & 1 & 1
+\end{bmatrix}\]
+This gives us $x_2 = t$, $x_1 = 1 -t$, thus 
+\[\rho = \begin{bmatrix}
+    1 - t\\
+    t
+\end{bmatrix}\]
+We take a specific value of $t$, for simplicity take $t = 0$ to get 
+\[\rho = \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}\]
+Therefore our general solution is
+\begin{align*}
+    Y &= c_1Ve^{2x} + c_2(xV + \rho)e^{2x}\\
+    &= c_1\begin{bmatrix}
+        -1\\
+        1
+    \end{bmatrix}  e^{2x} + c_2\left(x\begin{bmatrix}
+        -1\\
+        1
+    \end{bmatrix} + \begin{bmatrix}
+        1\\
+        0
+    \end{bmatrix}\right) e^{2x}\\
+    &= \begin{bmatrix}
+        -c_1e^{2x} + c_2(-x + 1)e^{2x}\\
+        c_1e^{2x} + c_2xe^{2x}
+    \end{bmatrix}
+\end{align*}
+Now using our initial conditions we get 
+\[Y(0) = \begin{bmatrix}
+    1\\
+    3
+\end{bmatrix}\implies \begin{bmatrix}
+    -c_1 + c_2\\
+    c_1
+\end{bmatrix} = \begin{bmatrix}
+    1\\
+    3
+\end{bmatrix}\]
+Thus $c_1 = 3$, $c_2 = 4$. The solution to our IVP is 
+\[Y = \begin{bmatrix}
+    -3e^{2x} + 4(-x+1)e^{2x}\\
+    3e^{2x} + 4xe^{2x}
+\end{bmatrix}\]
+\textbf{Example.}
+Solve the IVP 
+\[Y' = \begin{bmatrix}
+    2 & -9\\
+    1 & 2\\
+\end{bmatrix}Y;\ Y(0) = \begin{bmatrix}
+    6\\
+    -4
+\end{bmatrix}\]
+\textbf{Solution.} Find the eigenvalues of $A$, 
+\begin{align*}
+    \det\begin{bmatrix}
+        \lambda - 2 & 9\\
+        -1 & \lambda - 2
+    \end{bmatrix} &= (\lambda - 2)^2 + 9\\
+    &= \lambda^2 - 4\lambda + 13
+    \implies \lambda &= \frac{4 \pm \sqrt{16 - 4(13)}}{2}\\
+    &= \frac{4 \pm 2\sqrt{4 - 13}}{2}\\
+    &= 2 \pm \sqrt{-9}\\
+    &= 2 \pm 3i
+\end{align*}
+We have 2 complex conjugate roots $\lambda_1 = 2 + 3i$, $\lambda_2 = 2-3i$. Now we find the eigenvector for $\lambda_1 = 2 + 3i$. Recall that the general solutions for the system is 
+\[Y = Ve^{\lambda_1 x} = c_1V_1 + c_2V_2\]
+Where $V$ is the eigenvector and $V_1$, $V_2$ are the real components of $V$. We solve the system
+\[[A - (2+3i)I|0] = \begin{bmatrix}
+    2 - (2 + 3i) & -9 & 0\\
+    -1 & 2 - (2 + 3i) & 0
+\end{bmatrix} = \begin{bmatrix}
+    -3i & -9 & 0\\
+    -1 & -3i & 0
+\end{bmatrix}\]
+Solving this we get 
+\[[A - (2+3i)I|0] = \begin{bmatrix}
+    1 & -3i & 0\\
+    0 & 0 & 0
+\end{bmatrix}\]
+$x_2 = t$ is a free variable, $x_1 = 3it$. Thus our eigenvector is
+\[V = \begin{bmatrix}
+    3i\\
+    1
+\end{bmatrix}t\]
+Now we multiply by $e^{\lambda x}$ and split the vector up 
+\begin{align*}
+    Ve^{(2+3i)x} &= \begin{bmatrix}
+        3i\\
+        1
+    \end{bmatrix}e^{2x}e^{3ix}\\
+    &= \begin{bmatrix}
+        3i\\
+        1
+    \end{bmatrix}e^{2x}(\cos(3x) + i\sin(3x))\\
+    &= \begin{bmatrix}
+        3i\\
+        1
+    \end{bmatrix}(e^{2x}\cos(3x) + ie^{2x}\sin(3x))\\
+    &= \begin{bmatrix}
+        3ie^{2x}\cos(3x) - 3e^{2x}\sin(3x)\\
+        e^{2x}\cos(3x) + ie^{2x}\sin(3x)
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        -3e^{2x}\sin(3x)\\
+        e^{2x}\cos(3x)
+    \end{bmatrix} + i\begin{bmatrix}
+        3e^{2x}\cos(3x)\\
+        e^{2x}\sin(3x)
+    \end{bmatrix}
+\end{align*}
+Therefore our general solution to the system is 
+\[Y = c_1\begin{bmatrix}
+    -3e^{2x}\sin(3x)\\
+    e^{2x}\cos(3x)
+\end{bmatrix} + c_2\begin{bmatrix}
+    3e^{2x}\cos(3x)\\
+    e^{2x}\sin(3x)
+\end{bmatrix} = \begin{bmatrix}
+    -3c_1e^{2x}\sin(3x) + 3c_2e^{2x}\cos(3x)\\
+    c_1e^{2x}\cos(3x) + c_2e^{2x}\sin(3x)
+\end{bmatrix}\]
+Now using our inital conditions 
+\[Y(0) = \begin{bmatrix}
+    6\\
+    -4
+\end{bmatrix} \implies \begin{bmatrix}
+    3c_2\\
+    c_1
+\end{bmatrix} = \begin{bmatrix}
+    6\\
+    -4
+\end{bmatrix}\]
+Therefore $c_1 = -4$, $c_2 = 2$ and our unique solution is 
+\[Y = \begin{bmatrix}
+    12e^{2x}\sin(3x)+6e^{2x}\cos(3x)\\
+    -4e^{2x}\cos(3x) + 2e^{2x}\sin(3x)
+\end{bmatrix}\]
+
+\section{Non-homogeneous Systems of First Order ODEs}
+In this section, we find the general solution of the following system
+\[y_1' = a_{11}y_1 + a_{12}y_2 + r_1(x)\]
+\[y_2' = a_{21}y_1 + a_{22}y_2 + r_2(x)\]
+We can write this in matrix form as
+\[Y' = AY + \overrightarrow{r(x)}\]
+Similar to the case of non-homogeneous ODEs, the general solutions has the form 
+\[Y = Y_H + Y_p\]
+Where $Y_H$ is the general solution to the corresponding homogeneous system $Y' = AY$, and $Y_p$ is the particular solution to the non-homogeneous system $Y' = AY + \overrightarrow{r(x)}$. To find $y_p$, we use the method of undetermined coefficients. The constants in the undetermined coefficients method are replaced by constant vectors. For example, if 
+\[\overrightarrow{r(x)} = \begin{bmatrix}
+    2\cos x + x^2 - x \\
+    3e^x - x^2 + 2x + 1
+\end{bmatrix}\]
+Then we decompose it as 
+\[\begin{bmatrix}
+    2\\
+    0
+\end{bmatrix}\cos x + \begin{bmatrix}
+    0\\
+    3
+\end{bmatrix} + \begin{bmatrix}
+    1\\
+    -1
+\end{bmatrix} + \begin{bmatrix}
+    -1\\
+    2
+\end{bmatrix}x + \begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\]
+Then we find the particular solution for each term and add them together, in this case 
+\[r_1(x) = \begin{bmatrix}
+    2\\
+    0
+\end{bmatrix}\cos x \implies \overrightarrow{y_p} = \overrightarrow{U}\cos x + \overrightarrow{V}\sin x\]
+\[\begin{bmatrix}
+    0\\
+    3
+\end{bmatrix}e^x \implies \overrightarrow{y_p} = \overrightarrow{W}e^x\]
+\[\begin{bmatrix}
+    1\\
+    -1
+\end{bmatrix}x^2 + \begin{bmatrix}
+    -1\\
+    2
+\end{bmatrix}x + \begin{bmatrix}
+    0\\
+    1
+\end{bmatrix} \implies \overrightarrow{y_p} = \overrightarrow{C}x^2 + \overrightarrow{D}x + \overrightarrow{E}\]
 \end{document}
+
 
 
 

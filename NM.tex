@@ -400,4 +400,58 @@ we approximate $f(x)$ with the linear function to calculate the areas of the tra
     The absolute error $|E_T|$ in the Trapezoidal rule satisfies
     \[|E_T| \leq \frac{M(b-a)^3}{12n^2}\]
 \end{theorem}
-\end{document}
+
+\textbf{Example.} Use the Trapezoidal rule with a maximal absolute error of $0.01$ to estimate the value of the integral
+\[\int_0^1 e^{-x^2}dx\]
+\textbf{Solution.} First we compute $n$, 
+\[f(x) = e^{-x^2}\]
+\[f'(x) = -2xe^{-x^2}\]
+\[f''(x) = -2e^{-x^2} + 4x^2e^{-x^2}\]
+\[f''(x) = -2e^{-x^2} + 4x^2e^{-x^2}\]
+\[f'''(x) = 8xe^{-x^2} + (-2 + 4x^2)(-2xe^{-x^2}) = e^{-x^2}4x(3-2x^2)\]
+From the third derivative we see that $f'''(x)$ is always positive on $[0,1]$, so $f''(x)$ is increasing, therefore 
+\[f''(0) \leq f''(x) \leq f''(1) \implies -2 \leq f''(x) \leq -2e^{-1} + 4e^{-1}\]
+Thus we can take $M =2$. Then by the error formula we have
+\[\frac{2}{12n^2} \leq 0.01 \implies n \geq \sqrt{\frac{1}{6(0.01)}} \approx 4.08\]
+Then we take $n = 5$. So our length of each subinterval is
+\[h = \frac{1 -0}{5} = 0.2\]
+Now we can approximate the integral 
+\begin{align*}
+    \int_0^1 e^{-x^2}dx \approx \frac{0.2}{2}\left[f(0) + 2f(0.2) + 2f(0.4) +2f(0.6) + 2f(0.8) + f(1)\right]\\
+    &=0.1\left(1 + 2e^{-0.2^2} + 2e^{-0.4^2} + 2e^{-0.6^2} + 2e^{-0.8^2} + 2e^{-1}\right)
+\end{align*}
+
+\section{Simpson's Rule}
+
+We start by subdividing $[a,b]$ into an \emph{even} number of subintervals. The idea is to estimate the function $f(x)$ in every subinterval with a polynomial of degree 2. 
+\[\int_a^b f(x) \approx \frac{h}{3}\left[f(a) + 4(x_1) + 2f(x_2) + 4f(x_3) + \cdots + f(b)\right]\]
+where $h = \frac{b-a}{n}$ and $n$ is the number of subintervals. The error in Simpson's rule is given by
+\[|E_S| \leq \frac{M(b-a)^5}{180n^4}\]
+Where $M$ is the derivative for the fourth derivative of $f(x)$.\\[2ex]
+\textbf{Example.} Using Simpson's rule, with a maximal error of $0.001$, estimate the value of the integral
+\[\int_{0.5}^{1.5}x^2\ln x dx\]
+\textbf{Solution.} We start by computing $n$,
+\[f(x) = x^2\ln x\]
+\[f'(x) = 2x\ln x + x\]
+\[f''(x) = 2\ln x + 3\]
+\[f'''(x) = \frac{2}{x}\]
+\[f^{(4)}(x) = -\frac{2}{x^2}\]
+\[f^{(5)}(x) = \frac{4}{x^3}\]
+The fifth derivative is always positive so $f^{(4)}$ is increasing, therefore
+\[f^{(4)}(0.5) \leq f^{(4)}(x) \leq f^{(4)}(1.5) \implies |f^{(4)}(x)| \leq 8\]
+So we can take $M = 8$. Then by the error formula we have
+\[\frac{8(1.5-0.5)}{180n^4} \implies n \geq \sqrt[4]{\frac{8}{180(0.001)}} \approx 2.58\]
+We need an even $n$ so we take $n=4$. Then we can calculate $h$,
+\[h = \frac{1}{4}\]
+\[x_0 = 0.5\]
+\[x_1 = 0.5 + \frac{1}{4} = 0.75\]
+\[x_2 = 0.75 + \frac{1}{4} = 1\]
+\[x_3 = 1 + \frac{1}{4} = 1.25\]
+\[x_4 = 1.25 + \frac{1}{4} = 1.5\]
+Then we can approximate the integral,
+\begin{align*}
+    \int_{0.5}^{1.5} x^2\ln x dx \approx \frac{0.25}{3}\left[f(0.5) + 4f(0.75) + 2f(1) + 4f(1.25) + f(1.5)\right]\\
+    &= \frac{1}{12}\left[0.5^2\ln 0.5 + 4(0.75)^2\ln 0.75 + 2(1)^2\ln 1 + 4(1.25)^2\ln 1.25 + (1.5)^2\ln 1.5\right]
+    &\approx 0.123915
+\end{align*}
+\end{document} 
