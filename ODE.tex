@@ -1388,7 +1388,69 @@ Therefore our particular solution is
     &= \frac{6\ln x + 3}{4}
 \end{align*}
 Thus our general solution is 
+
 \[y = c_1x + c_2x^2 + c_3x^3 + \frac{6\ln x + 3}{4}\]
+
+\chapter{Systems of Linear ODEs}
+\section{Generalities}
+\begin{definition}
+    A system of first order linear ODEs is a system of the form 
+    \[y_1' = a_{11}(x)y_1 + a_{12}(x)y_2 + \cdots a_{1n}(x)y_n + r_1(x)\]
+    \[y_2' = a_{21}(x)y_1 + a_{22}(x)y_2 + \cdots a_{2n}(x)y_n + r_2(x)\]
+    \[\vdots\]
+    \[y_n' = a_{n1}(x)y_1 + a_{n2}(x)y_2 + \cdots a_{nn}(x)y_n + r_n(x)\]
+    Let 
+    \[Y = \begin{bmatrix}
+        y_1(x)\\
+        y_2(x)\\
+        \vdots\\
+        y_n(x)
+    \end{bmatrix}\]
+    \[Y' = \begin{bmatrix}
+        y_1'(x)\\
+        y_2'(x)\\
+        \vdots\\
+        y_n'(x)
+    \end{bmatrix}\]
+    \[A = \begin{bmatrix}
+        a_{11}(x) & a_{12}(x) \cdots a_{1n}(x)\\
+        a_{21}(x) & a_{22}(x) \cdots a_{2n}(x)\\
+        \vdots & \vdots \ddots \vdots\\
+        a_{n1}(x) & a_{n2}(x) \cdots a_{nn}(x)\\
+    \end{bmatrix}\]
+    \[\overrightarrow{r(x)} = \begin{bmatrix}
+        r_1(x)\\
+        r_2(x)\\
+        \vdots\\
+        r_n(x)
+    \end{bmatrix}\]
+    The above system can be written as 
+    \[Y' = AY + \overrightarrow{r(x)}\]
+    If $\overrightarrow{r(x)} = 0$, then we say that this system is homogeneous. Otherwise, it is non-homogeneous.
+\end{definition}
+In this course we only deal with systems of the form $Y' = AY + \overrightarrow{r(x)}$ where $A$ is a $2\times 2$ matrix with constant coefficients. 
+\section{Homogeneous Systems of First order ODEs with Constant Coefficients}
+Similar to in the case of First-Order constant coefficient ODEs, we have 
+\[y' = ay \implies y' - ay = 0\]
+We look for exponential solutions,
+\[Y = Ve^{\lambda x} \implies Y' = \lambda Ve^{\lambda x}\]
+Then we have
+\[\lambda V e^{\lambda x} = AV e^{\lambda x} \implies AV = \lambda V\]
+This means that $\lambda$ is an eigen value for $A$ and $V$ is a corresponding eigen vector. 
+\subsection{Steps to Solving Homogeneous Systems}
+To solve the homogeneous system $Y' = AY$,
+\begin{enumerate}
+    \item Find the eigen values of $A$ by solving the characteristic equation $|\lambda I - A| = 0$
+    \item If $A$ has 2 distinct real eigenvalues $\lambda_1,\lambda_2$, then the general solution is
+    \item \[Y = c_1V_1e^{\lambda_1x} + c_2V_2e^{\lambda_2x}\]
+    \item If $\lambda$ is an eigenvalue with multiplicity 2, then the general solution is
+    \[Y = c_1Ve^{\lambda x} + c_2(xV + \rho)e^[\lambda x]\]
+    where $V$ is a basis for the eigenspace of $\lambda$ and $\rho$ is a generalized eigenvector.
+    \item If $\lambda_1 = \alpha + i\beta$ and $\lambda_2 = \alpha - i\beta$ are complex eigenvalues, then find a basis for the complex eigenspace for $\lambda_1 = \alpha + i\beta$, and form the complex vector $Ve^{(\alpha + i\beta)x}$. Then write 
+    \[Ve^{(\alpha + i\beta)x} = V_1 + iV_2\]
+    where $V_1$, $V_2$ have real entries. Then the general solution is
+    \[y = c_1V_1 + c_2V_2\]
+\end{enumerate}
 \end{document}
 
 
