@@ -1730,7 +1730,225 @@ Then we find the particular solution for each term and add them together, in thi
 \end{bmatrix}x + \begin{bmatrix}
     0\\
     1
-\end{bmatrix} \implies \overrightarrow{y_p} = \overrightarrow{C}x^2 + \overrightarrow{D}x + \overrightarrow{E}\]
+\end{bmatrix} \implies \overrightarrow{y_p} = \overrightarrow{C}x^2 + \overrightarrow{D}x + \overrightarrow{U}\]
+\textbf{Solution.} Solve the IVP 
+\[\overrightarrow{y'} = \begin{bmatrix}
+    9 & 18\\
+    -2 & -3
+\end{bmatrix}\overrightarrow{y} + \begin{bmatrix}
+    9x - 51\\
+    7 + e^{2x}
+\end{bmatrix}; \ \overrightarrow{y}(0) = \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}\]
+\textbf{Solution.} Start by solving the corresponding ODE
+\[\overrightarrow{y}' = \begin{bmatrix}
+    9 & 18\\
+    -2 & -3
+\end{bmatrix}\overrightarrow{y}\]
+We find the eigenvalues of $A$ by solving the characteristic equation
+\[\det\begin{bmatrix}
+    9 - \lambda & 18\\
+    -2 & -3 - \lambda\\
+\end{bmatrix} = (9 - \lambda)(-3-\lambda) + 36 = \lambda^2 -6\lambda + 9\]
+This gives us the equation $(\lambda -3)^2$ so we have $\lambda = 3$ with multiplicity 2. Now we find the eigenvector 
+\[[A - 3I| 0] = \begin{bmatrix}
+    6 & 18 & 0\\
+    -2 & -6 & 0
+\end{bmatrix} \sim \begin{bmatrix}
+    1 & 3 & 0\\
+    0 & 0 & 0
+\end{bmatrix}\]
+This gives us $x_2 = t$, $x_1 = -3t$. So our eigenvector is 
+\[V = t\begin{bmatrix}
+    -3\\
+    1
+\end{bmatrix}\]
+Now we need a generalized eigenvector, so we solve the system
+\[[A - 3I| V] = \begin{bmatrix}
+    6 & 18 & -3\\
+    -2 & -6 & 1
+\end{bmatrix} \sim \begin{bmatrix}
+    1 & 3 & -1/2\\
+    0 & 0 & 0
+\end{bmatrix}\]
+This gives us $x_2 = t$, $x_1 = -3t - 1/2$, the general solutions is 
+\[\overrightarrow{\rho} = \begin{bmatrix}
+    -3t - 1/2\\
+    t
+\end{bmatrix}\]
+We'll take $t= 0$, 
+\[\overrightarrow{\rho} = \begin{bmatrix}
+    -1/2\\
+    0
+\end{bmatrix}\]
+The general solution to the homogeneous ODE is 
+\begin{align*}
+    \overrightarrow{y}_H &= c_1\begin{bmatrix}-3\\1\end{bmatrix}xe^{3x} + c_2\left(x\begin{bmatrix}
+        -3\\
+        1
+    \end{bmatrix} + \begin{bmatrix}
+        -1/2\\
+        0
+    \end{bmatrix}\right)e^{3x}  \\
+    &= \begin{bmatrix}
+        -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}c_2e^{3x}\\
+        c_1e^{3x} + c_2xe^{3x}
+    \end{bmatrix}
+\end{align*}
+Now for $y_p$, we have 
+\[r(x) = \begin{bmatrix}
+    9x - 51\\
+    7 + e^{2x}
+\end{bmatrix} = \begin{bmatrix}
+    9\\
+    0
+\end{bmatrix}x + \begin{bmatrix}
+    -51\\
+    7
+\end{bmatrix} + \begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}e^{2x}\]
+For the first term, we have a polynomial of degree 1, so 
+\[y_p = Ux + V\]
+For the exponential term, we take 
+\[y_p = We^{2x}\]
+Therefore we have the equation 
+\[y_p = Ux + V + We^{2x}\]
+We can rewrite the non-homogeneous system as 
+\[y' = \begin{bmatrix}
+    9 & 18\\
+    -2 & -3
+\end{bmatrix}y + \begin{bmatrix}
+    9\\0
+\end{bmatrix}x + \begin{bmatrix}
+    -51\\7
+\end{bmatrix} + \begin{bmatrix}
+    0\\1
+\end{bmatrix}e^{2x}\]
+We must compute the derivative of $y_p$, 
+\[y_p' = U + 2We^{2x}\]
+This gives us 
+\begin{align*}
+   U + 2We^{2x} &= A(Ux + V + We^{2x}) + \begin{bmatrix}
+    9\\0
+\end{bmatrix}x + \begin{bmatrix}
+    -51\\7
+\end{bmatrix} + \begin{bmatrix}
+    0\\1
+\end{bmatrix}e^{2x}\\
+&= \left(AU + \begin{bmatrix}
+    9\\0
+\end{bmatrix}\right) + \left(AW + \begin{bmatrix}
+    0\\1
+\end{bmatrix}\right)e^{2x} +AV + \begin{bmatrix}
+    -51\\7
+\end{bmatrix}
+\end{align*}
+This gives us the three equations 
+\[AU + \begin{bmatrix}
+    9\\0
+\end{bmatrix} = 0\]
+\[AV + \begin{bmatrix}
+    -51\\7
+\end{bmatrix} = U\]
+\[AW + \begin{bmatrix}
+    0\\1
+\end{bmatrix} = 2W\]
+The first equation gives us 
+\[AU = \begin{bmatrix}
+    -9\\0
+\end{bmatrix} \implies U = A^{-1}\begin{bmatrix}
+    -9\\0
+\end{bmatrix} = \frac{1}{9}\begin{bmatrix}
+    -3 & -18\\
+    2 & 9
+\end{bmatrix}\begin{bmatrix}
+    -9\\0
+\end{bmatrix} = \begin{bmatrix}
+    3\\-2
+\end{bmatrix}\]
+The second equation gives us 
+\[AV = U - \begin{bmatrix}
+    -51\\7
+\end{bmatrix} = \begin{bmatrix}
+    54\\-9
+\end{bmatrix}\implies V = A^{-1}\begin{bmatrix}
+    54\\-9
+\end{bmatrix} = \begin{bmatrix}
+    0\\3
+\end{bmatrix}\]
+The third equation gives us 
+\begin{align*}
+    AW - 2W = \begin{bmatrix}
+        0\\-1
+    \end{bmatrix} &\implies (A - 2I)W = \begin{bmatrix}
+        0\\-1
+    \end{bmatrix}\\
+    &\implies W = \frac{1}{1}\begin{bmatrix}
+        -5 & -18\\
+        2 & 7
+    \end{bmatrix}\begin{bmatrix}
+        0\\-1
+    \end{bmatrix}\\
+    &\implies W = \begin{bmatrix}
+        18\\-7
+    \end{bmatrix}        
+\end{align*}
+This gives us our particular solution
+\begin{align*}
+    y_p &= Ux + V + We^{2x}\\
+    &= \begin{bmatrix}
+        3\\-2
+    \end{bmatrix}x + \begin{bmatrix}
+        0\\3
+    \end{bmatrix} + \begin{bmatrix}
+        18\\-7
+    \end{bmatrix}e^{2x}\\
+    &= \begin{bmatrix}
+        3x + 18e^{2x}\\
+        -2x+3 - 7e^{2x}
+    \end{bmatrix}  
+\end{align*}
+
+
+The general solution to the non-homogeneous ODE is 
+\begin{align*}
+    y &= y_H + y_p\\
+    &= \begin{bmatrix}
+        -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}e^{3x}\\
+        c_1e^{3x} + c_2xe^{3x}
+    \end{bmatrix}
+    + \begin{bmatrix}
+        3x + 18e^{2x}\\
+        -2x+3 - 7e^{2x}
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}e^{3x} + 3x + 18e^{2x}\\
+        c_1e^{3x} + c_2xe^{3x} -2x+3 - 7e^{2x}
+    \end{bmatrix}
+\end{align*}
+Using the intial condition, 
+\[y(0) = \begin{bmatrix}
+    1\\0
+\end{bmatrix}\implies \begin{bmatrix}
+    -3c_1 - \frac{1}{2}c_2 + 18\\
+    c_1 -4
+\end{bmatrix} = \begin{bmatrix}
+    1\\0
+\end{bmatrix}\]
+This gives us the equation 
+\[-3c_1 - \frac{1}{2} + 18 = 1\]
+\[c_1 = 5 \implies c_2 = 10\]
+Therefore the unique solution is 
+\[y = \begin{bmatrix}
+    -15e^{3x} - 30xe^{3x} - \frac{1}{2}e^{3x} + 3x + 18e^{2x}\\
+    5e^{3x} + 10xe^{3x} -2x+3 - 7e^{2x}
+\end{bmatrix}\]
+
+
 \end{document}
 
 
