@@ -1418,17 +1418,17 @@ Thus our general solution is
         \vdots & \vdots \ddots \vdots\\
         a_{n1}(x) & a_{n2}(x) \cdots a_{nn}(x)\\
     \end{bmatrix}\]
-    \[\overrightarrow{r(x)} = \begin{bmatrix}
+    \[\vec{r(x)} = \begin{bmatrix}
         r_1(x)\\
         r_2(x)\\
         \vdots\\
         r_n(x)
     \end{bmatrix}\]
     The above system can be written as 
-    \[Y' = AY + \overrightarrow{r(x)}\]
-    If $\overrightarrow{r(x)} = 0$, then we say that this system is homogeneous. Otherwise, it is non-homogeneous.
+    \[Y' = AY + \vec{r(x)}\]
+    If $\vec{r(x)} = 0$, then we say that this system is homogeneous. Otherwise, it is non-homogeneous.
 \end{definition}
-In this course we only deal with systems of the form $Y' = AY + \overrightarrow{r(x)}$ where $A$ is a $2\times 2$ matrix with constant coefficients. 
+In this course we only deal with systems of the form $Y' = AY + \vec{r(x)}$ where $A$ is a $2\times 2$ matrix with constant coefficients. 
 \section{Homogeneous Systems of First order ODEs with Constant Coefficients}
 Similar to in the case of First-Order constant coefficient ODEs, we have 
 \[y' = ay \implies y' - ay = 0\]
@@ -1687,11 +1687,11 @@ In this section, we find the general solution of the following system
 \[y_1' = a_{11}y_1 + a_{12}y_2 + r_1(x)\]
 \[y_2' = a_{21}y_1 + a_{22}y_2 + r_2(x)\]
 We can write this in matrix form as
-\[Y' = AY + \overrightarrow{r(x)}\]
+\[Y' = AY + \vec{r(x)}\]
 Similar to the case of non-homogeneous ODEs, the general solutions has the form 
 \[Y = Y_H + Y_p\]
-Where $Y_H$ is the general solution to the corresponding homogeneous system $Y' = AY$, and $Y_p$ is the particular solution to the non-homogeneous system $Y' = AY + \overrightarrow{r(x)}$. To find $y_p$, we use the method of undetermined coefficients. The constants in the undetermined coefficients method are replaced by constant vectors. For example, if 
-\[\overrightarrow{r(x)} = \begin{bmatrix}
+Where $Y_H$ is the general solution to the corresponding homogeneous system $Y' = AY$, and $Y_p$ is the particular solution to the non-homogeneous system $Y' = AY + \vec{r(x)}$. To find $y_p$, we use the method of undetermined coefficients. The constants in the undetermined coefficients method are replaced by constant vectors. For example, if 
+\[\vec{r(x)} = \begin{bmatrix}
     2\cos x + x^2 - x \\
     3e^x - x^2 + 2x + 1
 \end{bmatrix}\]
@@ -1716,11 +1716,11 @@ Then we find the particular solution for each term and add them together, in thi
 \[r_1(x) = \begin{bmatrix}
     2\\
     0
-\end{bmatrix}\cos x \implies \overrightarrow{y_p} = \overrightarrow{U}\cos x + \overrightarrow{V}\sin x\]
+\end{bmatrix}\cos x \implies \vec{y_p} = \vec{U}\cos x + \vec{V}\sin x\]
 \[\begin{bmatrix}
     0\\
     3
-\end{bmatrix}e^x \implies \overrightarrow{y_p} = \overrightarrow{W}e^x\]
+\end{bmatrix}e^x \implies \vec{y_p} = \vec{W}e^x\]
 \[\begin{bmatrix}
     1\\
     -1
@@ -1730,23 +1730,23 @@ Then we find the particular solution for each term and add them together, in thi
 \end{bmatrix}x + \begin{bmatrix}
     0\\
     1
-\end{bmatrix} \implies \overrightarrow{y_p} = \overrightarrow{C}x^2 + \overrightarrow{D}x + \overrightarrow{U}\]
-\textbf{Solution.} Solve the IVP 
-\[\overrightarrow{y'} = \begin{bmatrix}
+\end{bmatrix} \implies \vec{y_p} = \vec{C}x^2 + \vec{D}x + \vec{U}\]
+\textbf{Example.} Solve the IVP 
+\[\vec{y'} = \begin{bmatrix}
     9 & 18\\
     -2 & -3
-\end{bmatrix}\overrightarrow{y} + \begin{bmatrix}
+\end{bmatrix}\vec{y} + \begin{bmatrix}
     9x - 51\\
     7 + e^{2x}
-\end{bmatrix}; \ \overrightarrow{y}(0) = \begin{bmatrix}
+\end{bmatrix}; \ \vec{y}(0) = \begin{bmatrix}
     1\\
     0
 \end{bmatrix}\]
 \textbf{Solution.} Start by solving the corresponding ODE
-\[\overrightarrow{y}' = \begin{bmatrix}
+\[\vec{y}' = \begin{bmatrix}
     9 & 18\\
     -2 & -3
-\end{bmatrix}\overrightarrow{y}\]
+\end{bmatrix}\vec{y}\]
 We find the eigenvalues of $A$ by solving the characteristic equation
 \[\det\begin{bmatrix}
     9 - \lambda & 18\\
@@ -1774,18 +1774,18 @@ Now we need a generalized eigenvector, so we solve the system
     0 & 0 & 0
 \end{bmatrix}\]
 This gives us $x_2 = t$, $x_1 = -3t - 1/2$, the general solutions is 
-\[\overrightarrow{\rho} = \begin{bmatrix}
+\[\vec{\rho} = \begin{bmatrix}
     -3t - 1/2\\
     t
 \end{bmatrix}\]
 We'll take $t= 0$, 
-\[\overrightarrow{\rho} = \begin{bmatrix}
+\[\vec{\rho} = \begin{bmatrix}
     -1/2\\
     0
 \end{bmatrix}\]
 The general solution to the homogeneous ODE is 
 \begin{align*}
-    \overrightarrow{y}_H &= c_1\begin{bmatrix}-3\\1\end{bmatrix}xe^{3x} + c_2\left(x\begin{bmatrix}
+    \vec{y}_H &= c_1\begin{bmatrix}-3\\1\end{bmatrix}xe^{3x} + c_2\left(x\begin{bmatrix}
         -3\\
         1
     \end{bmatrix} + \begin{bmatrix}

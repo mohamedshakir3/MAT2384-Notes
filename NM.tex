@@ -222,7 +222,7 @@ where $f_i = f(x_i)$ for an unknown function $f$.
         &= 3.7037x^2 - 7.4074x + 3.3704
     \end{align*}
     So our polynomial is
-    \begin{align*}
+    \begin{align*}z
         p_2(x) &= (1.519x^2 - 5.3704x + 3.8519)(2.2) + (-5.6667x^2 + 12.77778x - 6.22222)(3.1) \\
         &+ (3.7037x^2 - 7.4074x + 3.3704)(4)\\
         &= 1.66667x - 1.83333x + 2.66667
@@ -289,7 +289,7 @@ Similar to Lagrange Interpolation, we start with $n$ datapoints $(x_0,f_0),\ldot
         \item The \emph{first divided difference} at $x_i$ is defined as 
         \[f(x_i,x_{i+1}) = \frac{f_{i+1}- f_i}{x_{i+1} - x_i}\]
         \item The \emph{second divided difference} at $x_i$ is 
-        \[f(x_i, x_{i+1}, x_{i+2}) = \frac{f(x_{i+1}, x_{i+2}) - f(x_1,x_{i+1})}{x_{i+2}-x_i}\]
+        \[f(x_i, x_{i+1}, x_{i+2}) = \frac{f(x_{i+1}, x_{i+2}) - f(x_i,x_{i+1})}{x_{i+2}-x_i}\]
         \item In general, the $k$th divided difference at $x_i$ is 
         \[f(x_i, x_{i+1}, \ldots x_{i+k}) = \frac{f(x_{i+1},\ldots, x_{i+k}) - f(x_i, \ldots x_{i+k-1})}{x_{i+k}-x_i}\]
     \end{enumerate}
@@ -427,7 +427,7 @@ We start by subdividing $[a,b]$ into an \emph{even} number of subintervals. The 
 \[\int_a^b f(x) \approx \frac{h}{3}\left[f(a) + 4(x_1) + 2f(x_2) + 4f(x_3) + \cdots + f(b)\right]\]
 where $h = \frac{b-a}{n}$ and $n$ is the number of subintervals. The error in Simpson's rule is given by
 \[|E_S| \leq \frac{M(b-a)^5}{180n^4}\]
-Where $M$ is the derivative for the fourth derivative of $f(x)$.\\[2ex]
+Where $M$ is the upperbound for the fourth derivative of $f(x)$.\\[2ex]
 \textbf{Example.} Using Simpson's rule, with a maximal error of $0.001$, estimate the value of the integral
 \[\int_{0.5}^{1.5}x^2\ln x dx\]
 \textbf{Solution.} We start by computing $n$,
@@ -450,8 +450,52 @@ We need an even $n$ so we take $n=4$. Then we can calculate $h$,
 \[x_4 = 1.25 + \frac{1}{4} = 1.5\]
 Then we can approximate the integral,
 \begin{align*}
-    \int_{0.5}^{1.5} x^2\ln x dx \approx \frac{0.25}{3}\left[f(0.5) + 4f(0.75) + 2f(1) + 4f(1.25) + f(1.5)\right]\\
+    \int_{0.5}^{1.5} x^2\ln x dx &\approx \frac{0.25}{3}\left[f(0.5) + 4f(0.75) + 2f(1) + 4f(1.25) + f(1.5)\right]\\
     &= \frac{1}{12}\left[0.5^2\ln 0.5 + 4(0.75)^2\ln 0.75 + 2(1)^2\ln 1 + 4(1.25)^2\ln 1.25 + (1.5)^2\ln 1.5\right]\\
     &\approx 0.123915
+\end{align*}
+
+\section{Gaussian Quadrature}
+The Gaussian Quadrature of order $n$ consists of estimating the integral 
+\[\int_{-1}^{1}f(t)dt\]
+using an expression of the form 
+\[\int_{-1}^{1}f(t)dt \approx w_1f(t_1) + \cdots w_nf(t_n)\]
+where $t_1, \ldots, t_n$  are not necessarily equidistant and are called the \emph{nodes} and $w_1,\cdots w_n$ are constants called the coefficients. The approximation becomes an equality if $f(t)$ is a polynomial of degree $2n-1$. In general, to convert $\int_a^bf(x)dx$ to $\int_{-1}^{1}g(t)dt$, we use the following change of variables
+\[x = \frac{b-a}{2}t + \frac{b+a}{2}\]
+We then use a table of values to find the nodes and coefficients.
+\begin{center}
+    \begin{tabular}{c|cc}
+        Order $n$ & Nodes $t_i$ & Coefficients $w_i$\\
+        \hline
+        1 & 0 & 2\\
+        \hline
+        2 & $\pm \sqrt{\frac{1}{3}}$ & 1\\
+        \hline
+        3 & $\pm \sqrt{\frac{3}{5}}$ & $\frac{5}{9}$\\
+        & 0 & $\frac{8}{9}$\\
+        \hline
+        & -0.8611363116 &0.3478548451\\
+        4&-0.3399810436& 0.6521451549\\
+        &0.3399810436 &0.6521451549\\
+        &0.8611363116 &0.3478548451\\
+        \hline
+        &-0.9061798459 &0.2369268850\\
+        &-0.5384693101& 0.4786286705\\
+        5 &0.0 &0.5688888889\\
+        &0.5384693101 &0.4786286705\\
+        &0.9061798459& 0.2369268850\\
+    \end{tabular}
+\end{center}
+\noindent
+\textbf{Example.} Use Gaussian Quadrature of order 4 to estimate the value of 
+\[\int_{0}^1\sin(x^2)dx\]
+\textbf{Solution.} First we substitute $x$ with 
+\[x = \frac{b-a}{2}t + \frac{b+a}{2} = \frac{1}{2}t +\frac{1}{2}\]
+\[\frac{dx}{dt} = \frac{1}{2} \implies dx = \frac{dt}{2}\]
+\[\int_0^1 \sin(x^2) = \int_{-1}^1 \sin \left(\frac{(t+1)^2}{4}\right) \frac{1}{2}dt\]
+Then we can use Gaussian Quadrature of order 4 to estimate the value of the integral,
+\begin{align*}
+    \int_{-1}^1 \sin \left(\frac{(t+1)^2}{4}\right) \frac{1}{2}dt &\approx w_1f(t_1) + w_2f(t_2) + w_3(t_3) + w_4f(t_4)\\
+    &= 0.3479f(-0.8611) + 0.6521f(-0.3399) + 0.6521f(0.3399) + 0.3479f(0.8611)\\
 \end{align*}
 \end{document} 
