@@ -1948,6 +1948,135 @@ Therefore the unique solution is
     5e^{3x} + 10xe^{3x} -2x+3 - 7e^{2x}
 \end{bmatrix}\]
 
+\chapter{Laplace Transforms}
+
+\begin{definition}
+    Let $a \in \real$, and let $f$ be a function on $[a, \infty)$ then we define the type 1 improper integral 
+    \[\int_a^\infty f(x)dx = \lim_{L\rightarrow\infty} \int_a^L f(x)dx\]
+    If this limit exists, then the integral converges. 
+\end{definition}
+
+\noindent
+\textbf{Example.} 
+\[\int_0^\infty \frac{1}{1+x}dx = \lim_{L\rightarrow\infty}\int_0^L \frac{1}{1+x}dx = \lim_{L\rightarrow \infty} \ln(1 + L)\]
+We can see that this integral diverges since $\ln(1 + L) \rightarrow \infty$.\\[2ex]
+\noindent
+\textbf{Example.} 
+\[\int_0^\infty \frac{1}{1+x^2}dx = \lim_{L\rightarrow\infty} \arctan(L) = \frac{\pi}{2}\]
+This integral converges. 
+\begin{definition}
+    Let $\alpha \in \real$. A function $f: [\alpha, \infty) \rightarrow \infty$ is called of \emph{exponential order} $\alpha$ if there exists $t_0$ such that  
+    \[|f(t)| \leq Me^{\alpha t}\]
+    for some $M > 0$, and any $t \geq t_0$. 
+\end{definition}
+\noindent
+\textbf{Example.} Consider the constant function $f(t) = 1$. This is of exponential order $\alpha = 0$ since for any $M \geq 1$, 
+\[|f(t)| = 1 \leq Me^{0 t} = M\]
+\textbf{Example.} The function $f(t) = t^n$ is of exponential order $\alpha$ for any $\alpha > 0$. (Proof omitted.)\\[2ex]
+\textbf{Example.} The exponential function $f(t) = e^{at}$ is of exponential order $\alpha = a$. \\[2ex]
+\textbf{Example.} Sinusoidal functions $f(t) = \sin t$ and $g(t) = \cos t$ are of exponential order $\alpha = 0$ since 
+\[|\cos t| \leq 1 = 1 e^{0 t}\]
+\begin{definition}[Piecewise Continuity]
+    We say that a function $f(t)$ is \emph{piecewise continuous} on $[a,b]$ if there exists subintervals 
+    \[t_0 = a, t_1, \ldots, t_n = b\]
+    such that 
+    \begin{enumerate}[label=(\roman*)]
+        \item The limits 
+        \[\lim_{t \rightarrow t_i^-}f(t), \lim_{t\rightarrow t_i^+} f(t), \lim_{t\rightarrow a^+}f(t), \lim_{t\rightarrow b^-}f(t)\]
+        all exist, and
+        \item $f(t)$ is continuous on every open subinterval $(x_i, x_{i+1})$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Laplace Transform]
+    Let $f(t)$ be a function, then we define the Laplace transform of $f(t)$ as 
+    \[F(s) = \mathcal{L}\{f(t)\} = \int_{0}^\infty e^{-st}f(t)dt\]
+\end{definition}
+\noindent
+\textbf{Note.} If $F(s) = \mathcal{L}\{f(t)\}$, then $f(t)$ is the \emph{inverse} Laplace transform of $F(s)$ written as 
+\[f(t) = \mathcal{L}^{-1}\{F(s)\}\]
+\begin{theorem}
+    Let $f(t)$ be a function such that 
+    \begin{enumerate}[label=(\roman*)]
+        \item $f$ is of exponential order $\alpha$, and 
+        \item $f$ is piecewise continuous on $[0, \infty)$. 
+    \end{enumerate}
+    Then the Laplace transform $\mathcal{L}\{f(t)\}$ exists for any $s \geq \alpha$. 
+\end{theorem}
+\begin{proof}
+    We can divide the improper integral over a subinterval $0 \leq t \leq T$, and $T \leq t < \infty$, for any $T$, 
+    \[\int_0^\infty e^{-st}f(t)dt = \int_0^T e^{-st}f(t)dt + \int_T^\infty e^{-st}f(t)dt\]
+    Since $f(t)$ is piecewise continuous on $0 \leq t \leq T$, this interval is compact and therefore $f$ is Riemann integrable over this region. (See proof in real analysis notes). Then, since $f(t)$ is $O(e^{\alpha t})$, there exists constants $M$ and $T$ such that $|f(t)| \leq Me^{\alpha t}$ for $t \geq T$, hence for the second integral we have  
+    \begin{align*}
+        \left|\int_T^\infty e^{-st}f(t)dt\right| &\leq \int_T^\infty e^{-st}|f(t)|dt\\
+        &\leq \int_T^\infty Me^{-st}e^{\alpha t}dt\\
+        &= \int_T^\infty Me^{(\alpha - s)t}dt\\
+    \end{align*}
+    Now this integral converges when $s \geq \alpha$, if $\alpha > s$, then $e^{(\alpha - s)} \rightarrow \infty$. Therefore, the integral 
+    \[\int_0^\infty e^{-st}f(t)dt\]
+    converges for $s \geq \alpha$.
+\end{proof}
+
+\begin{theorem}
+    The Laplace transform and its inverse are linear operators; that is, for arbitrary functions $f$ and $g$ with transformations $F$ and $G$, and an arbitrary constant $c$, we have 
+    \[\laplace{f+g} = \laplace{f} + \laplace{g}, \ \laplace{cf} = c\laplace{f}\]
+    \[\ilaplace{F+G} = \ilaplace{F} + \ilaplace{G}, \ \ilaplace{cF} = c\ilaplace{F}\]
+\end{theorem}
+
+\subsection{Laplace Transforms of Basic Functions}
+\begin{enumerate}
+    \item $f(t) = 1$, 
+    \[F(s) = \laplace{1} = \int_0^\infty e^{-st}dt = \lim_{L\rightarrow \infty} \left(-\frac{1}{s}e^{-sL} + \frac{1}{s}\right) = \frac{1}{s}\]
+    \item $f(t) = t$,
+    \[\laplace{t} = \int_0^\infty e^{-st}tdt = \lim_{L\rightarrow\infty} \left(-\frac{L}{s}e^{-sL} - \frac{1}{s^2}e^{-sL} + \frac{1}{s^2}\right) = \frac{1}{s^2}\]
+    \item $f(t) = t^n$ for some $n \in \nat$, then $\laplace{t^n} = \frac{n!}{s^{n+1}}$. Prove this by induction on $n$, 
+    \begin{proof}
+        For the base case take $n = 0$, then $t^0 = 1$, and $\laplace{1} = 1/s = 0!/s^{0+1}$. Suppose for $k \geq 1$, 
+        \[\laplace{t^k} = \frac{k!}{s^{k+1}}\]
+        We want to show 
+        \[\laplace{t^{k+1}} = \frac{(k+1)!}{s^{k+1 + 1}}\]
+        Notice that
+        \begin{align*}
+            \frac{d}{ds}\laplace{1} &= \frac{d}{ds}\int_0^\infty e^{-st}dt\\
+            &= \int_0^\infty \frac{d}{ds}e^{-st}dt\\
+            &= \int_0^\infty -te^{-st}dt\\
+            &= \laplace{-t} = -\laplace{t}\tag{Linearty $c = -1$.}
+        \end{align*}
+        Then, 
+        \begin{align*}
+            \laplace{t} &= - \frac{d}{ds}\laplace{1}\\
+            &= -\frac{d}{ds}\frac{1}{s^2}\\
+            &= \frac{1}{s^2}
+        \end{align*}
+        This pattern continues so forth, 
+        \begin{align*}
+            \laplace{t^2} &= -\frac{d}{ds}\laplace{t}\\
+            &= - \frac{1}{s^2}\\
+            &= \frac{2}{s^3} = \frac{2!}{s^{2 + 1}}
+        \end{align*}
+        By our induction hypothesis we assume this holds for $n = k$, then for $n = k+1$, 
+        \begin{align*}
+            \laplace{t^{k+1}} &= -\frac{d}{ds} \laplace{t^{k}}\\
+            &= -\frac{d}{ds} \frac{k!}{s^{k+1}}\\
+            &= (k+1)\frac{k!}{s^{k+1+1}}\\
+            &= \frac{(k+1)!}{s^{k+1+1}}
+        \end{align*}
+        Therefore $\laplace{t^n} = \frac{n!}{s^{n+1}}$ for all $n \in \nat$. 
+    \end{proof}
+    \item $f(t) = e^{at}$ for any $a \in \complex$. 
+    \[\laplace{e^{at}} = \int_0^\infty e^{at}e^{-st} = \int_0^\infty e^{(a-s)t}dt = \lim_{L\rightarrow \infty} \frac{1}{a-s}e^{(a-s)L} - \frac{1}{a-s}\]
+    As $L \rightarrow \infty$, $s \geq a$ so $e^{(a-s)L} \rightarrow 0$, 
+    \[\laplace{e^{at}} = \frac{1}{s-a}, \ s > a\]
+\end{enumerate}
+\noindent
+\textbf{Example.} Find 
+\[\ilaplace{\frac{2s+3}{s^2-2s+2}}\]
+\textbf{Solution.} We can decompose the fraction to get 
+\[\frac{2s+3}{s^2-2s + 2} = \frac{2s+3}{(s-1)(s+2)} = \frac{7}{s-2} - \frac{5}{s-1}\]
+Then, using linearity we get 
+\[\ilaplace{\frac{7}{s-2} - \frac{5}{s-1}} = 7\ilaplace{\frac{1}{s-2}} -5\ilaplace{\frac{1}{s-1}} = 7e^{2t} - 5e^t\]
+
+
 
 \end{document}
 

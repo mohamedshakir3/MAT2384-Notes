@@ -493,9 +493,10 @@ We then use a table of values to find the nodes and coefficients.
 \[x = \frac{b-a}{2}t + \frac{b+a}{2} = \frac{1}{2}t +\frac{1}{2}\]
 \[\frac{dx}{dt} = \frac{1}{2} \implies dx = \frac{dt}{2}\]
 \[\int_0^1 \sin(x^2) = \int_{-1}^1 \sin \left(\frac{(t+1)^2}{4}\right) \frac{1}{2}dt\]
-Then we can use Gaussian Quadrature of order 4 to estimate the value of the integral,
+Then we can use Gaussian Quadrature of order 4å to estimate the value of the integral,
 \begin{align*}
     \int_{-1}^1 \sin \left(\frac{(t+1)^2}{4}\right) \frac{1}{2}dt &\approx w_1f(t_1) + w_2f(t_2) + w_3(t_3) + w_4f(t_4)\\
-    &= 0.3479f(-0.8611) + 0.6521f(-0.3399) + 0.6521f(0.3399) + 0.3479f(0.8611)\\
+    &= 0.3479f(-0.8611) + 0.6521f(-0.3399)\\
+    &+0.6521f(0.3399) + 0.3479f(0.8611)\\
 \end{align*}
 \end{document} 
