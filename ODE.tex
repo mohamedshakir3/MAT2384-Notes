@@ -2076,8 +2076,106 @@ This integral converges.
 Then, using linearity we get 
 \[\ilaplace{\frac{7}{s-2} - \frac{5}{s-1}} = 7\ilaplace{\frac{1}{s-2}} -5\ilaplace{\frac{1}{s-1}} = 7e^{2t} - 5e^t\]
 
+\begin{theorem}
+    Let $a \in \real$, then 
+    \[\laplace{\cos(at)} = \frac{s}{s^2 + a^2} \iff \ilaplace{\frac{s}{s^2+a^2}} = \cos(at)\]
+    and 
+    \[\laplace{\sin(at)} = \frac{a}{s^2+a^2} \iff \ilaplace{\frac{a}{s^2+a^2}} = \sin(at)\]
+\end{theorem}
+\begin{proof}
+    This is easily verifiable from the definition of laplace transforms with $f(t) = \sin(at)$. 
+\end{proof}
+\noindent
+\textbf{Example.} The Laplace transform of $f(t) = -3e^{-2t} + \frac{1}{2}t^4 + 6\sin(4t)$ is 
+\[\laplace{-3e^{-2t} + \frac{1}{2}t^4 + 6\sin(4t)} = -3\laplace{e^{-2t}} + \frac{1}{2}\laplace{t^4} + 6\laplace{\sin(4t)}\]
+Then these are all known Laplace transforms and we find 
+\[\frac{-3}{s+2} + \frac{1}{2}\frac{4!}{s^5} + 6 \cdot \frac{4}{s^2 + 4^2}\]
+\textbf{Example.} Find 
+\[\ilaplace{\frac{2s+3}{s^2+2}}\]
+\textbf{Solution.} 
+\begin{align*}
+    \ilaplace{\frac{2s+3}{s^2+2}} &= 2\ilaplace{\frac{s}{s^2+2}} + 3\ilaplace{\frac{1}{s^2+2}}\\
+    &=  2\ilaplace{\frac{s}{s^2+2}} + \frac{3}{\sqrt{2}}\ilaplace{\frac{\sqrt{2}}{s^2+2}} \\
+    &= 2\cos(\sqrt{2}t) + \frac{3}{\sqrt{2}}\sin(\sqrt{2}t)
+\end{align*}
 
+\section{The Unit Step Function}
 
+\begin{definition}
+    Let $a > 0$. The unit step function at $t = a$, also known as the \emph{Heaviside} function, is denoted by $u(t-a)$ defined by 
+    \[u(t-a) = \begin{cases}
+        0 &  0 \leq t < a\\
+        1 & t \geq a 
+    \end{cases}\]
+\end{definition}
+
+We can compute the Laplace transform of this function 
+\begin{align*}
+    \laplace{u(t-a)} &= \int_0^\infty e^{-st} u(t-a) dt\\
+    &= \int_0^\infty e^{-st}u(t-a)dt + \int_a^\infty e^{-st}u(t-a)dt\\
+    &=\int_a^\infty e^{-st}dt\\
+    &= \lim_{L\rightarrow\infty} \left(-\frac{1}{s}e^{-sL} + \frac{1}{s}e^{-sa}\right) \\
+    &= \frac{e^{-as}}{s}
+\end{align*}
+So the Laplace transform for the Heaviside function is
+\[\laplace{u(t-a)} = \frac{e^{-as}}{s}, \ s > 0\]
+or equivalently 
+\[\ilaplace{\frac{e^{-as}}{s}} = u(t-a)\]
+\textbf{Example.} Compute 
+\[\laplace{\frac{2}{3}u(t-4) + \frac{1}{e^{3t}}}+\cos(t)\]
+\textbf{Solution.} 
+\begin{align*}
+    \laplace{\frac{2}{3}u(t-4) + \frac{1}{e^{3t}}}+\cos(t) &= \frac{2}{3}\laplace{u(t-4)} + \laplace{e^{-3t}} + \laplace{\cos t}\\
+    &= \frac{2}{3}\cdot \frac{e^{-4s}}{s} + \frac{1}{s + 3} + \frac{s}{s^2+1}
+\end{align*}
+\section{Dirac Delta Function}
+\begin{definition}
+    Let $a,k > 0$, define the function $f_{k,a}(t)$ as 
+    \[f_{k,a}(t) = \frac{1}{k}\left[u(t-a) - u(t-(a+k))\right] = \begin{cases}
+        0 & 0 \leq t < a\\
+        \frac{1}{k} & a \leq t < a + k\\
+        0 & t \geq a + k
+    \end{cases}\]
+    Then we define the Dirac delta function at $t = a$ as  
+    \[\delta(t-a) = \lim_{k\rightarrow 0} f_{k,a}(t) = \begin{cases}
+        0 & 0 \leq t < a \\
+        \infty  & a \leq t < a + k\\
+        0 & t \geq a + k 
+    \end{cases} \rightarrow \begin{cases}
+        0 & t \neq a\\
+        \infty & t = a
+    \end{cases}\]
+\end{definition}
+Then we can compute the Laplace transform for the Dirac delta function 
+\begin{align*}
+    \laplace{\delta(t-a)} &= \laplace{\lim_{k\rightarrow 0} \frac{1}{k}\left[u(t-a) - u(t-(a+k))\right] }\\
+    &= \lim_{k\rightarrow 0} \frac{1}{k} \laplace{u(t-a) + u(t-(a+k))}\\
+    &= \lim_{k\rightarrow 0} \frac{1}{k} \left[\frac{e^{-as}}{s} - \frac{e^{-(a+k)s}}{s}\right]\\
+    &= \lim_{k\rightarrow 0}\frac{e^{-as}}{s}\left[\frac{1-e^{-ks}}{k}\right]\\
+    &= \frac{e^{-as}}{s}\lim_{k\rightarrow 0}\left(\frac{1-e^{-ks}}{k}\right)\\
+    &= \frac{e^{-as}}{s}\lim_{k\rightarrow 0}\left(\frac{se^{-ks}}{1}\right)\tag{L'Hopital's Rule}\\
+    &= e^{-as}
+\end{align*}
+Therefore, the Laplace transform of the Dirac delta function is
+\[\laplace{\delta(t-a)} = e^{-as} \implies \ilaplace{e^{-as}} = \delta(t-a)\]
+\section{The Two Shifting Theorems}
+\begin{theorem}[First Shifting Theorem]
+    If $F(s) = \laplace{f(t)}$ and $a \in \real$, then 
+    \[F(s-a) = \laplace{e^{at}f(t)} \implies \ilaplace{F(s-a)} = e^{at}f(t)\]
+\end{theorem}
+\begin{proof}
+    The proof follows from the definition of the Laplace transform for $F(s-a)$, 
+    \begin{align*}
+        F(s-a) &= \int_0^\infty e^{-(s-a)t}f(t)dt\\
+        &= \int_0^\infty e^{-st}e^{at}f(t)dt\\
+        &= \laplace{e^{at}f(t)}
+    \end{align*}
+\end{proof}
+\noindent
+\textbf{Example.} Find 
+\[\laplace{e^{-2t}u(t-3)}\]
+\textbf{Solution.} Set $F(s) = \laplace{u(t-3)} = \frac{e^{-3s}}{s}$, then 
+\[\laplace{e^{-2t}u(t-3)} = F(s-2) = \frac{e^{-3(s+2)}}{s+2}\]
 \end{document}
 
 
