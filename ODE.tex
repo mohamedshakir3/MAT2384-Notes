@@ -2161,7 +2161,7 @@ Therefore, the Laplace transform of the Dirac delta function is
 \section{The Two Shifting Theorems}
 \begin{theorem}[First Shifting Theorem]
     If $F(s) = \laplace{f(t)}$ and $a \in \real$, then 
-    \[F(s-a) = \laplace{e^{at}f(t)} \implies \ilaplace{F(s-a)} = e^{at}f(t)\]
+    \[F(s-a) = \laplace{e^{at}f(t)} \iff \ilaplace{F(s-a)} = e^{at}f(t)\]
 \end{theorem}
 \begin{proof}
     The proof follows from the definition of the Laplace transform for $F(s-a)$, 
@@ -2175,7 +2175,106 @@ Therefore, the Laplace transform of the Dirac delta function is
 \textbf{Example.} Find 
 \[\laplace{e^{-2t}u(t-3)}\]
 \textbf{Solution.} Set $F(s) = \laplace{u(t-3)} = \frac{e^{-3s}}{s}$, then 
-\[\laplace{e^{-2t}u(t-3)} = F(s-2) = \frac{e^{-3(s+2)}}{s+2}\]
+\[\laplace{e^{-2t}u(t-3)} = F(s+2) = \frac{e^{-3(s+2)}}{s+2}\]
+\noindent
+\textbf{Example.} Find 
+\[\laplace{e^{-2t}\cos(3t)}\]
+\textbf{Solution.} Set $F(s) = \laplace{\cos(3t)} = \frac{s}{s^2 + 9}$. Then by the first shifting theorem, 
+\[\laplace{e^{-2}t\cos(3t)} = F(s + 2) = \frac{s+2}{s^2+4s+13}\] 
+
+\noindent
+\textbf{Example.} Find 
+\[\ilaplace{\frac{1}{(s+3)^6}}\]
+\textbf{Solution.} We know that 
+\[\ilaplace{\frac{1}{s^6}} = \frac{1}{5!} \ilaplace{\frac{1}{s^6}} = \frac{t^5}{5!}\]
+So, from the first shifting theorem with $a = -3$, we have 
+\[\ilaplace{\frac{1}{(s+3)^6}} = \frac{1}{5!}t^5e^{-3t}\]
+\noindent
+\textbf{Example.} Find 
+\[\ilaplace{\frac{2s+3}{s^3 + 5s^2 + 8s + 4}}\]
+\textbf{Solution.} Start by decomposing the fraction to get 
+\[\frac{2s+3}{s^3+5s^2+8s + 4} = \frac{2s+3}{(s+1)(s+2)^2} = \frac{1}{s+1} - \frac{1}{s+2}  + \frac{1}{(s+2)^2}\]
+Then, 
+\begin{align*}
+    \ilaplace{\frac{2s+3}{s^3+5s^2 + 8s+ 4}} &= \ilaplace{\frac{1}{s+1}} - \ilaplace{\frac{1}{s+2}} + \ilaplace{\frac{1}{(s+2)^2}}\\
+    &= e^{-t} - e^{-2t} + te^{-2t}
+\end{align*}
+Note that $i\laplace{\frac{1}{s^2}} = t$, so we apply first shifting theorem to get 
+\[\ilaplace{\frac{1}{(s+2)^2}} = te^{-2t}\]
+
+\begin{theorem}[Second Shifting Theorem]
+    Let $F(s) = \laplace{f(t)}$, and $a > 0$, then 
+    \[\laplace{u(t-a)f(t-a)} = e^{-as}F(s) \iff \ilaplace{e^{-as}F(s)} = u(t-a)f(t-a)\]
+\end{theorem}
+\noindent
+\textbf{Example.} Find
+\[\laplace{u(t-1)(-3t^2 + 2t-1)}\]
+\textbf{Solution.} From second shifting theorem, we have 
+\[f(t-1) = (-3t^2 + 2t - 1)\]
+Then we can compute $F(s) = \laplace{f(t)}$, so we must find $f(t) = f(t-1+1)$.
+\[f(t) = -3(t+1)^2 + 2(t+1) - 1 = -3t^2 -4t -2\]
+Now we can apply the second shifting theorem 
+\begin{align*}
+    \laplace{u(t-1)(-3t^2 + 2t - 1)} &= e^{-s}\laplace{-3t^2-4t-2}\\
+    &= e^{-s}\left(-3\frac{2}{s^3} - 4\frac{1}{s^2} - \frac{2}{s}\right)\\
+    &= e^{-s}\left(\frac{6}{s^3} - \frac{4}{s^2} - \frac{2}{s}\right)
+\end{align*}
+\noindent
+\textbf{Example.} Find 
+\[\laplace{u(t-\pi)\sin(t)}\]
+\textbf{Solution.} We can use the second shifting theorem wiht $a = \pi$, and 
+\[f(t-\pi) = \sin t \implies f(t) = \sin(t + \pi) = -\sin(t)\]
+Then 
+\[\laplace{(t-\pi) = e^{-\pi s} \laplace{-\sin t}} = -e^{-\pi s} \frac{1}{s^2+1}\]
+\noindent
+\textbf{Example.} Find 
+\[\ilaplace{\frac{e^{-s}}{s^2-5s+6}}\]
+\textbf{Solution.} Recall from the second shifting theorem for inverse laplace transforms, 
+\[\ilaplace{e^{-as}F(s)} = u(t-a)f(t-a)\]
+Here, $F(s) = \frac{1}{s^2 - 5s + 6}$, then 
+\[f(t) = \ilaplace{\frac{1}{(s-2)(s-3)}} = \ilaplace{\frac{1}{s-3}} - \ilaplace{\frac{1}{s-2}} = e^{3t} - e^{-t}\]
+Then, 
+\[\ilaplace{\frac{e^{-s}}{s^2-5s+16}} = u(t-1)\left(e^{3(t-1)} - e^{2(t-1)} \right)\]
+
+
+\section{Convolutions}
+\begin{definition}
+    Let $f(t)$,$g(t)$ be 2 functions on the positive real numbers, we define the \emph{convolution} of $f(t)$ and $g(t)$ as 
+    \[(f*g)(t) = \int_0^t f(x)g(t-x)dx \]
+\end{definition}
+Note that convolutions are commutative $f*g = g*f$, and associate $f*(g*h) = (f*g) * h$.
+
+\begin{theorem}[Convolution Thoerem]
+    Let $F(s) = \laplace{f(t)}$ and $G(s) = \laplace{g(t)}$. Then, 
+    \[\laplace{f(t)*g(t)} = F(s)\cdot G(s)\]
+    or equivalently
+    \[\ilaplace{F(s) \cdot G(s)} = f(t)*g(t)\]
+\end{theorem}
+
+\textbf{Example.} Find 
+\[\ilaplace{\frac{1}{s^2 + 4s - 5}}\]
+\textbf{Solution.} We can rewrite the fraction and use the convolution, 
+\begin{align*}
+    \ilaplace{\frac{1}{s^2 + 4s - 5}} &= \ilaplace{\frac{1}{s-1} \frac{1}{s+5}} \\
+    &= \ilaplace{\frac{1}{s-1}} * \ilaplace{\frac{1}{s+5}}\\
+    &= e^{t} * e^{-5t}\\
+    &= \int_0^t e^{t-x}e^{-5x}dx\\
+    &= \int_0^t e^{t}e^{-x}e^{-5x}dx\\
+    &= e^t \int_0^t e^{-6x}dx\\
+    &= e^t\left(-\frac{1}{6}e^{-6t} + 1\right)\\
+    &= \frac{1}{6}e^t - \frac{1}{6}e^{-5t}
+\end{align*}
+\noindent
+\textbf{Example.} Find 
+\[\laplace{(u(t-2)(-t^2+1))*\cos(3t)}\]
+\textbf{Solution.} From the convolution theorem, 
+\begin{align*}
+    \laplace{(u(t-2)(-t^2+1))*\cos(3t)} &= \laplace{(u(t-2)(-t^2+1))}\laplace{\cos(3t)}\\
+    &= e^{-2s}\laplace{-t^2-4t-3}\frac{s}{s^2+9}\\
+    &= e^{-2s}\left(-\frac{2}{s^3} - \frac{4}{s^2} - \frac{3}{s}\right)\frac{s}{s^2+9}
+\end{align*}
+
+
 \end{document}
 
 

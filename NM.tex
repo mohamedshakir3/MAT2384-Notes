@@ -469,10 +469,12 @@ We then use a table of values to find the nodes and coefficients.
         \hline
         1 & 0 & 2\\
         \hline
-        2 & $\pm \sqrt{\frac{1}{3}}$ & 1\\
+        2 & $-0.5773502692$ & 1\\
+        & $0.5773502692$ & 1\\
         \hline
-        3 & $\pm \sqrt{\frac{3}{5}}$ & $\frac{5}{9}$\\
-        & 0 & $\frac{8}{9}$\\
+        & $-0.7745966692$ & $0.555555556$\\
+        3 & 0 & 0.888888889\\
+        & $0.7745966692$ & $0.555555556$\\
         \hline
         & -0.8611363116 &0.3478548451\\
         4&-0.3399810436& 0.6521451549\\
@@ -499,4 +501,57 @@ Then we can use Gaussian Quadrature of order 4å to estimate the value of the in
     &= 0.3479f(-0.8611) + 0.6521f(-0.3399)\\
     &+0.6521f(0.3399) + 0.3479f(0.8611)\\
 \end{align*}
+
+
+
+
+\chapter{Numerical Methods to Solving First-Order IVP's}
+
+Given a first-order IVP 
+\[y' = f(x,y), y(x_0) = y_0\]
+The goal of this chapter is to explore techniques that allow us to estimate values of the function $y$. 
+
+\section{Euler Method}
+
+Given a step size between our $x$ values, Euler's method uses the formula 
+\[x_{n+1} = x_n + h\]
+\[y_{n+1} = y_n + hf(x_n, y_n)\]
+where $h$ is the given step size, and $y' = f(x,y)$ for the differential equation. \\[2ex]
+\textbf{Example.} Consider the IVP 
+\[y' = 2x + y, \ y(0) = -1\]
+Use Euler's method with a step size $h = 0.2$ to estimate the values of the function $y$ on the interval $[0,0.6]$. \\[1ex]
+
+\textbf{Solution.} We have $f(x,y) = 2x + y$, $x_0 = 0$, $y_0 = -1$, and $h = 0.2$. Now we can caluclate each step 
+\[x_1 = x_0 + h = 0.2\]
+\[y_1 = y_0 + h f(x_0,y_0) = -1 + 0.2(-1) = -1.2\]
+\[x_2 = x_1 + h = 0.4\]
+\[y_2 = y_1 + hf(x_1,y_1) = -1.2 + 0.2(2(0.2) - 1.2) = -1.36\]
+\[x_3 = x_2 + h = 0.6\]
+\[y_3 = y_2 + hf(x_2,y_2) = -1.36 + 0.2(2(0.4) - 1.36) = -1.472\]
+
+
+\section{Improved Euler Method}
+
+The improved Euler method consists of using Euler's method to "predict" the value for $y$, then "correct" it at each step to have a more accurate value. Given a first order IVP 
+\[y' = f(x,y), \ y(x_0) = y_0\]
+We have the $x$ values at each step 
+\[x_{n+1} = x_n + h\]
+Then the $y$ values are 
+\[y^c_{n+1} = y_n^c + \frac{h}{2}\left[f(x_n,y_n^c) + f(x_{n+1}, y^p_{n+1})\right]\]
+where $y^p$ is the predicted $y$ value obtained from the standard Euler method.\\[2ex]
+
+\textbf{Example.} Consider the previous IVP with the improved Euler method, 
+\[y' = 2x+y, \ y(0) = -1\]
+We're given $f(x,y) = 2x + y$, $h = 0.2$, $y_0 = -1$, and $x_0 = 0$, then 
+\[x_1 = x_0 + h = 0.2\]
+\[y_1^p = y_0 + h f(x_0, y_0) = -1 + 0.2(-1) = -1.2\] 
+\[y_1^c = y_0 + \frac{h}{2}\left[f(x_0,y_0) + f(x_1,y_1^p)\right] = -1 + 0.1 \left[-1 + 2(0.2) - 1.2\right] = -1.18\]
+\[x_2 = x_1 + h = 0.4\]
+\[y_2^p = y_1^c + h f(x_1, y_1^c) = -1.18 + 0.2(2(0.2) - 1.18) = -1.336\]
+\[y_2^c = y_1^c + \frac{h}{2}\left[f(x_1,y_1^c) + f(x_2,y_2^p)\right] = -1.18 + 0.1\left[2(0.2) - 1.18 + 2(0.4)\right] = -1.3116\]
+\[x_3 = x_2 + h = 0.6\]
+\[y_3^p = y_2^c + hf(x_2, y_2^c) = -1.3116 + 0.2(2(0.4) - 1.3116) = -1.41392\]
+\[y_3^c = -1.3116 + 0.1\left[2(0.4) - 1.18 + 2(0.6) - 1.413192\right] = -1.384152\]
+
+
 \end{document} 
