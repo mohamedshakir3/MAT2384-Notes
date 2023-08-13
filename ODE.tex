@@ -2273,7 +2273,170 @@ Note that convolutions are commutative $f*g = g*f$, and associate $f*(g*h) = (f*
     &= e^{-2s}\laplace{-t^2-4t-3}\frac{s}{s^2+9}\\
     &= e^{-2s}\left(-\frac{2}{s^3} - \frac{4}{s^2} - \frac{3}{s}\right)\frac{s}{s^2+9}
 \end{align*}
+\noindent
+\textbf{Example.} Find 
+\[\ilaplace{\frac{1}{(s^2+1)^2}}\]
+\textbf{Solution.} We can use the convolution theorem 
+\begin{align*}
+    \ilaplace{\frac{1}{(s^2+1)^2}} &= \ilaplace{\frac{1}{s^2+1}\frac{1}{s^2+1}}\\
+    &= \ilaplace{\frac{1}{s^2 + 1}} * \ilaplace{\frac{1}{s^2+1}}\\
+    &= \sin t * \sin t\\
+    &= \int_0^t \sin x \sin (t - x)dx\\
+    &= \int_0^t \sin x (\sin t \cos x - \cos t \sin x)dx\\
+    &= \int_0^t \sin x \sin t \cos x - \sin x\cos t \sin x dx\\
+    &= \sin t\int_0^t \sin x \cos xdx - \cos t \int_0^t \sin^2 x dx \\
+    &= \frac{\sin t}{2}\int_0^t \sin(2x)dx - \frac{\cos t}{2}\int_0^t 1 - \cos (2x)\\
+    &= \frac{\sin t}{2}\left[-\frac{\cos(2x)}{2}\right]_0^t - \frac{\cos t}{2}\left[x - \frac{\sin(2x)}{2}\right]_0^t\\
+    &= \frac{\sin t}{2}\left[-\frac{\cos(2t)}{2} + \frac{1}{2}\right] - \frac{\cos t}{2}\left[t - \frac{\sin(2t)}{2}\right]\\
+    &= -\frac{\sin t}{4} \cos(2t) + \frac{1}{4}\sin t - \frac{1}{2}t \cos t + \frac{1}{4} \cos t\sin(2t)\\
+    &= \frac{1}{2}\sin t - \frac{1}{2}t\cos t
+\end{align*}
 
+\noindent
+
+
+\textbf{Example.} Find 
+\[\laplace{\left(u(t-2)\left(-\frac{1}{2}t^2 + t\right)\right)*\sin(3t)}\]
+\textbf{Solution.} By the convolution theorem, 
+\[\laplace{\left(u(t-2)\left(-\frac{1}{2}t^2 + t\right)\right)*\sin(3t)} = \laplace{u(t-2)\left(-\frac{1}{2}t^2 + t\right)}\laplace{\sin(3t)}\]
+From the second shifting theorem, 
+\[f(t-2) = -\frac{1}{2}t^2 + t \implies f(t) = -\frac{1}{2}(t+2)^2 + t + 2 = -\frac{1}{2}t^2 - t\]
+So, 
+\[\laplace{u(t-2)f(t-2)} = e^{-2s}\laplace{f(t)} = -e^{2s}\left(\frac{1}{s^3} + \frac{1}{s^2}\right)\]
+Thus, 
+\[\laplace{\left(u(t-2)\left(-\frac{1}{2}t^2 + t\right)\right)*\sin(3t)} = -e^{-2s}\left(\frac{1}{s^3} - \frac{1}{s^2}\right)\frac{3}{s^2 + 9} \]
+\begin{theorem}
+    Let $F(s) = \laplace{f(t)}$, and $n \geq 1$ be an integer, then 
+    \[\laplace{t^nf(t)} = (-1)^nF^{(n)}(s)\]
+\end{theorem}
+\begin{proof}
+    TBD.
+\end{proof}
+\noindent
+\textbf{Example.} Find 
+\[\laplace{t^2\cos(2t)}\]
+\textbf{Solution.}
+Using the above theorem, set 
+\[F(s) = \laplace{\cos(2t)} = \frac{s}{s^2 + 4}\]
+So, 
+\[\laplace{t^2\cos(2t)} = (-1)^2F''(s) = -\frac{2s(s^2+4)-4s(-s^2+4)}{(s^2+4)^3}\]
+\noindent
+\textbf{Example.} Find 
+\[\laplace{te^{-2t}\cos(3t)}\]
+\textbf{Solution.} To be able to use the theorem, first we have to find 
+\[F(s) = \laplace{e^{-2t}\cos(3t)}\]
+Using first shifting theorem, 
+\[F(s) = \frac{s+2}{(s+2)^2 + 9} =  \frac{s + 2}{s^2 + 4s + 13}\]
+Now using the above theorem, 
+\[\laplace{te^{-2t}\cos(3t)} = (-1)^1F'(s) = -\frac{(s^2+4s+13)-(s+2)(2s+4)}{(s^2+4s+13)^2}\]
+
+\begin{theorem}
+    Let $f(t)$ be a function such that 
+    \[\lim_{t\rightarrow 0} \frac{f(t)}{t} = L < \infty\]
+    If $F(s) = \laplace{f(t)}$, then
+    \[\laplace{\frac{f(t)}{t}} = \int_s^\infty F(x)dx\]
+\end{theorem}
+\noindent
+\textbf{Example.} Find 
+\[\laplace{\frac{\sin t}{t}}\]
+\textbf{Solution.} We can check that the limit exists 
+\[\lim_{t\rightarrow 0}\frac{\sin t}{t} = \frac{0}{0} \implies \lim_{t\rightarrow 0} \frac{\sin t}{t} = \lim_{t\rightarrow 0}\frac{\cos t}{1} = 1 < \infty\]
+Then applying the theorem, 
+\begin{align*}
+    \laplace{\frac{\sin t}{t}} &= \int_s^\infty \frac{1}{x^2 + 1}dx\\
+    &= \lim_{L \rightarrow \infty} \int_s^L \frac{1}{x^2+1}dx\\
+    &= \lim_{L\rightarrow \infty} \left[\arctan x\right]_s^L \\
+    &= \lim_{L \rightarrow \infty} (\arctan L - \arctan s )\\
+    &= \frac{\pi}{2} - \arctan s
+\end{align*}
+\noindent
+
+\textbf{Example.} Find 
+\[\laplace{\frac{e^t - 1}{t}}\]
+\textbf{Solution.} Same as the previous example, 
+\[\lim_{t\rightarrow 0} \frac{e^t - 1}{t} = \frac{0}{0} \implies \lim_{t\rightarrow 0}\frac{e^{t}-1}{t} = \lim_{t\rightarrow 0}\frac{e^t}{1} = 1\]
+Then applying the theorem, 
+\begin{align*}
+    \laplace{\frac{e^t - 1}{t}} &= \int_s^\infty \left(\frac{1}{x-1} -  \frac{1}{x}\right)dx\\
+    &= \lim_{L\rightarrow \infty} \int_s^L \left(\frac{1}{x-1} - \frac{1}{x}\right)dx\\
+    &= \lim_{L\rightarrow\infty}\left[\ln(x-1) - \ln x\right]_s^L\\
+    &= \lim_{L \rightarrow \infty} \left(\ln\left(\frac{L-1}{L}\right) - \ln\left(\frac{s-1}{s}\right)\right)\\
+    &= - \ln\left(\frac{s-1}{s}\right)\\
+    &= \ln\left(\frac{s}{s-1}\right)
+\end{align*}
+
+\subsection{Laplace Transforms of Integerals}
+Given a function defined as 
+\[f(t) = \int_0^t g(x)dx\]
+our goal is to find the laplace transform of $f(t)$. 
+
+\begin{theorem}
+    Let $g$ be an integral function on $[0,t]$, for some $t \in \real$, with $F(s) = \laplace{g}$. Then 
+    \[\laplace{\int_0^t g(x)dx} = \frac{F(s)}{s} \] 
+\end{theorem}
+
+\textbf{Example.} Find 
+\[f(t) = \int_0^t \sin(2x)dx\]
+\textbf{Solution.} Simply from our theorem, 
+\[\laplace{f(t)} = \frac{\frac{2}{s^2+4}}{s} = \frac{2}{s(s^2+4)}\]
+
+\section{Using Laplace Transforms to Solve IVP's}
+
+\begin{theorem}
+    Let $y(t)$ be a differentiable function, then 
+    \[\laplace{y'(t)} = s\laplace{y(t)} - y(0)\]
+\end{theorem}
+\begin{proof}
+    From the definition, 
+    \[
+        \laplace{y'(t)} = \int_0^\infty e^{-st}y'(t)dt = \lim_{L\rightarrow \infty}\int_0^L e^{-st}y'(t)dt
+    \]
+    Solving this integtral, we get 
+    \[\int e^{-st}y'(t)dt = e^{-st}y(t) + s\int e^{-st}y(t)dt \]
+    Computing the limits gives us 
+    \[\int_0^L e^{-st}y'(t)dt = e^{-sL}y(L) - y(0) + s\int_0^L e^{-st}y(t)dt\]
+    Now taking the limit as $L \rightarrow \infty$, 
+    \[\laplace{y'(t)} = \lim_{L\rightarrow\infty} e^{-sL}y(L) - y(0) + s\int_0^L e^{-st}y(t)dt = s\int_0^\infty e^{-st}y(t)dt - y(0)\]
+    So 
+    \[\laplace{y'(t)} = s\laplace{y(t)} - y(0)\]
+\end{proof}
+Note that this can be extended to each order derivative, 
+\[\laplace{y''(t)} = s\laplace{y'(t)} - y'(0) = s\left(s\laplace{y(t)} - y(0)\right) - y(0)\]
+\[\laplace{y'''(t)} = s^3\laplace{y(t)} - s^2y(0) - sy'(0)-y''(0)\]
+In general, 
+\[\laplace{y^{(n)}(t)} = s^n\laplace{y(t)} - s^{n-1}y(0) - s^{n-2}y'(0) - \cdots - y^{(n-1)}(0)\]
+\subsection{Steps to Solving IVP}
+\begin{enumerate}
+    \item Set $Y = \laplace{y(t)}$. 
+    \item Apply the laplace transform to both sides of the ODE. 
+    \item Isolate $Y$ from the after taking the laplace transform. 
+    \item Then
+    \[y(t) = \ilaplace{Y}\]
+\end{enumerate}
+
+\noindent
+\textbf{Example.} Solve the IVP 
+\[y'' - y = \delta(t-2), \ y(0) = 0, \ y'(0) = 1\]
+
+\textbf{Solution.} Set $Y(s) = \laplace{y(t)}$, then take the laplace transform of the ODE, 
+\begin{align*}
+    &\laplace{y''} - \laplace{y} = \laplace{\delta(t-2)}\\
+    \implies& s^2Y - sY(0) - y'(0) - Y = e^{-2s}\\
+    \implies& s^2Y - 1 - Y = e^{-2s}\\
+    \implies& (s^2 - 1)Y = e^{-2s} + 1\\
+    \implies& Y = \frac{e^{-2s} + 1}{s^2-1}
+\end{align*}
+Now we compute the inverse laplace transform, 
+\begin{align*}
+    \ilaplace{Y} &= \ilaplace{\frac{e^{-2s} + 1}{s^2 - 1}}\\
+    &= \ilaplace{\frac{e^{-2s}}{s^2-1}} + \ilaplace{\frac{1}{s^2-1}}\\
+    &= \ilaplace{\frac{1}{(s-1)(s+1)}} + \ilaplace{\frac{e^{-2s}}{s^2-1}}\\
+    &= \frac{1}{2}\ilaplace{\frac{1}{s+1}} - \frac{1}{2}\ilaplace{\frac{1}{s-1}} + \ilaplace{\frac{e^{-2s}}{s^2-1}}\\
+    &= \frac{1}{2}e^t - \frac{1}{2}e^{-t} + \ilaplace{\frac{e^{-2s}}{s^2-1}}\\
+    &= \frac{1}{2}e^{t} - \frac{1}{2}e^{-t} + u(t-2)\left[\frac{1}{2}e^{t-2} - \frac{1}{2}e^{-(t-2)}\right]\\
+\end{align*}
+Therefore, the solution to the IVP is 
+\[y(t) = \frac{1}{2}e^{t} - \frac{1}{2}e^{-t} + u(t-2)\left[\frac{1}{2}e^{t-2} - \frac{1}{2}e^{-(t-2)}\right]\]
 
 \end{document}
 
