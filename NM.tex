@@ -10,6 +10,13 @@
 
 \title{MAT 2384: Numerical Methods Lecture Notes}
 \author{Last Updated:}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
 
 \begin{document}
 
@@ -540,6 +547,7 @@ Then the $y$ values are
 \[y^c_{n+1} = y_n^c + \frac{h}{2}\left[f(x_n,y_n^c) + f(x_{n+1}, y^p_{n+1})\right]\]
 where $y^p$ is the predicted $y$ value obtained from the standard Euler method.\\[2ex]
 
+\noindent
 \textbf{Example.} Consider the previous IVP with the improved Euler method, 
 \[y' = 2x+y, \ y(0) = -1\]
 We're given $f(x,y) = 2x + y$, $h = 0.2$, $y_0 = -1$, and $x_0 = 0$, then 
@@ -553,5 +561,47 @@ We're given $f(x,y) = 2x + y$, $h = 0.2$, $y_0 = -1$, and $x_0 = 0$, then
 \[y_3^p = y_2^c + hf(x_2, y_2^c) = -1.3116 + 0.2(2(0.4) - 1.3116) = -1.41392\]
 \[y_3^c = -1.3116 + 0.1\left[2(0.4) - 1.18 + 2(0.6) - 1.413192\right] = -1.384152\]
 
+\section{Runge-Kutta Method of Order 4}
 
+Given a first order ODE 
+\[y' = f(x,y); \ y(x_0) = y_0\]
+In the improved Euler method, we had "2 steps" with "predicting" and "correcting" each term. The Runge-Kutta method of order 4 concists of "4 steps" to compute $y_{n+1}$. The formula is as follows. Note that the step size is given as $h$, 
+\[y' = f(x,y) ; \ y(x_0) = y_0\]
+\[x_{n+1} = x_n + h\]
+\[k_1 = hf(x_n,y_n)\]
+\[k_2 = hf\left(x_n + \frac{1}{2}h, y_n + \frac{1}{2}k_1\right)\]
+\[k_3 = hf\left(x_n + \frac{1}{2}h, y_n + \frac{1}{2}k_2\right)\]
+\[k_4 = hf\left(x_n + h, y_n + k_3\right)\]
+\[y_{n+1} = y_n + \frac{1}{6}(k_1 + 2k_2 + 2k3 + k_4)\]
+
+\noindent
+\textbf{Example.} Conisder the IVP 
+\[y' = y - x^2 + 1; \ y(0) = \frac{1}{2}\]
+Use Runge-Kutta Method of Order 4 to estimate the values of the function $y$, on the interval $[0,1]$, using a step size $h = 0.5$.\\[-2ex]
+
+\noindent
+\textbf{Solution.}
+We have $x_0 = 0$, and $y_0 = \frac{1}{2}$, and $f(x,y) = y -x^2 + 1$. Now we can compute with a step size $h = 0.5$,
+\begin{align*}
+    x_1 &= x_0 + h = 0.5 \\
+    k_1 &= hf(x_0, y_0) = 0.5(\frac{1}{2} - 0 + 1) = 0.75\\
+    k_2 &= hf\left(x_0 + \frac{1}{2}h, y_0 + \frac{1}{2}k_1\right) = 0.5f(0.25,0.875) = 0.90625\\
+    k_3 &= hf\left(x_0 + \frac{h}{2}, y_0 + \frac{1}{2}k_2\right) = 0.5f(0.25, 0.953125) = 0.9453125\\
+    k_3 &= hf\left(x_0 + h, y_0 + k_3\right) = 0.5f(0.5, 1.4453125) = 1.09765625\\
+\end{align*}
+Then, 
+\[y_1 = y_0 + \frac{1}{6}(k_1 + 2k_2 + 3k_2 + k_4) = 1.4251306\]
+So we get the new point 
+\[(x_1,y_1) = (0.5, 1.4251302)\]
+Then we continue 
+\begin{align*}
+    x_2 &= x_1 + h = 1\\
+    k_1 &= hf(x_1, y_1) = 1.087561 \\
+    k_2 &= hf\left(x_1 + \frac{1}{2}h, y_1 + \frac{1}{2}k_1\right) = 1.2032014\\
+    k_3 &= hf\left(x_1 + \frac{1}{2}h, y_1 + \frac{1}{2}k_2\right) = 1.2321167\\
+    k_4 &= hf(x_1 + h, y_1 + k_3) = 1.3286235\\
+    y_2 &= y_1 + \frac{1}{6}(k_1 + 2k_2 + 3k_2 + k_4) = 2.6396027
+\end{align*}
+This gives us our final point 
+\[(x_2, y_2) = (1, 2.6396027)\]
 \end{document} 

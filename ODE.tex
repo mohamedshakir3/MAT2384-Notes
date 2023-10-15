@@ -7,6 +7,13 @@
 \pgfplotsset{compat=1.18}
 
 \newcommand{\powerset}[0]{\mathcal{P}}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
 
 \title{MAT 2384: Ordinary Differentials Lecture Notes}
 \author{Last Updated:}
@@ -2293,8 +2300,6 @@ Note that convolutions are commutative $f*g = g*f$, and associate $f*(g*h) = (f*
 \end{align*}
 
 \noindent
-
-
 \textbf{Example.} Find 
 \[\laplace{\left(u(t-2)\left(-\frac{1}{2}t^2 + t\right)\right)*\sin(3t)}\]
 \textbf{Solution.} By the convolution theorem, 
@@ -2305,13 +2310,11 @@ So,
 \[\laplace{u(t-2)f(t-2)} = e^{-2s}\laplace{f(t)} = -e^{2s}\left(\frac{1}{s^3} + \frac{1}{s^2}\right)\]
 Thus, 
 \[\laplace{\left(u(t-2)\left(-\frac{1}{2}t^2 + t\right)\right)*\sin(3t)} = -e^{-2s}\left(\frac{1}{s^3} - \frac{1}{s^2}\right)\frac{3}{s^2 + 9} \]
-\begin{theorem}
+\begin{theorem}[Multiplication by $t^n$]
     Let $F(s) = \laplace{f(t)}$, and $n \geq 1$ be an integer, then 
     \[\laplace{t^nf(t)} = (-1)^nF^{(n)}(s)\]
 \end{theorem}
-\begin{proof}
-    TBD.
-\end{proof}
+
 \noindent
 \textbf{Example.} Find 
 \[\laplace{t^2\cos(2t)}\]
@@ -2327,10 +2330,10 @@ So,
 \[F(s) = \laplace{e^{-2t}\cos(3t)}\]
 Using first shifting theorem, 
 \[F(s) = \frac{s+2}{(s+2)^2 + 9} =  \frac{s + 2}{s^2 + 4s + 13}\]
-Now using the above theorem, 
-\[\laplace{te^{-2t}\cos(3t)} = (-1)^1F'(s) = -\frac{(s^2+4s+13)-(s+2)(2s+4)}{(s^2+4s+13)^2}\]
+Now using the multiplication by $t^n$ theorem, 
+\[\laplace{te^{-2t}\cos(3t)} = (-1)^1F'(s) = -\frac{(s^2+4s+13)-(s+2)(2s+4)}{(s^2+4s+13)^2} = \frac{s^2+4s-5}{(s^2+4s+13)^2}\]
 
-\begin{theorem}
+\begin{theorem}[Division by $t$]
     Let $f(t)$ be a function such that 
     \[\lim_{t\rightarrow 0} \frac{f(t)}{t} = L < \infty\]
     If $F(s) = \laplace{f(t)}$, then
@@ -2343,14 +2346,14 @@ Now using the above theorem,
 \[\lim_{t\rightarrow 0}\frac{\sin t}{t} = \frac{0}{0} \implies \lim_{t\rightarrow 0} \frac{\sin t}{t} = \lim_{t\rightarrow 0}\frac{\cos t}{1} = 1 < \infty\]
 Then applying the theorem, 
 \begin{align*}
-    \laplace{\frac{\sin t}{t}} &= \int_s^\infty \frac{1}{x^2 + 1}dx\\
+    \laplace{\frac{\sin  t}{t}} &= \int_s^\infty \frac{1}{x^2 + 1}dx\\
     &= \lim_{L \rightarrow \infty} \int_s^L \frac{1}{x^2+1}dx\\
     &= \lim_{L\rightarrow \infty} \left[\arctan x\right]_s^L \\
     &= \lim_{L \rightarrow \infty} (\arctan L - \arctan s )\\
     &= \frac{\pi}{2} - \arctan s
 \end{align*}
-\noindent
 
+\noindent
 \textbf{Example.} Find 
 \[\laplace{\frac{e^t - 1}{t}}\]
 \textbf{Solution.} Same as the previous example, 
@@ -2375,6 +2378,7 @@ our goal is to find the laplace transform of $f(t)$.
     \[\laplace{\int_0^t g(x)dx} = \frac{F(s)}{s} \] 
 \end{theorem}
 
+\noindent
 \textbf{Example.} Find 
 \[f(t) = \int_0^t \sin(2x)dx\]
 \textbf{Solution.} Simply from our theorem, 
@@ -2408,8 +2412,8 @@ In general,
 \subsection{Steps to Solving IVP}
 \begin{enumerate}
     \item Set $Y = \laplace{y(t)}$. 
-    \item Apply the laplace transform to both sides of the ODE. 
-    \item Isolate $Y$ from the after taking the laplace transform. 
+    \item Apply the Laplace transform to both sides of the ODE. 
+    \item Isolate $Y$ after taking the Laplace transform. 
     \item Then
     \[y(t) = \ilaplace{Y}\]
 \end{enumerate}
@@ -2437,6 +2441,76 @@ Now we compute the inverse laplace transform,
 \end{align*}
 Therefore, the solution to the IVP is 
 \[y(t) = \frac{1}{2}e^{t} - \frac{1}{2}e^{-t} + u(t-2)\left[\frac{1}{2}e^{t-2} - \frac{1}{2}e^{-(t-2)}\right]\]
+
+\noindent
+\textbf{Example.} Solve the following IVP 
+\[y'' + 6y' + 9y = \begin{cases}
+    0 & 0 \leq t < 2\\
+    e^{-3t} & t \geq 0
+\end{cases}, \ y(0) = 1, \ y'(0) = 0\]
+
+\noindent
+\textbf{Solution.} Notice that the right side of the equation is $e^{-3t}u(t-2)$. So we can rewrite the ODE as 
+\[y'' + 6y' + 9y = e^{-3t}u(t-2)\]
+Applying the laplace transform to both sides, 
+\begin{align*}
+  &\laplace{y''} + 6\laplace{y'} + 9\laplace{y} = \laplace{e^{-3t}u(t-2)}\\
+  \implies & s^2Y - sy(0) - y'(0) + 6(sY - y(0)) + 9Y= \frac{e^{-2(s+3)}}{s+3}\\
+  \implies & (s^2 + 6s + 9)Y =  s + 6 + \frac{e^{-2(s+3)}}{s+3}\\
+  \implies & Y = \frac{s+6}{s^2 + 6s + 9} + \frac{e^{-2(s+3)}}{(s+3)(s^2+6s+9)}\\
+  \implies & Y = \frac{s+6}{(s+3)^2} + \frac{e^{-2(s+3)}}{(s+3)^3}\\
+\end{align*}
+Now we can compute the inverse laplace transform of $Y$, 
+\[y(t) = \ilaplace{Y} = \ilaplace{\frac{s+6}{(s+3)^2}} + \ilaplace{\frac{e^{-2(s+3)}}{(s+3)^3}}\]
+\[\ilaplace{\frac{s+6}{(s+3)^2}} = \ilaplace{\frac{1}{s+3}} + 3\ilaplace{\frac{1}{(s+3)^2}} = e^{-3t} + 3te^{-3t}\]
+\begin{align*}
+    \ilaplace{\frac{e^{-2(s+3)}}{(s+3)^3}} &= \ilaplace{\frac{e^{-2s}e^{-6}}{(s+3)}}\\
+    &= e^{-6}\ilaplace{\frac{e^{-2s}}{(s+3)^3}}\\
+    &= e^{-6}\ilaplace{e^{-2s}\frac{1}{(s+3)^3}} \\
+    f(t) &= \ilaplace{\frac{1}{(s+3)^3}}\tag{Apply 2\textsuperscript{nd} shifting theorem}\\
+    &= \frac{1}{2}\ilaplace{\frac{2!}{(s+3)^3}}\\
+    &= \frac{1}{2}t^2e^{-3t}\\
+\end{align*}
+So, 
+\[\ilaplace{\frac{e^{-2(s+3)}}{(s+3)^3}} = e^{-6}u(t-2)\frac{1}{2}(t-2)^2e^{-3(t-2)}\]
+Thus, 
+\[y(t) = e^{-3t} + 3te^{-3t} + e^{-6}u(t-2)\frac{1}{2}(t-2)^2e^{-3(t-2)}\]
+\noindent
+\textbf{Example.} Solve the following IVP 
+\[y'' + y' - 6y = \delta(t-1) + 2t; \ y(0) = 1, \ y'(0) = -2\]
+\noindent
+\textbf{Solution.} Let $Y = \laplace{y(t)}$, then 
+\begin{align*}
+    &\laplace{y''} + \laplace{y'} - 6\laplace{y} = \laplace{\delta(t-1)} + 2\laplace{t}\\
+    \implies& s^2Y - sy(0) - y'(0) + sY - y(0) - 6Y = e^{-s} + \frac{2}{s^2}\\
+    \implies& (s^2+s-6)Y = s+1 + e^{-s} + \frac{2}{s^2}\\
+    \implies& Y = \frac{s+1}{s^2 + s - 6} + \frac{e^{-2s}}{s^2+s-6} + \frac{2}{s^2(s^2+s-6)}
+\end{align*}
+Now, 
+\[y(t) = \ilaplace{\frac{s+1}{s^2+s-6}} + \ilaplace{\frac{e^{-s}}{s^2+s-6}} + \ilaplace{\frac{2}{s^2(s^2+6-6)}}\]
+\begin{align*}
+    \ilaplace{\frac{s+1}{s^2+s-6}} &= \ilaplace{\frac{s+2}{(s-2)(s+3)}}\\
+    &= \frac{3}{5}\ilaplace{\frac{1}{s-2}} + \frac{2}{5}\ilaplace{\frac{1}{s+3}}\tag{Partial Fractions}\\
+    &= \frac{3}{5}e^{2t} + \frac{2}{5}e^{-3t}\\
+\end{align*}
+\[
+    \ilaplace{\frac{e^{-s}}{s^2+s-6}} = \ilaplace{e^{-s}\frac{1}{s^2+s-6}}
+\]
+From second shifting theorem with $f(t) = \ilaplace{\frac{1}{s^2+s-6}}$,
+\begin{align*}
+    f(t) &= \ilaplace{\frac{1}{s^2+s-6}}\\
+    &= \frac{1}{5}\ilaplace{\frac{1}{s-2}} - \frac{1}{5}\ilaplace{s+3}\tag{Partial Fractions}\\
+    &= \frac{1}{5}e^{2t} - \frac{1}{5}e^{-3t}
+\end{align*}
+By the second shifting theorem, 
+\[\ilaplace{\frac{e^{-s}}{s^2+s-6}} = u(t-1)\left(\frac{1}{5}e^{2(t-1)} - \frac{1}{5}e^{-3(t-1)}\right)\]
+Now finally, 
+\begin{align*}
+    \ilaplace{\frac{2}{s^2(s^2+s-6)}} &=  -\frac{1}{18}\ilaplace{\frac{1}{s}} - \frac{1}{3}\ilaplace{\frac{1}{s^2}} + \frac{1}{10}\ilaplace{\frac{1}{s-2}} - \frac{2}{45}\ilaplace{\frac{1}{s+3}}\\
+    &= -\frac{1}{18} - \frac{1}{3}t + \frac{1}{10}e^{2t} - \frac{2}{45}e^{-3t}\\
+\end{align*}
+Putting these three together, we get 
+\[y(t) = \frac{3}{5}e^{2t} + \frac{2}{5}e^{-3t} + u(t-1)\left(\frac{1}{5}e^{2(t-1)} - \frac{1}{5}e^{-3(t-1)}\right) -\frac{1}{18} - \frac{1}{3}t + \frac{1}{10}e^{2t} - \frac{2}{45}e^{-3t}\]
 
 \end{document}
 
