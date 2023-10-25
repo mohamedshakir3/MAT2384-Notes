@@ -819,27 +819,27 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
             \end{redbox}\\[-2ex]
         \end{blackbox}
         \begin{blackbox}{Laplace Transforms}
-            \begin{bluebox}{Computing Laplace Transforms}
-                {\footnotesize
-                \textbf{Example.} Find \\[-4ex]
-                \[\ilaplace{\frac{2s+3}{s^3 + 5s^2 + 8s + 4}}\]
-                \textbf{Solution.} Start by decomposing the fraction to get \\[-2ex]
-                \begin{align*}
-                    \frac{2s+3}{s^3+5s^2+8s + 4} &= \frac{2s+3}{(s+1)(s+2)^2}\\
-                    &=\frac{1}{s+1} - \frac{1}{s+2}  + \frac{1}{(s+2)^2}
-                \end{align*}
-                \vspace{-4ex}
+        %     \begin{bluebox}{Computing Laplace Transforms}
+        %         {\footnotesize
+        %         \textbf{Example.} Find \\[-4ex]
+        %         \[\ilaplace{\frac{2s+3}{s^3 + 5s^2 + 8s + 4}}\]
+        %         \textbf{Solution.} Start by decomposing the fraction to get \\[-2ex]
+        %         \begin{align*}
+        %             \frac{2s+3}{s^3+5s^2+8s + 4} &= \frac{2s+3}{(s+1)(s+2)^2}\\
+        %             &=\frac{1}{s+1} - \frac{1}{s+2}  + \frac{1}{(s+2)^2}
+        %         \end{align*}
+        %         \vspace{-4ex}
 
-                Then, \\[-3ex]
-                % \[\]
-                % \[= \ilaplace{\frac{1}{s+1}} - \ilaplace{\frac{1}{s+2}} + \ilaplace{\frac{1}{(s+2)^2}}\]
-                % \[=e^{-t} - e^{-2t} + te^{-2t}\]
-                \[
-                    \ilaplace{\frac{2s+3}{s^3+5s^2 + 8s+ 4}} =  e^{-t} - e^{-2t} + te^{-2t}
-                \]
-                \[\ilaplace{\frac{1}{(s+2)^2}} = te^{-2t}\tag{$1^{st}$ shift. theorem.}\]
-                }
-            \end{bluebox}
+        %         Then, \\[-3ex]
+        %         % \[\]
+        %         % \[= \ilaplace{\frac{1}{s+1}} - \ilaplace{\frac{1}{s+2}} + \ilaplace{\frac{1}{(s+2)^2}}\]
+        %         % \[=e^{-t} - e^{-2t} + te^{-2t}\]
+        %         \[
+        %             \ilaplace{\frac{2s+3}{s^3+5s^2 + 8s+ 4}} =  e^{-t} - e^{-2t} + te^{-2t}
+        %         \]
+        %         \[\ilaplace{\frac{1}{(s+2)^2}} = te^{-2t}\tag{$1^{st}$ shift. theorem.}\]
+        %         }
+        %     \end{bluebox}
             \begin{redbox}{Convolution}
                 \textbf{Example.} Find \\[-4ex]
                 {\footnotesize
@@ -873,9 +873,20 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
                 \[Y = \frac{s+6}{(s+3)^2} + \frac{e^{-2(s+3)}}{(s+3)^3}\]
                 Now we can compute the inverse laplace transform of $Y$\\[-2ex]
                 \[y(t) = \ilaplace{Y} = \ilaplace{\frac{s+6}{(s+3)^2}} + \ilaplace{\frac{e^{-2(s+3)}}{(s+3)^3}}\]
-               The second part requires second shifting theorem with $e^{-2s}$ and $f(t) = \ilaplace{\frac{1}{(s+3)^3}}$. This gives us \\[-2ex]
-               \[y(t) = e^{-3t} + 3te^{-3t} + e^{-6}u(t-2)\frac{1}{2}(t-2)^2e^{-3(t-2)}\]
-               \vspace{-4ex}
+                The first part simply requires partial fractions, \\[-2ex]
+                \[\ilaplace{\frac{s+6}{(s+3)^2}} = \ilaplace{\frac{1}{s+3}} + 3\ilaplace{\frac{1}{(s+3)^2}}\]
+                \[=e^{-3t} + 3te^{-3t}\] 
+                The second part requires second shifting theorem with $e^{-2s}$ and $f(t) = \ilaplace{\frac{1}{(s+3)^3}}$. \\[-2ex]
+               \begin{align*}
+                \ilaplace{\frac{e^{-2(s+3)}}{(s+3)^3}} &= \ilaplace{\frac{e^{-2s}e^{-6}}{(s+3)^3}}\\
+                &= e^{-6}\ilaplace{e^{-2s}\frac{1}{(s+3)^3}} \\
+                f(t) &= \ilaplace{\frac{1}{(s+3)^3}}\\
+                &= \frac{1}{2}\ilaplace{\frac{2!}{(s+3)^3}} =  \frac{1}{2}t^2e^{-3t}\\
+            \end{align*}
+            \vspace{-9.25ex} 
+
+            Thus,\\[-3ex] 
+            \[y(t) = e^{-3t} + 3te^{-3t} + e^{-6}u(t-2)\frac{1}{2}(t-2)^2e^{-3(t-2)}\]
                 }
                 \end{brownbox}\\[-2ex]
             \end{blackbox}
