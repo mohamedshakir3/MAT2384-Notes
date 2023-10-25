@@ -22,6 +22,9 @@
 \newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
 \makeatother
 
+\newcommand{\laplace}[1]{\mathcal{L}\left\{#1\right\}}
+\newcommand{\ilaplace}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
+
 \title{SI 2132 Midterm Cheat SheetC}
 \usepackage[brazilian]{babel}
 \usepackage[utf8]{inputenc}
@@ -152,256 +155,442 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
 
 \begin{document}
 
-\begin{center}{\large{\textbf{MAT 2384 Summary Sheet: Ordinary Differential Equations}}}\\
-\end{center}
 
 
 
 
 \begin{multicols*}{3}
-\begin{blackbox}{Order 1 ODE's}
-    \textbf{Standard Form:} $y' = f(x,y)$
+    \begin{blackbox}{Order 1 ODE's}
+        {\footnotesize
+        \textbf{Standard Form:} $y' = f(x,y)$
+    
+        \textbf{Differential Form:} $M(x,y)dx + N(x,y)dy = 0$
+    
+        \begin{bluebox}{Seperable First Order ODE's}
+            An ODE is called seperate if it can be written as \\[-2ex]
+            \[F(x)dx = G(y)dy\]
+            \textbf{Steps to Solving.}
+                \begin{enumerate}[leftmargin=7pt]
+                    \item Write $y' = \frac{dy}{dx}$, and seperate the ODE to write it in the form $F(x)dx = G(y)dy$
+                    \item Integrate both sides
+                    \item If an initial condition is given, solve for the integration constant C. 
+                \end{enumerate}
+        \end{bluebox}
+        \begin{brownbox}{First Order ODE's with Homogeneous Coefficients}
+            $F(x,y)$ is called homogeneous of degree $k$ if it can be written\\[-4ex]
+            \[F(\lambda x, \lambda y) = \lambda^k \cdot F(x,y)\]
+            An ODE is differential form is homogeneous if $M(x,y)$ and $N(x,y)$ are homogeneous of the same degree.
 
-    \textbf{Differential Form:} $M(x,y)dx + N(x,y)dy = 0$
-    \begin{bluebox}{Seperable First Order ODE's}
-        \textbf{Definition.} A first order ODE is called seperable if it can be written in the form \\[-2ex]
-        \[F(x)dx = G(y)dy\]
-        \begin{redbox}{Steps to Solving Seperable ODE's}
-            \begin{enumerate}[align=left]
-                \item Write $y' = \frac{dy}{dx}$
-                \item Seperate the ODE to write it in the form $F(x)dx = G(y)dy$
-                \item Integrate both sides
-                \item If an initial condition is given, solve for the integration constant C. 
-            \end{enumerate}
-        \end{redbox}
-    \end{bluebox}
-    \begin{brownbox}{First Order ODE's with Homogeneous Coefficients}
-        \textbf{Definition.} A function $F(x,y)$ is called homogeneous of degree $k$ if \\[-2ex]
-        \[F(\lambda x, \lambda y) = \lambda^k \cdot F(x,y)\]
-        \textbf{Definition.} A first order ODE given in differential form is called homogeneous if both $M(x,y)$ and $N(x,y)$ are homogeneous of the same degree.\\[1ex]
-        \textbf{Theorem.} A first order ODE of homogeneous coefficients can be made seperable by changing the function by substituting $u = \frac{y}{x} \implies y = xu$ or $u \frac{x}{y} \implies y = \frac{x}{u}$. 
-    \end{brownbox}
-    \begin{bluebox}{Exact First Order ODEs}
-        \textbf{Definition.} Given a function $F(x,y)$, the differential of $F$ denoted by $dF$ is defined by
-        \[dF = \frac{\partial F}{\partial x} dx + \frac{\partial F}{\partial y}dy\]
-        \textbf{Remark.} $dF = 0 \iff F(x,y) = C$.\\[1ex]
-        \textbf{Definition.} A first order ODE is called exact if there exists $F(x,y)$ such that 
-        \[\frac{\partial F}{\partial x} = M(x,y) \text{ and } \frac{\partial F}{\partial x} = N(x,y)\]
-        \textbf{Theorem.} A first order ODE is exact if and only if
-        \[\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\]
-    \end{bluebox}\\[-2ex]
+            \textbf{Steps to Solving.}
+
+                A homogeneous ODE can be made seperable by substituting $u = \frac{y}{x}$, or $u = \frac{x}{y}$.\\[-2ex]
+                \[u = \frac{y}{x} \implies y = xu, \ dy = udx + xdu\]
+                \vspace{-3ex}
+                \[u = \frac{x}{y} \implies y = \frac{x}{u}, \frac{dy}{dx} = \frac{x - u\frac{dx}{du}}{u^2}\]
+        \end{brownbox}
+        
+        \begin{bluebox}{Exact First Order ODEs}
+            An ODE is called exact if $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$
+
+            \textbf{Steps to Solving.}
+                \begin{enumerate}[leftmargin=7pt]
+                    \item Check exactness: $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$
+                    \item Look for a function $F(x,y)$ such that $\frac{\partial F}{\partial x} = M$, $\frac{\partial F}{\partial y} = N$
+                    Integrate $M$ with respect to $x$ or $N$ with respect to $y$ then differentiate the equation with respect to the other variable respectively.
+                    \item The general solution is $F(x,y) = C$
+                \end{enumerate}
+        \end{bluebox}\\[-2ex]
+        \begin{brownbox}{Integrating Factor}
+            $\mu(x,y)$ is an integrating factor of a if the following equation is exact \\[-2ex]
+            \[\mu(x,y)M(x,y)dx + \mu(x,y)N(x,y)dy = 0\]
+            \textbf{Theorem.}
+                If \\[-5ex]
+                \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = g(y)\]
+                for some function $g(y)$, then\\[-2ex]
+                \[\mu(y) = \exp\left(-\int g(y) dy\right)\]
+                If \\[-5ex]
+                \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = f(x)\]
+                for some function $f(x)$, then\\[-2ex]
+                \[\mu(x) = \exp\left(\int f(x) dy\right)\]
+        \end{brownbox}\\[-2ex]
+        }
 \end{blackbox}
-\begin{blackbox}{Exact First Order ODE's}
-    \begin{bluebox}{Steps To Solving}
-        \begin{enumerate}[align=left]
-            \item Check exactness: $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$
-            \item Look for a function $F(x,y)$ such that\\[-0.0001mm]
-            \[\frac{\partial F}{\partial x} = M, \ \frac{\partial F}{\partial y} = N\]
-            Do this by integrating $M$ with respect to $x$ or $N$ with respect to $y$ then differentiate the equation with respect to the other variable respectively.
-            \item The general solution is $F(x,y) = C$
-            \item If an initial condition is given, solve for the integration constant $C$.
-        \end{enumerate}
-    \end{bluebox}
-    {\footnotesize
-    \textbf{Example.} Solve the following IVP \\[-2ex]
-    \[(6x - 2y^2 + 2xy^3)dx + (3x^2y^2-4xy)dy = 0\]
-    \textbf{Solution.} Check for exactness \\[-2ex]
-    \[\frac{\partial M}{\partial y} = -4y + 6xy^2 = \frac{\partial N}{\partial x}\]
-    \[F(x,y) = \int 3x^2y^2 - 4xydy = x^2y^3 - 2xy^2 + h(x)\]
-    \[\frac{\partial F}{\partial x} = 2xy^3 - 2y^2 + h'(x) = M \implies h'(x) = 6x\]
-    \[h(x) = \int 6xdx = 3x^2 + k\]
-    Our general solution is  \\[-2ex] 
-    \[F(x,y) = x^2y^3 - 2xy^2 + 3x^2 = C\]
-    }
-\end{blackbox} 
-\begin{blackbox}{ODEs With an Integrating Factor}
-    \textbf{Definition.} We say that the function $\mu(x,y)$ is an integrating factor of a first order ODE in differential form if the following equation is exact \\[-2ex]
-    \[\mu(x,y)M(x,y)dx + \mu(x,y)N(x,y)dy = 0\]
-    \begin{redbox}{Theorem}
-        If \\[-6ex]
-        \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = g(y)\]
-        for some function $g(y)$, then\\[-2ex]
-        \[\mu(y) = \exp\left(-\int g(y) dy\right)\]
-        If \\[-5ex]
-        \[\frac{\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}}{M} = f(x)\]
-        for some function $f(x)$, then\\[-2ex]
-        \[\mu(x) = \exp\left(\int f(x) dy\right)\]
-    \end{redbox}\\[-2ex]
-\end{blackbox}
+        
+
 \begin{blackbox}{Linear First-Order ODEs}
+    {\footnotesize
+
     \textbf{Definition.} A first order ODE is called linear if it can be written in the form\\[-2ex]
     \[y' + f(x)y = r(x)\]
     \begin{bluebox}{Steps to Finding General Solution}
         Given a linear first-order ODE in the form $y' + f(x)y = r(x)$, find $y$ using 
-        \[y = \frac{\int\mu(x)r(x)dx + C}{\exp\left(\int f(x)dx\right)}\]
-        {\footnotesize
-        \[y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(\int f(x)\right)^{-1}\]
-        }
+        \[y = \left(\int \exp\left(\int f(x)dx\right)r(x)dx + C\right)\exp\left(-\int f(x)\right)\]
     \end{bluebox}\\[-2ex]
+    }
 \end{blackbox} 
+\begin{blackbox}{Bernoulli ODE's}
+    A first order ODE is of Bernoulli type if it can be written as \\[-4ex]
+    \[y' + f(x)y= r(x)y^a\]
+    \begin{redbox}{Steps to Solving}
+        \begin{enumerate}[leftmargin=7pt]
+            \item Let $u = y^{1-a}$, then compute $u' = (1-a)y^{-a}y'$.
+            \item Isolate $y'$ from the original ODE and substitute into $u'$. 
+            \item The resulting ODE is linear and solve for $u$.
+        \end{enumerate}
+    \end{redbox}\\[-2ex]
+\end{blackbox}
+\begin{blackbox}{Homogeneous ODEs}
+    {\footnotesize
+    \begin{bluebox}{Constant Coefficients}
+        \textbf{General Form}\\[-2ex]
+        \[a_ny^{(n)} + a_{n-1}y^{(n-1)} + \cdots + a_1y' + a_0y = 0\]
+        \textbf{Characteristic Equation}\\[-2ex]
+        \[\lambda^n + a_{n-1}\lambda^{(n-1)} + \cdots + a_1\lambda + a_0 = 0\]
+        If $\lambda$ is a root with multiplicity $k$, 
+        \[y_1 = e^{\lambda x}, \ y_2 = xe^{\lambda x}, \ y_3 = x^2e^{\lambda x}, \ldots, y_k = x^{k-1}e^{\lambda x}\]
+        If $\alpha + i\beta$ is a pair of complex conjugate roots, then
+        \[y_1 = e^{\alpha x}\cos(\beta x), \ y_2 = e^{\alpha x}\sin(\beta x)\]
+    \end{bluebox}
+    \begin{brownbox}{Euler-Cauchy}
+        \textbf{General Form}\\[-2ex]
+        \[a_n(x)y^{(n)} + a_{n-1}(x)y^{(n-1)} + \cdots + a_1(x)y' + a_0(x)y = 0\]
+        \textbf{Characteristic Equation.} Differentiate $y = x^m$ and plug into ODE. If $m$ is a root of the characteristic equation of multiplicity $k$, then it contributes the following equations to our basis of solutions
+        \[y_1 = x^m, y_2 = x^m\ln x, y_3 = x^m (\ln x)^2, y_k = x^m(\ln x)^{k-1}\]
+        If $\alpha \pm i\beta$ is a pair of complex conjugate roots of the characteristic equation, then the pair contributes the following 2 equations to our basis of solutions
+        \[y_1 = x^{\alpha} \cos(\beta \ln x), y_2 = x^\alpha\sin(\beta \ln x)\]
+    \end{brownbox}\\[-2ex]
+    }
+\end{blackbox}
 
-
-\end{multicols*}
-\begin{center}{\large{\textbf{Numerical Methods}}}\\
-\end{center}
-\begin{multicols*}{3}
-    \begin{blackbox}{Iterative Methods to Solving $f(x) = 0$}
-        \textbf{Theorem.} (Intermediate Value Theorem). Let $f: [a,b] \rightarrow \mathbb{R}$ be a continuous function. Let $y \in \mathbb{R}$ between $f(a)$ and $f(b)$. Then there exists $z \in [a,b]$ such that $f(z) = y$.
-        \begin{bluebox}{Fixed Point Iteration}
-            \textbf{Definition.} The value $x = r$ is a fixed point for $g(x)$ if $g(r) = r$.\\
-            \textbf{Definition.} The iteration sequence is given as \\[-2ex]
-            \[x_{n+1} = g(x_n)\]
-            with $x_0$ being given. \\[1ex]
-            \textbf{Theorem.} Assume that the function $g(x)$ has a fixed-point $s$ on an interal $I$, if 
-            \begin{itemize}
-                \item $g(x)$ is continuous on $I$,
-                \item $g'(x)$ is continuous on $I$, and
-                \item $|g'(x)| < 1$ for all $x \in I$.
-            \end{itemize}
-            Then then the iteration sequence converges.
-            \begin{redbox}{Steps to Solve Using Fixed-Point Iteration}
-               
-                Then the steps for solving are as follows,
-                \begin{enumerate}
-                    \item Start with $f(x) = 0$
-                    \item Rewrite $f(x) = 0$ under the form $x = g(x)$
-                    \item Verify the iteration sequence $x_0, x_1 = g(x_0), \ldots, x_n = g(x_{n-1})$ converges using the above theorem 
-                    \item Compute the terms of the sequence and stop when the required accuracy is reached (i.e when 2 consecutive terms have the same $k$ decimal places where $k$ is the desired accuracy).
-                \end{enumerate}
-            \end{redbox}
-        \end{bluebox}\\[-2ex]
+\begin{blackbox}{Undetermined Coefficients}
+    \textbf{General Form}\\[-2ex]
+    \[a_ny^{(n)} + \cdots + a_1(x)y' + a_0y = r(x)\]
+    All coefficients on the left ($a_n, \ldots, a_0$) are constants and $r(x)$ is a polynomial, exponential, and/or sinusoidal. 
+    % Solve by splitting the ODE $y = y_H + y_p$, $y_H$ is the coresponding homogeneous ODE, $y_p$ is decided my the rules below.
+    \begin{pinkbox}{Rules}
+        \renewcommand{\arraystretch}{1.25}
+        \begin{center}
+            \begin{tabular}{|c|c|}
+                \hline
+                $r(x)$ & $y_p$\\
+                \hline
+                $Ke^{\lambda x}$ & $Ae^{\lambda x}$\\
+                $p_n(x)$ & $q_n(x)$\\
+                $K \sin(wx)$ & $A \cos(wx) + B \sin(wx)$\\
+                $Ke^{\alpha x} \sin(wx)$ & $ A e^{\alpha x}\cos(wx) + Be^{\alpha x} \sin(wx)$\\
+                $p_n(x)e^{\alpha x}$ & $q_n(x)e^{\alpha x}$\\
+                \hline
+            \end{tabular}
+        \end{center}
+        Where $p_n(x)$ and $q_n(x)$ are polynomials of degree $n$. 
+    \end{pinkbox}\\[-2ex]
+\end{blackbox}
+\begin{blackbox}{Variation of Parameters}
+    \textbf{General Form}\\[-2ex]
+        \[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0y(x) = r(x)\]
+        Same solution with $y = y_H + y_p$ where $y_H$ is the solution to the coresponing homogeneous ODE\\[-1.5ex]
+        \[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0y(x) = 0\]
+        \[y_p = u_1y_1 + u_2y_2 + \cdots u_ny_n\]
+        Where $\{y_1,y_2,\ldots,y_n\}$ is a basis of solutions for the corresponding homogeneous ODE. $u_1, u_2, \ldots, u_n$ are functions that satisfy the following system of equations 
+        \[\begin{cases}
+            0 = u_1'y_1 + u2'y_2 + \cdots + u_n'y_n \\
+            0 = u_1'y_1' + u_2'y_2' + \cdots + u_n'y_n' \\
+            \vdots\\
+            \frac{r(x)}{a_n(x)} = u_1'y_1^{(n-1)} + u_2'y_2^{(n-1)} + \cdots + u_n'y_n ^{(n-1)} 
+        \end{cases}\]
+\end{blackbox}
+\begin{blackbox}{Solving IVP's With Laplace Transforms}
+    \textbf{Steps to Solving.}
+    {\footnotesize
+    
+    \begin{enumerate}[leftmargin=7pt]
+        \item Set $Y = \mathcal{L}\{y(t)\}$.
+        \item Apply Laplace transform to both sides of the ODE. 
+        \item Isolate $Y$ after preforming the Laplace transform. 
+        \item Then solve $y(t) = \mathcal{L}^{-1}\{Y\}$.
+    \end{enumerate}
+    }
+    \vspace{-1.25ex}
+    \begin{redbox}{Laplace of a derivative}
+        \[\mathcal{L}\{y'(t)\} = s\mathcal{L}\{y(t)\} - y(0)\]
+        \[\mathcal{L}\{y''(t)\} = s^2\mathcal{L}\{y(t)\} - sy(0) - y'(0)\]
+        \[\mathcal{L}\{y^{(n)}\} = s^n\mathcal{L}\{y(t)\} - s^{n-1}y(0) - \cdots - y^{(n-1)}(0)\]
+    \end{redbox}\\[-2ex]
+\end{blackbox}
+\begin{blackbox}{Systems of ODE's}
+    {\footnotesize
+    \textbf{General Form}\\[-2ex]
+    \[\begin{rcases}
+        y_1' = a_{11}y_1 + a_{12}y_2 + r_1(x)\\
+        y_1' = a_{21}y_1 + a_{22}y_2 + r_2(x)  
+    \end{rcases} \implies \vec{y'} = A\vec{y} + \vec{r}(x)\]
+    \[A = \begin{bmatrix}
+        a_{11} & a_{12}\\
+        a_{21} & a_{22}
+    \end{bmatrix}, \vec{y'} = \begin{bmatrix}
+        y_1'\\
+        y_2'
+    \end{bmatrix}, \vec{r}(x) = \begin{bmatrix}
+        r_1(x)\\
+        r_2(x)
+    \end{bmatrix}\]
+    \begin{redbox}{Homogenous Systems with Constant Coefficients}
+        A system is homogeneous if $\vec{r}(x) = 0$, $\vec{y'} = A\vec{y}$.
+        \begin{brownbox}{Steps to Solving}
+            \begin{enumerate}[leftmargin=5pt]
+                \item Find the eigen values of $A$ $|\lambda I - A| = 0$
+                \item If 2 distinct real eigenvalues, find eigenvectors $V_1,V_2$.\\[-5ex]
+                \[\vec{y} = c_1\vec{V_1}e^{\lambda_1x} + c_2\vec{V_2}e^{\lambda_2x}\]
+                \item If $\lambda$ with multiplicity 2, find generalized eigenvector $\rho$ \\[-4ex]
+                \[Y = c_1Ve^{\lambda x} + c_2(xV + \rho)e^{\lambda x}\]                
+                \item If $\lambda = \alpha \pm i\beta$, then find eigenvector for $\lambda_1 = \alpha + i\beta$, compute gen. solution $y = c_1V_1 + c_2V_2$ with
+                \[\vec{V}e^{(\alpha + i\beta)x} = \vec{V}e^{\alpha x}(\cos(\beta x) + i\sin (\beta x)) = \vec{V_1} + i\vec{V_2}\]
+        \end{enumerate}
+        \end{brownbox}
+    \end{redbox}\\[-2ex]
+    \begin{bluebox}{Non-Homogeneous Systems}
+        Similar to non-homogeneous ODEs, use undetermined to solve $\vec{y} = \vec{y_H} + \vec{y_p}$. $y_H$ is ODE with $\vec{r}(x) = 0$. Decompose $\vec{r}(x)$ as 
+        {\scriptsize
+        \[\vec{r(x)} = \begin{bmatrix}
+            2 x^3 + x^2 + x \\
+            3e^x + x^2 + 2x + 1
+        \end{bmatrix} = \begin{bmatrix}
+            2\\
+            0
+        \end{bmatrix}x^3 + \begin{bmatrix}
+            0\\
+            3
+        \end{bmatrix}e^x + \begin{bmatrix}
+            1\\
+            1
+        \end{bmatrix}x^2 + \begin{bmatrix}
+            1\\
+            2
+        \end{bmatrix}x\]
+        }
+        Solve each $r_1(x)$ using same rules as undetermined coefficients replacing constants with constant vectors
+        \[r_1(x) = \begin{bmatrix}
+            2\\0
+        \end{bmatrix}x^3 \implies \vec{y}_p = \vec{U}x^3 + \vec{V}x^2 + \vec{W}x + \vec{Z} \]
+    \end{bluebox}\\[-2ex]
+    }
+\end{blackbox}
+\begin{blackbox}{Linear Algebra and Trig Identities}
+    {\footnotesize
+    \begin{pinkbox}{Linear Algebra}      
+        \textbf{Eigen Values}\\[-3ex]
+        \[|A - \lambda I| = |\lambda I - A| = 0\]
+        \[A = \begin{bmatrix}
+            a & b\\
+            c & d
+        \end{bmatrix} \implies A^{-1} = \frac{1}{\det A}\begin{bmatrix}
+            d & -b\\
+            -c & a
+        \end{bmatrix}\]
+        \textbf{Eigen Vectors.} An eigenvector $\vec{V}$ is a vector that satisfies\\[-5ex]
+        \[[A - \lambda I | \vec{0}]\]
+        \textbf{Generalized Eigen Vector $\rho$} The solution to, then pick specific value for the parameter $t$ to get a specific vector, (i.e take $t=0$, $t=1$, etc).\\[-2ex]
+        \[[A - \lambda I | V]\]
+    \end{pinkbox}
+    \begin{redbox}{Trig Identities}
+        \vspace{-2ex}
+        \[\cos^2\left(\frac{t}{2}\right) = \frac{1+\cos(t)}{2}, \  2\sin(t)\cos(t) = \sin(2t)\]
+        \vspace{-3ex}
+    \end{redbox}\\[-3ex]
+    }
+\end{blackbox}
+\begin{blackbox}{Example of Non-Homogeneous System}
+    {\footnotesize
+        \textbf{Example.}\\[-2ex] 
+        \[\vec{y'} = \begin{bmatrix}
+            9 & 18\\
+            -2 & -3
+        \end{bmatrix}\vec{y} + \begin{bmatrix}
+            9x - 51\\
+            7 + e^{2x}
+        \end{bmatrix}; \ \vec{y}(0) = \begin{bmatrix}
+            1\\
+            0
+        \end{bmatrix}\]
+        \textbf{Solution.} Solve the corresponding homogeneous ODE
+        \[\vec{y}' = \begin{bmatrix}
+            9 & 18\\
+            -2 & -3
+        \end{bmatrix}\vec{y}\]
+        Find eigenvalues of $A$
+        \[\det\begin{bmatrix}
+            9 - \lambda & 18\\
+            -2 & -3 - \lambda\\
+        \end{bmatrix} = (9 - \lambda)(-3-\lambda) + 36 = \lambda^2 -6\lambda + 9\]
+        This gives us $\lambda = 3$ with multiplicity 2, find eigenvector $V = t\begin{bmatrix}-3\\1\end{bmatrix}$
+        Find generalized eigenvector, set parameter $t = 0$,
+        \[[A - 3I| V] = \begin{bmatrix}
+            6 & 18 & -3\\
+            -2 & -6 & 1
+        \end{bmatrix} \sim \begin{bmatrix}
+            1 & 3 & -1/2\\
+            0 & 0 & 0
+        \end{bmatrix}\]
+        \[\vec{\rho} = \begin{bmatrix}
+            -3t - 1/2\\
+            t
+        \end{bmatrix} \implies \begin{bmatrix}
+            -1/2\\
+            0
+        \end{bmatrix}\]
+        The general solution to the homogeneous ODE is 
+        \begin{align*}
+            \vec{y}_H &= c_1\begin{bmatrix}-3\\1\end{bmatrix}xe^{3x} + c_2\left(x\begin{bmatrix}
+                -3\\
+                1
+            \end{bmatrix} + \begin{bmatrix}
+                -1/2\\
+                0
+            \end{bmatrix}\right)e^{3x}  \\
+            &= \begin{bmatrix}
+                -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}c_2e^{3x}\\
+                c_1e^{3x} + c_2xe^{3x}
+            \end{bmatrix}
+        \end{align*}
+        For $y_p$, decompose $r(x)$ to get
+        \[r(x) = \begin{bmatrix}
+            9x - 51\\
+            7 + e^{2x}
+        \end{bmatrix} = \begin{bmatrix}
+            9\\
+            0
+        \end{bmatrix}x + \begin{bmatrix}
+            -51\\
+            7
+        \end{bmatrix} + \begin{bmatrix}
+            0\\
+            1
+        \end{bmatrix}e^{2x}\]
+        Find $y_p$ for each part of $r(x)$\\[-2ex]
+        \[y_p = Ux + V + We^{2x}\]
+        Rewrite the non-homogeneous system as 
+        \[\vec{y'} = \begin{bmatrix}
+            9 & 18\\
+            -2 & -3
+        \end{bmatrix}y + \begin{bmatrix}
+            9\\0
+        \end{bmatrix}x + \begin{bmatrix}
+            -51\\7
+        \end{bmatrix} + \begin{bmatrix}
+            0\\1
+        \end{bmatrix}e^{2x}\]
+       Compute $\vec{y'}_p$ and plug into the system to solve for constant vectors, $\vec{y'}_p = U + 2We^{2x}$, $\vec{y'}_p = A\vec{y}_p + \vec{r}(x)$\\[-2ex]
+       {\scriptsize
+       \[
+        U + 2We^{2x} = A(Ux + V + We^{2x}) + \begin{bmatrix}
+            9\\0
+        \end{bmatrix}x + \begin{bmatrix}
+            -51\\7
+        \end{bmatrix} + \begin{bmatrix}
+            0\\1
+        \end{bmatrix}e^{2x}
+        \]
+    }
+        This gives us the three equations 
+        \[AU + \begin{bmatrix}
+            9\\0
+        \end{bmatrix} = 0, AV + \begin{bmatrix}
+            -51\\7
+        \end{bmatrix} = U, AW + \begin{bmatrix}
+            0\\1
+        \end{bmatrix} = 2W\]
+        Solve equations to find\\[-2ex]
+       \[U = \begin{bmatrix}
+        3\\-2
+       \end{bmatrix}, V = \begin{bmatrix}
+        0\\3
+       \end{bmatrix}, W = \begin{bmatrix}
+        18\\-7
+       \end{bmatrix}\]
+        This gives us our particular solution
+        \[
+            y_p = \begin{bmatrix}
+                3\\-2
+            \end{bmatrix}x + \begin{bmatrix}
+                0\\3
+            \end{bmatrix} + \begin{bmatrix}
+                18\\-7
+            \end{bmatrix}e^{2x} = \begin{bmatrix}
+                3x + 18e^{2x}\\
+                -2x+3 - 7e^{2x}
+            \end{bmatrix}  
+        \]
+        The general solution to the non-homogeneous ODE is 
+        \[
+            y = \begin{bmatrix}
+                -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}e^{3x}\\
+                c_1e^{3x} + c_2xe^{3x}
+            \end{bmatrix}
+            + \begin{bmatrix}
+                3x + 18e^{2x}\\
+                -2x+3 - 7e^{2x}
+            \end{bmatrix}
+        \]
+    }
+\end{blackbox}
+    \begin{blackbox}{Fixed Point Iteration}
+        For a given starting value $x_0$, The iteration sequence is given as \\[-5ex]
+        \[x_{n+1} = g(x_n)\]
+        \textbf{Theorem.} Assume that the function $g(x)$ has a fixed-point $s$ on an interal $I$, if 
+        \begin{itemize}
+            \item $g(x)$ is continuous on $I$,
+            \item $g'(x)$ is continuous on $I$, and
+            \item $|g'(x)| < 1$ for all $x \in I$.
+        \end{itemize}
+        Then then the iteration sequence converges.
+        \begin{redbox}{Steps to Solve Using Fixed-Point Iteration}
+           
+            Then the steps for solving are as follows,
+            \begin{enumerate}[leftmargin=8pt]
+                \item Start with $f(x) = 0$
+                \item Rewrite $f(x) = 0$ under the form $x = g(x)$
+                \item Verify the iteration sequence $x_0, x_1 = g(x_0), \ldots, x_n = g(x_{n-1})$ converges using the above theorem 
+                \item Compute the terms of the sequence and stop when 2 terms have the same required digits.
+            \end{enumerate}
+        \end{redbox}\\[-2ex]
     \end{blackbox}
     \begin{blackbox}{Newton's Method}
         Given an equation equation $f(x) = 0$ and a starting point $x_0$, the Newton's method is given as\\[-2ex]
         \[x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}\]
+        \vspace{-1ex}
         Calculate values for $x_n$ until you reach the accuracy.\\
-        {\footnotesize
-        \textbf{Example.} Approximate the root for the equation $x^3 + 12x - 3$ to 6 decimal places with $x_0 = 1.8$  \\
-        \textbf{Solution.}\\[-5ex]
-        \[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 0.675138, \ldots, x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 0.248748\]\\[-4ex]        \[x_4 = x_3 - \frac{f(x_3)}{f'(x_3)} = 0.248718, \ x_5 = x_4 - \frac{f(x_4)}{f'(x_4)} = 0.248718\]
-        }
     \end{blackbox}
-\end{multicols*}
-\begin{multicols*}{3}
-    \begin{blackbox}{Homogeneous ODEs}
-        {\footnotesize
-        \begin{bluebox}{Constant Coefficients}
-            \textbf{General Form}\\[-2ex]
-            \[a_ny^{(n)} + a_{n-1}y^{(n-1)} + \cdots + a_1y' + a_0y = 0\]
-            \textbf{Characteristic Equation}
-            \[\lambda^n + a_{n-1}\lambda^{(n-1)} + \cdots + a_1\lambda + a_0 = 0\]
-            If $\lambda$ is a root with multiplicity $k$, 
-            \[y_1 = e^{\lambda x}, \ y_2 = xe^{\lambda x}, \ y_3 = x^2e^{\lambda x}, \ldots, y_k = x^{k-1}e^{\lambda x}\]
-            If $\alpha + i\beta$ is a pair of complex conjugate roots, then it contributes the following 2 equations to our basis of solutions,\\[-2ex]
-            \[y_1 = e^{\alpha x}\cos(\beta x), \ y_2 = e^{\alpha x}\sin(\beta x)\]
-        \end{bluebox}
-        \begin{brownbox}{Euler-Cauchy}
-            \textbf{General Form}\\[-2ex]
-            \[a_n(x)y^{(n)} + a_{n-1}(x)y^{(n-1)} + \cdots + a_1(x)y' + a_0(x)y = 0\]
-            \textbf{Characteristic Equation.} Differentiate $y = x^m$ and plug into ODE. If $m$ is a root of the characteristic equation of multiplicity $k$, then it contributes the following equations to our basis of solutions
-            \[y_1 = x^m, y_2 = x^m\ln x, y_3 = x^m (\ln x)^2, y_k = x^m(\ln x)^{k-1}\]
-            If $\alpha \pm i\beta$ is a pair of complex conjugate roots of the characteristic equation, then the pair contributes the following 2 equations to our basis of solutions
-            \[y_1 = x^{\alpha} \cos(\beta \ln x), y_2 = x^\alpha\sin(\beta \ln x)\]
-        \end{brownbox}\\[-2ex]
-        }
+    \begin{blackbox}{Secant Method}
+        Given 2 estimates for the roots $x_0$, $x_1$, compute the terms in the sequence until you reach the required accuracy.\\[-2ex]
+        \[x_{n+1} = x_n - f(x_n)\cdot \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}\]
+        \vspace{-2.5ex}
     \end{blackbox}
-    \begin{blackbox}{Undetermined Coefficients}
-        \textbf{General Form}\\[-2ex]
-        \[a_ny^{(n)} + \cdots + a_1(x)y' + a_0y = r(x)\]
-        All coefficients on the left ($a_n, \ldots, a_0$) are constants and $r(x)$ is a polynomial, exponential, and/or sinusoidal.
-        \begin{pinkbox}{Rules}
-            \begin{itemize}[leftmargin=5pt]
-                \item \textbf{Rule 1: Basic Rule.} If $r(x) = ke^{\lambda x}$, then $y_p = Ae^{\lambda x}$. If $r(x) = p_n(x)$, then $y_p = q_n(x)$. If $r(x) = k\cos(wx)$ or $k\sin(wx)$, then $y_p = Ae^{\alpha x}\cos(wx) + Be^{\alpha x}\sin(wx)$. If $r(x) = p_n(x)e^{\lambda x}$, then $y_p = q_n(x)e^{\lambda x}$.
-                \item \textbf{Rule 2: The Modifcation Rule.} If any term of $y_p$ is in the basis of solutions for $y_H$, then multiply by $x$ until it's not.
-                \item \textbf{Rule 3: The Sum Rule.} If $r(x) = r_1(x) + \cdots r_n(x)$, then do each $r_i(x)$ seperately and combine.
-            \end{itemize}
-    
-        \end{pinkbox}\\[-2ex]
-    \end{blackbox}
-    \begin{blackbox}{Variation of Parameters}
+    \begin{blackbox}{Lagrange Interpolation}
+        Given points $(x_0, f_0), (x_1, f_1), \ldots, (x_n, f_n)$, the Lagrange interpolation polynomial is \\[-2ex]
+        \[p_n(x) = L_0(x)f_0 + L_(1)(x)f_1 + \cdots + L_n(x)f_n\]
+        where \\[-5ex]
         {\footnotesize
-        \textbf{General Form}\\[-2ex]
-            \[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0y(x) = r(x)\]
-            Same solution with $y = y_H + y_p$ where $y_H$ is the solution to the coresponing homogeneous ODE\\[-1.5ex]
-            \[a_n(x)y^{(n)} + \cdots + a_1(x)y' + a_0y(x) = 0\]
-            \[y_p = u_1y_1 + u_2y_2 + \cdots u_ny_n\]
-            Where $\{y_1,y_2,\ldots,y_n\}$ is a basis of solutions for the corresponding homogeneous ODE. $u_1, u_2, \ldots, u_n$ are functions that satisfy the following system of equations 
-            \[\begin{cases}
-                0 = u_1'y_1 + u2'y_2 + \cdots + u_n'y_n \\
-                0 = u_1'y_1' + u2'y_2' + \cdots + u_n'y_n' \\
-                \vdots\\
-                \frac{r(x)}{a_n(x)} = u_1'y_1^{(n-1)} + u_2'y_2^{(n-1)} + \cdots + u_n'y_n ^{(n-1)} 
-            \end{cases}\]
-        }
-    \end{blackbox}
-    \begin{blackbox}{Systems of ODE's}
-        {\footnotesize
-        \textbf{General Form}\\[-2ex]
-        \[\begin{rcases}
-            y_1' = a_{11}y_1 + a_{12}y_2 + r_1(x)\\
-            y_1' = a_{21}y_1 + a_{22}y_2 + r_2(x)  
-        \end{rcases} \implies \vec{y'} = A\vec{y} + \vec{r}(x)\]
-        \[A = \begin{bmatrix}
-            a_{11} & a_{12}\\
-            a_{21} & a_{22}
-        \end{bmatrix}, \vec{y'} = \begin{bmatrix}
-            y_1'\\
-            y_2'
-        \end{bmatrix}, \vec{r}(x) = \begin{bmatrix}
-            r_1(x)\\
-            r_2(x)
-        \end{bmatrix}\]
-        \begin{redbox}{Homogenous Systems with Constant Coefficients}
-            A system is homogeneous if $\vec{r}(x) = 0$, $\vec{y'} = A\vec{y}$.
-            \begin{brownbox}{Steps to Solving}
-                \begin{enumerate}[leftmargin=5pt]
-                    \item Find the eigen values of $A$ $|\lambda I - A| = 0$
-                    \item If 2 distinct real eigenvalues, find eigenvectors $V_1,V_2$.\\[-5ex]
-                    \[\vec{y} = c_1\vec{V_1}e^{\lambda_1x} + c_2\vec{V_2}e^{\lambda_2x}\]
-                    \item If $\lambda$ with multiplicity 2, find generalized eigenvector $\rho$ \\[-4ex]
-                    \[Y = c_1Ve^{\lambda x} + c_2(xV + \rho)e^{\lambda x}\]                
-                    \item If $\lambda = \alpha \pm i\beta$, then find eigenvector for $\lambda_1 = \alpha + i\beta$, compute gen. solution $y = c_1V_1 + c_2V_2$ with
-                    \[\vec{V}e^{(\alpha + i\beta)x} = \vec{V}e^{\alpha x}(\cos(\beta x) + i\sin (\beta x)) = \vec{V_1} + i\vec{V_2}\]
-            \end{enumerate}
-            \end{brownbox}
-        \end{redbox}\\[-2ex]
-        \begin{bluebox}{Non-Homogeneous Systems}
-            Similar to non-homogeneous ODEs, use undetermined to solve $\vec{y} = \vec{y_H} + \vec{y_p}$. $y_H$ is ODE with $\vec{r}(x) = 0$. Decompose $\vec{r}(x)$ as 
-            {\scriptsize
-            \[\vec{r(x)} = \begin{bmatrix}
-                2 x^3 + x^2 + x \\
-                3e^x + x^2 + 2x + 1
-            \end{bmatrix} = \begin{bmatrix}
-                2\\
-                0
-            \end{bmatrix}x^3 + \begin{bmatrix}
-                0\\
-                3
-            \end{bmatrix}e^x + \begin{bmatrix}
-                1\\
-                1
-            \end{bmatrix}x^2 + \begin{bmatrix}
-                1\\
-                2
-            \end{bmatrix}x\]
-            }
-            Solve each $r_1(x)$ using same rules as undetermined coefficients replacing constants with constant vectors
-            \[r_1(x) = \begin{bmatrix}
-                2\\0
-            \end{bmatrix}x^3 \implies \vec{y}_p = \vec{U}x^3 + \vec{V}x^2 + \vec{W}x + \vec{Z} \]
-        \end{bluebox}\\[-2ex]
+        \begin{align*}
+            L_0 &= \frac{(x-x_1)(x-x_2)\cdots(x-x_n)}{(x_0-x_1)(x_0-x_2)\cdots(x_0-x_n)}  \\
+            L_1 &= \frac{(x-x_0)(x-x_2)\cdots(x-x_n)}{(x_1-x_0)(x_1-x_2)\cdots(x_1-x_n)}\\
+            L_2 &= \frac{(x-x_0)(x-x_1)(x-x_3)\cdots(x-x_n)}{(x_2-x_0)(x_2-x_1)(x_2-x_3)\cdots(x_2-x_n)}
+        \end{align*}
+        
+        The error formula for interpolation is \\[-4ex]
+        \[|f(x) - p_n(x)| = \left|(x-x_0)(x-x_1)\cdots(x-x_n)\frac{f^{(n+1)(t)}}{(n+1)!}\right| \]
         }
     \end{blackbox}
     \begin{blackbox}{Newton's Divided-Difference Interpolation}
-        {\footnotesize
         Given a node $x_i$, 
-        \begin{enumerate}[leftmargin=5pt]
+        \begin{enumerate}[leftmargin=8pt]
             \item The \emph{first divided difference} at $x_i$ is defined as 
             \[f(x_i,x_{i+1}) = \frac{f_{i+1}- f_i}{x_{i+1} - x_i}\]
             \item The \emph{second divided difference} at $x_i$ is 
             \[f(x_i, x_{i+1}, x_{i+2}) = \frac{f(x_{i+1}, x_{i+2}) - f(x_i,x_{i+1})}{x_{i+2}-x_i}\]
             \item In general, the $k$th divided difference at $x_i$ is 
+            {\footnotesize
             \[f(x_i, x_{i+1}, \ldots x_{i+k}) = \frac{f(x_{i+1},\ldots, x_{i+k}) - f(x_i, \ldots x_{i+k-1})}{x_{i+k}-x_i}\]
+            }
         \end{enumerate}
         \textbf{Newton's Interpolation Polynomial} 
         \begin{align*}
@@ -409,7 +598,6 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
             &+ f(x_0,x_1,x_2)(x-x_0)(x-x_1) + \cdots\\
             &+ f(x_0,\ldots,x_n)(x-x_0)(x-x_1)\cdots(x - x_n)
         \end{align*}
-        }
     \end{blackbox}
     \begin{blackbox}{Numerical Integration}
         {\footnotesize
@@ -466,164 +654,256 @@ label={[anchor=west, fill=green]north west:\textbf{#1:}},
             \end{center}
         \end{redbox}\\[-2ex]
     \end{blackbox}
-    \begin{blackbox}{Linear Algebra and Integrals}
-        \begin{pinkbox}{Linear Algebra}      
-            \textbf{Eigen Value}\\[-2ex]
-            \[|A - \lambda I| = |\lambda I - A| = 0\]
-            \[A = \begin{bmatrix}
-                a & b\\
-                c & d
-            \end{bmatrix} \implies A^{-1} = \frac{1}{\det A}\begin{bmatrix}
-                d & -b\\
-                -c & a
-            \end{bmatrix}\]
-            \textbf{Eigen Vectors.} An eigenvector $\vec{V}$ is a vector that satisfies\\[-4ex]
-            \[[A - \lambda I | \vec{0}]\]
-            \textbf{Generalized Eigen Vector $\rho$} The solution to, then pick specific value for the parameter $t$ to get a specific vector, (i.e take $t=0$, $t=1$, etc).\\[-2ex]
-            \[[A - \lambda I | V]\]
-        \end{pinkbox}
-        \begin{brownbox}{Integrals}
-            \[\int xe^{ax} = \frac{1}{a}xe^{ax} - \frac{1}{a^2}e^{ax}, \int \ln x = x\ln x - x \]
-            \[\int \sin(ax)dx = -\frac{1}{a}\cos(ax), \int \cos(ax)dx = \frac{1}{a}\sin (ax)\]
-        \end{brownbox}\\[-2ex]
+    \begin{blackbox}{Euler Method}
+        Given a step size $h$ between $x$ values, we estimate values of $y$ with \\[-5ex]
+        \[x_{n+1} = x_n + h\]
+        \[y_{n+1} = y_n + hf(x_n, y_n)\]
+        \vspace{-4ex}
     \end{blackbox}
-    \begin{blackbox}{Example of Non-Homogeneous System}
+    \begin{blackbox}{Improved Euler Method}
+        We use Euler's method to predict then correct each step with \\[-5ex]
+        \[x_{n+1} = x_n + h\]
+        \[y^c_{n+1} = y_n^c + \frac{h}{2}(f(x_n, y_n^c) + f(x_{n+1},y^p_{n+1}))\]
+        \[y^p_{n+1} = y_n^c + hf(x_n, y_n)\]
+        \vspace{-4ex}
+    \end{blackbox}
+    \begin{blackbox}{Runge-Kutta Method of Order 4}
+        Given $y(x_0) = y_0$, use the following formula to compute \\[-2ex]
         {\footnotesize
-            \textbf{Example.}\\[-2ex] 
-            \[\vec{y'} = \begin{bmatrix}
-                9 & 18\\
-                -2 & -3
-            \end{bmatrix}\vec{y} + \begin{bmatrix}
-                9x - 51\\
-                7 + e^{2x}
-            \end{bmatrix}; \ \vec{y}(0) = \begin{bmatrix}
-                1\\
-                0
-            \end{bmatrix}\]
-            \textbf{Solution.} Solve the corresponding homogeneous ODE
-            \[\vec{y}' = \begin{bmatrix}
-                9 & 18\\
-                -2 & -3
-            \end{bmatrix}\vec{y}\]
-            Find eigenvalues of $A$
-            \[\det\begin{bmatrix}
-                9 - \lambda & 18\\
-                -2 & -3 - \lambda\\
-            \end{bmatrix} = (9 - \lambda)(-3-\lambda) + 36 = \lambda^2 -6\lambda + 9\]
-            This gives us $\lambda = 3$ with multiplicity 2, find eigenvector $V = t\begin{bmatrix}-3\\1\end{bmatrix}$
-            Find generalized eigenvector, set parameter $t = 0$,
-            \[[A - 3I| V] = \begin{bmatrix}
-                6 & 18 & -3\\
-                -2 & -6 & 1
-            \end{bmatrix} \sim \begin{bmatrix}
-                1 & 3 & -1/2\\
-                0 & 0 & 0
-            \end{bmatrix}\]
-            \[\vec{\rho} = \begin{bmatrix}
-                -3t - 1/2\\
-                t
-            \end{bmatrix} \implies \begin{bmatrix}
-                -1/2\\
-                0
-            \end{bmatrix}\]
-            The general solution to the homogeneous ODE is 
+        \[x_{n+1} = x_n + h\]
+        \[k_1 = hf(x_n,y_n)\]
+        \[k_2 = hf\left(x_n + \frac{1}{2}h, y_n + \frac{1}{2}k_1\right)\]
+        \[k_3 = hf\left(x_n + \frac{1}{2}h, y_n + \frac{1}{2}k_2\right)\]
+        \[k_4 = hf\left(x_n + h, y_n + k_3\right)\]
+        \[y_{n+1} = y_n + \frac{1}{6}(k_1 + 2k_2 + 2k3 + k_4)\]
+        }
+        \vspace{-4ex}
+    \end{blackbox}
+    \begin{blackbox}{Examples for Numerical Integration}
+        \begin{bluebox}{Midpoint Rule}
+            
+            {\small
+            \textbf{Example.} Estimate the following integral with a maximal absolute error of $0.001$.\\[-2ex]
+            \[I = \int_0^{0.5}x\cos x dx\]
+            \textbf{Solution.} We have to first find $n$ \\[-2ex]
+            \[f(x) = x\cos x, \ f'(x) = \cos x - x\sin x\]
+            \[f''(x) = -\sin x - \sin x - x\cos x = -2\sin x - x\cos x \]
+            We can see that \\[-2ex]
+            \[|-2\sin x - x\cos x| \leq |-2\sin x| + |-x\cos x| \leq 2.5\]
+            Thus $M = 2.5$, then by the error formula we have\\[-2ex]
+            {\footnotesize
+            \[|E_m| \leq \frac{2.5(0.5-0)}{24n^2} \leq 0.001  \implies n \geq \sqrt{\frac{2.5(0.5)^3}{24(0.001)}} = 2.79\]
+            }
+            We take $n = 3$. Then we can calculate $h$,\\[-2ex]
+            \[h = \frac{0.5 -0}{3} = \frac{1}{6}, \ x_1^* = \frac{0 + 1/6}{2} = \frac{1}{12}\]
+            \[x_2^* = x_1^* + \frac{1}{6} = \frac{1}{4}, \ x_3^* = x_2^* + \frac{1}{6} = \frac{5}{12}\]
+            By the midpoint rule, we have\\[-1.5ex]
+            \[\int_{0}^{0.5} x\cos x dx \approx h[f(x_1^*) + f(x_2^*) + f(x_3^*)]\]
+            \[= \frac{1}{6}\left[\frac{1}{12}\cos \left(\frac{1}{12}\right) + \frac{1}{4}\cos \left(\frac{1}{4}\right) + \frac{5}{12}\cos \left(\frac{5}{12}\right)\right]\]
+            }
+            \vspace{-2.25ex}
+        \end{bluebox}
+        \begin{brownbox}{Trapezoidal Rule}
+            {\small
+            \textbf{Example.} Estimate the value of the integral with a maximal absolute error of $0.01$ to 
+            \[\int_0^1 e^{-x^2}dx\]
+            \vspace{-0.5ex}
+            \textbf{Solution.} First we compute $n$, \\[-2ex]
+            {\scriptsize
+            
+            \[f(x) = e^{-x^2}, \ f'(x) = -2xe^{-x^2}, \ f''(x) = -2e^{-x^2} + 4x^2e^{-x^2}\]
+            \[f''(x) = -2e^{-x^2} + 4x^2e^{-x^2}, \ f'''(x) = e^{-x^2}4x(3-2x^2)\]
+            }
+            $f''(x)$ is increasing, therefore \\[-1ex]
+            {\scriptsize
+            \[f''(0) \leq f''(x) \leq f''(1) \implies -2 \leq f''(x) \leq -2e^{-1} + 4e^{-1}\]
+            }
+            Thus we can take $M =2$. Then by the error formula we have\\[-2ex]
+            \[\frac{2}{12n^2} \leq 0.01 \implies n \geq \sqrt{\frac{1}{6(0.01)}} \approx 4.08\]
+            Take $n = 5$. Length of each subinterval is $h = \frac{1 -0}{5} = 0.2$. \\[-1.5ex]
+            {\footnotesize
+            \[\frac{0.2}{2}\left[f(0) + 2f(0.2) + 2f(0.4) +2f(0.6) + 2f(0.8) + f(1)\right]\]
+            }
+            }
+            \vspace{-2.25ex}
+        \end{brownbox}\\[-1ex]
+    \end{blackbox}
+    \begin{blackbox}{Simpson's Rule}
+            \textbf{Example.} Estimate the value of the integral with a maximal error of $0.001$
+            \[\int_{0.5}^{1.5}x^2\ln x dx\]
+            \textbf{Solution.} We start by computing $n$,\\[-2ex]
+            \[f(x) = x^2\ln x, \ f'(x) = 2x\ln x + x, \ f''(x) = 2\ln x + 3\]
+            \[f'''(x) = \frac{2}{x}, \ f^{(4)}(x) = -\frac{2}{x^2}, \ f^{(5)}(x) = \frac{4}{x^3}\]
+            $f^{(4)}$ is increasing, therefore\\[-2ex]
+            \[f^{(4)}(0.5) \leq f^{(4)}(x) \leq f^{(4)}(1.5) \implies |f^{(4)}(x)| \leq 8\]
+            
+            So we can take $M = 8$. Then by the error formula we have\\[-2ex]
+            {\footnotesize
+            \[\frac{8(1.5-0.5)}{180n^4} \implies n \geq \sqrt[4]{\frac{8}{180(0.001)}} \approx 2.58\]
+            }
+            We need an even $n$ so we take $n=4$. Then we can calculate $h$,
+            {\footnotesize
+            \[h = \frac{1}{4}, \ x_0 = 0.5, \ x_1 = 0.5 + \frac{1}{4} = 0.75, \ x_2 = 0.75 + \frac{1}{4} = 1\]
+            \[x_3 = 1 + \frac{1}{4} = 1.25, \ x_4 = 1.25 + \frac{1}{4} = 1.5\]
+            }
+            Then we can approximate the integral,
+            \[\int_{0.5}^{1.5} x^2\ln x \approx 0.123915\]
+    \end{blackbox}
+    \begin{blackbox}{Guassian Quadrature}
+        Use Gaussian Quadrature of order 4 to estimate the value of \\[-2ex]
+        \[\int_{0}^1\sin(x^2)dx\]
+        \textbf{Solution.} First we substitute $x$ with \\[-1ex]
+        \[x = \frac{b-a}{2}t + \frac{b+a}{2} = \frac{1}{2}t +\frac{1}{2}\]
+        \vspace{-2ex}
+        \[\frac{dx}{dt} = \frac{1}{2} \implies dx = \frac{dt}{2}\]
+        \[\int_0^1 \sin(x^2) = \int_{-1}^1 \sin \left(\frac{(t+1)^2}{4}\right) \frac{1}{2}dt\]
+        From the table we have \\[-2ex]
+        \[w_1 = w_4 = 0.3479, \ w_2 = w_3 = 0.6521\]
+        \[f(t_1) = -f(t_4) = - 0.8611, \  f(t_2) = - f(t_3) = -0.3399\]
+        Then using the formula
+        {\footnotesize
+        \[\int_{-1}^1 \sin \left(\frac{(t+1)^2}{4}\right) \frac{1}{2}dt \approx w_1f(t_1) + w_2f(t_2) + w_3(t_3) + w_4f(t_4)\]
+        }
+    \end{blackbox}
+    \begin{blackbox}{Estimating IVP's}
+        \begin{bluebox}{Euler's Method}
+            \textbf{Example.} Use Euler's method with $h=0.2$ to estimate the IVP on $[0,0.6]$.\\[-2ex]
+            \[y' = 2x + y, \ y(0) = -1\]
+
+            \textbf{Solution.} We have $f(x,y) = 2x + y$, $x_0 = 0$, $y_0 = -1$, and $h = 0.2$. Now we can caluclate each step with $x_1 = 0.2$, $x_2 = 0.04$, $x_3 = 0.6$. 
+            {\footnotesize
+            \[y_1 = y_0 + h f(x_0,y_0) = -1 + 0.2(-1) = -1.2\]
+            \[y_2 = y_1 + hf(x_1,y_1) = -1.2 + 0.2(2(0.2) - 1.2) = -1.36\]
+            \[y_3 = y_2 + hf(x_2,y_2) = -1.36 + 0.2(2(0.4) - 1.36) = -1.472\]
+            }
+        \end{bluebox}
+        \begin{brownbox}{Improved Euler's Method}
+            \textbf{Example.} Using the same IVP as previous problem,
+            We're given $f(x,y) = 2x + y$, $h = 0.2$, $y_0 = -1$, and $x_0 = 0$, $x_1 = 0.2$, $x_2 = 0.04$, $x_3 = 0.6$. 
+            {\footnotesize
             \begin{align*}
-                \vec{y}_H &= c_1\begin{bmatrix}-3\\1\end{bmatrix}xe^{3x} + c_2\left(x\begin{bmatrix}
-                    -3\\
-                    1
-                \end{bmatrix} + \begin{bmatrix}
-                    -1/2\\
-                    0
-                \end{bmatrix}\right)e^{3x}  \\
-                &= \begin{bmatrix}
-                    -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}c_2e^{3x}\\
-                    c_1e^{3x} + c_2xe^{3x}
-                \end{bmatrix}
+                y_1^p &= y_0 + h f(x_0, y_0) = -1 + 0.2(-1) = -1.2\\
+                y_1^c &= y_0 + \frac{h}{2}\left[f(x_0,y_0) + f(x_1,y_1^p)\right]\\
+                      &= -1 + 0.1 \left[-1 + 2(0.2) - 1.2\right] = -1.18\\
+                y_2^p &= y_1^c + h f(x_1, y_1^c) = -1.18 + 0.2(2(0.2) - 1.18)\\
+                      &= -1.336\\
+                y_2^c &= y_1^c + \frac{h}{2}\left[f(x_1,y_1^c) + f(x_2,y_2^p)\right]\\
+                      &= -1.18 + 0.1\left[2(0.2) - 1.18 + 2(0.4)\right] = -1.3116\\
+                y_3^p &= y_2^c + hf(x_2, y_2^c) = -1.3116 + 0.2(2(0.4) - 1.3116)\\
+                      &= -1.41392\\
+                y_3^c &= -1.3116 + 0.1\left[2(0.4) - 1.18 + 2(0.6) - 1.413192\right]\\
+                      &= -1.384152
             \end{align*}
-            For $y_p$, decompose $r(x)$ to get
-            \[r(x) = \begin{bmatrix}
-                9x - 51\\
-                7 + e^{2x}
-            \end{bmatrix} = \begin{bmatrix}
-                9\\
-                0
-            \end{bmatrix}x + \begin{bmatrix}
-                -51\\
-                7
-            \end{bmatrix} + \begin{bmatrix}
-                0\\
-                1
-            \end{bmatrix}e^{2x}\]
-            Find $y_p$ for each part of $r(x)$\\[-2ex]
-            \[y_p = Ux + V + We^{2x}\]
-            Rewrite the non-homogeneous system as 
-            \[\vec{y'} = \begin{bmatrix}
-                9 & 18\\
-                -2 & -3
-            \end{bmatrix}y + \begin{bmatrix}
-                9\\0
-            \end{bmatrix}x + \begin{bmatrix}
-                -51\\7
-            \end{bmatrix} + \begin{bmatrix}
-                0\\1
-            \end{bmatrix}e^{2x}\]
-           Compute $\vec{y'}_p$ and plug into the system to solve for constant vectors, $\vec{y'}_p = U + 2We^{2x}$, $\vec{y'}_p = A\vec{y}_p + \vec{r}(x)$\\[-2ex]
-           {\scriptsize
-           \[
-            U + 2We^{2x} = A(Ux + V + We^{2x}) + \begin{bmatrix}
-                9\\0
-            \end{bmatrix}x + \begin{bmatrix}
-                -51\\7
-            \end{bmatrix} + \begin{bmatrix}
-                0\\1
-            \end{bmatrix}e^{2x}
-            \]
-        }
-            This gives us the three equations 
-            \[AU + \begin{bmatrix}
-                9\\0
-            \end{bmatrix} = 0, AV + \begin{bmatrix}
-                -51\\7
-            \end{bmatrix} = U, AW + \begin{bmatrix}
-                0\\1
-            \end{bmatrix} = 2W\]
-            Solve equations to find\\[-2ex]
-           \[U = \begin{bmatrix}
-            3\\-2
-           \end{bmatrix}, V = \begin{bmatrix}
-            0\\3
-           \end{bmatrix}, W = \begin{bmatrix}
-            18\\-7
-           \end{bmatrix}\]
-            This gives us our particular solution
-            \[
-                y_p = \begin{bmatrix}
-                    3\\-2
-                \end{bmatrix}x + \begin{bmatrix}
-                    0\\3
-                \end{bmatrix} + \begin{bmatrix}
-                    18\\-7
-                \end{bmatrix}e^{2x} = \begin{bmatrix}
-                    3x + 18e^{2x}\\
-                    -2x+3 - 7e^{2x}
-                \end{bmatrix}  
-            \]
-            The general solution to the non-homogeneous ODE is 
-            \[
-                y = \begin{bmatrix}
-                    -3c_1e^{3x} - 3c_2xe^{3x} - \frac{1}{2}e^{3x}\\
-                    c_1e^{3x} + c_2xe^{3x}
-                \end{bmatrix}
-                + \begin{bmatrix}
-                    3x + 18e^{2x}\\
-                    -2x+3 - 7e^{2x}
-                \end{bmatrix}
-            \]
-        }
-    \end{blackbox}
-    \begin{blackbox}{Extra Notes}
-        \hspace{300pt}
-        \vspace{557pt}
-    \end{blackbox}
+            }
+        \end{brownbox}
+        \begin{redbox}{Runge-Kutta Method of Order 4}
+
+            \textbf{Example.} \\[-5ex]
+            \[y' = y - x^2 + 1; \ y(0) = \frac{1}{2}\]            
+            We can compute with a step size $h = 0.5$ on the interval $[0,0.5]$, $x_1 = 0.5$.
+            \vspace{-2ex}
+            {\footnotesize
+            \begin{align*}
+                k_1 &= hf(x_0, y_0) = 0.5\left(\frac{1}{2} - 0 + 1\right) = 0.75\\
+                k_2 &= hf\left(x_0 + \frac{1}{2}h, y_0 + \frac{1}{2}k_1\right)\\
+                &= 0.5f(0.25,0.875) = 0.90625\\
+                k_3 &= hf\left(x_0 + \frac{h}{2}, y_0 + \frac{1}{2}k_2\right)\\
+                &= 0.5f(0.25, 0.953125) = 0.9453125\\
+                k_3 &= hf\left(x_0 + h, y_0 + k_3\right)\\
+                &= 0.5f(0.5, 1.4453125) = 1.09765625\\
+            \end{align*}
+            \vspace{-8ex}
+            }
+
+            For $x_2 = 1$, the process repeats and we get 2 new points. 
+            \end{redbox}\\[-2ex]
+        \end{blackbox}
+        \begin{blackbox}{Laplace Transforms}
+            \begin{bluebox}{Computing Laplace Transforms}
+                {\footnotesize
+                \textbf{Example.} Find \\[-4ex]
+                \[\ilaplace{\frac{2s+3}{s^3 + 5s^2 + 8s + 4}}\]
+                \textbf{Solution.} Start by decomposing the fraction to get \\[-2ex]
+                \begin{align*}
+                    \frac{2s+3}{s^3+5s^2+8s + 4} &= \frac{2s+3}{(s+1)(s+2)^2}\\
+                    &=\frac{1}{s+1} - \frac{1}{s+2}  + \frac{1}{(s+2)^2}
+                \end{align*}
+                \vspace{-4ex}
+
+                Then, \\[-3ex]
+                % \[\]
+                % \[= \ilaplace{\frac{1}{s+1}} - \ilaplace{\frac{1}{s+2}} + \ilaplace{\frac{1}{(s+2)^2}}\]
+                % \[=e^{-t} - e^{-2t} + te^{-2t}\]
+                \[
+                    \ilaplace{\frac{2s+3}{s^3+5s^2 + 8s+ 4}} =  e^{-t} - e^{-2t} + te^{-2t}
+                \]
+                \[\ilaplace{\frac{1}{(s+2)^2}} = te^{-2t}\tag{$1^{st}$ shift. theorem.}\]
+                }
+            \end{bluebox}
+            \begin{redbox}{Convolution}
+                \textbf{Example.} Find \\[-4ex]
+                {\footnotesize
+                \[\ilaplace{\frac{1}{s^2 + 4s - 5}}\]
+                \textbf{Solution.} Rewrite the fraction and use the convolution, \\[-3ex]
+                \begin{align*}
+                    &\ilaplace{\frac{1}{s^2 + 4s - 5}} = \ilaplace{\frac{1}{s-1} \frac{1}{s+5}} \\
+                    &= \ilaplace{\frac{1}{s-1}} * \ilaplace{\frac{1}{s+5}}\\
+                    &= e^{t} * e^{-5t} = \int_0^t e^{t-x}e^{-5x}dx\\
+                    &= \int_0^t e^{t}e^{-x}e^{-5x}dx = e^t \int_0^t e^{-6x}dx\\
+                    &= e^t\left(-\frac{1}{6}e^{-6t} + 1\right) = \frac{1}{6}e^t - \frac{1}{6}e^{-5t}
+                \end{align*}
+                }
+            \end{redbox}
+            \begin{brownbox}{Solving an IVP}
+                {\footnotesize
+                \textbf{Example.} Solve the following IVP \\[-2ex]
+                \[y'' + 6y' + 9y = \begin{cases}
+                    0 & 0 \leq t < 2\\
+                    e^{-3t} & t \geq 0
+                \end{cases}, \ y(0) = 1, \ y'(0) = 0\]
+                
+                \noindent
+                \textbf{Solution.} We can rewrite the ODE as \\[-2ex]
+                \[y'' + 6y' + 9y = e^{-3t}u(t-2)\]
+                Applying the laplace transform to both sides,\\[-2ex] 
+                \[\laplace{y''} + 6\laplace{y'} + 9\laplace{y} = \laplace{e^{-3t}u(t-2)}\]
+                \vspace{-3.5ex}
+                \[s^2Y - sy(0) - y'(0) + 6(sY - y(0)) + 9Y= \frac{e^{-2(s+3)}}{s+3}\]
+                This gives us \\[-4ex]
+                \[Y = \frac{s+6}{(s+3)^2} + \frac{e^{-2(s+3)}}{(s+3)^3}\]
+                Now we can compute the inverse laplace transform of $Y$\\[-2ex]
+                \[y(t) = \ilaplace{Y} = \ilaplace{\frac{s+6}{(s+3)^2}} + \ilaplace{\frac{e^{-2(s+3)}}{(s+3)^3}}\]
+               The second part requires second shifting theorem with $e^{-2s}$ and $f(t) = \ilaplace{\frac{1}{(s+3)^3}}$. This gives us \\[-2ex]
+               \[y(t) = e^{-3t} + 3te^{-3t} + e^{-6}u(t-2)\frac{1}{2}(t-2)^2e^{-3(t-2)}\]
+               \vspace{-4ex}
+                }
+                \end{brownbox}\\[-2ex]
+            \end{blackbox}
     \end{multicols*}
 \end{document}
+
+
+
+% \begin{blackbox}{Exact First Order ODE's}
+%     \begin{bluebox}{Steps To Solving}
+%         \begin{enumerate}[align=left]
+%             \item Check exactness: $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$
+%             \item Look for a function $F(x,y)$ such that\\[-0.0001mm]
+%             \[\frac{\partial F}{\partial x} = M, \ \frac{\partial F}{\partial y} = N\]
+%             Do this by integrating $M$ with respect to $x$ or $N$ with respect to $y$ then differentiate the equation with respect to the other variable respectively.
+%             \item The general solution is $F(x,y) = C$
+%             \item If an initial condition is given, solve for the integration constant $C$.
+%         \end{enumerate}
+%     \end{bluebox}
+%     {\footnotesize
+%     \textbf{Example.} Solve the following IVP \\[-2ex]
+%     \[(6x - 2y^2 + 2xy^3)dx + (3x^2y^2-4xy)dy = 0\]
+%     \textbf{Solution.} Check for exactness \\[-2ex]
+%     \[\frac{\partial M}{\partial y} = -4y + 6xy^2 = \frac{\partial N}{\partial x}\]
+%     \[F(x,y) = \int 3x^2y^2 - 4xydy = x^2y^3 - 2xy^2 + h(x)\]
+%     \[\frac{\partial F}{\partial x} = 2xy^3 - 2y^2 + h'(x) = M \implies h'(x) = 6x\]
+%     \[h(x) = \int 6xdx = 3x^2 + k\]
+%     Our general solution is  \\[-2ex] 
+%     \[F(x,y) = x^2y^3 - 2xy^2 + 3x^2 = C\]
+%     }
+% \end{blackbox} 
